@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAC · Production Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f8fa;--surface:#fff;--s2:#f0f2f5;--border:#e4e7ed;--b2:#d0d5de;
+  --ink:#0f1117;--ink2:#4a5168;--ink3:#8b92a8;
+  --blue:#2563eb;--blu:#eff4ff;--blum:#bfcffe;
+  --teal:#0891b2;--tlt:#ecfeff;
+  --green:#059669;--glt:#ecfdf5;--gmd:#a7f3d0;
+  --amber:#d97706;--alt:#fffbeb;
+  --red:#dc2626;--rlt:#fef2f2;
+  --violet:#7c3aed;--vlt:#f5f3ff;
+  --orange:#ea580c;--olt:#fff7ed;
+  --r:12px;--rs:8px;
+  --sh:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.04);
+  --sh2:0 4px 12px rgba(0,0,0,.08),0 16px 40px rgba(0,0,0,.06);
+  --f:'DM Sans',sans-serif;--m:'DM Mono',monospace;
+}
+html{font-size:14px}
+body{font-family:var(--f);background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* HEADER */
+header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.hdr{max-width:1400px;margin:0 auto;padding:0 28px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.hl{display:flex;align-items:center;gap:14px}
+.logo{width:34px;height:34px;background:var(--blue);border-radius:9px;display:grid;place-items:center}
+.logo svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ht{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.hs{font-size:11px;color:var(--ink3);margin-top:1px}
+.hr{display:flex;align-items:center;gap:8px}
+.pill{font-size:11px;font-weight:500;padding:4px 10px;border-radius:20px;border:1px solid var(--border);color:var(--ink3);background:var(--surface);white-space:nowrap}
+.pill.live{background:var(--glt);border-color:var(--gmd);color:var(--green)}
+.pill.live::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:5px;animation:blink 2s ease infinite;vertical-align:middle;margin-top:-1px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* LAYOUT */
+.page{max-width:1400px;margin:0 auto;padding:24px 28px 60px;display:grid;grid-template-columns:320px 1fr;gap:20px}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;animation:fadeUp .4s ease both}
+.card+.card{margin-top:16px}
+.ch{padding:15px 20px 13px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.ch h2{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3)}
+.chi{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;font-size:13px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* INPUTS */
+.ig{padding:0 20px 4px}
+.igt{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);padding:14px 0 10px}
+.ir{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);gap:12px}
+.ir:last-child{border-bottom:none}
+.il strong{display:block;font-size:13px;font-weight:500;color:var(--ink);line-height:1.2}
+.il span{font-size:11px;color:var(--ink3)}
+.ic{display:flex;align-items:center;gap:6px;flex-shrink:0}
+input[type=number]{width:76px;padding:6px 10px;border:1.5px solid var(--b2);border-radius:var(--rs);font-family:var(--m);font-size:13px;font-weight:500;color:var(--blue);background:var(--blu);outline:none;text-align:right;transition:border-color .15s,box-shadow .15s;-moz-appearance:textfield}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
+input[type=number]:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.u{font-size:11px;font-weight:500;color:var(--ink3);min-width:24px}
+.sw{padding:2px 0 10px}
+input[type=range]{-webkit-appearance:none;width:100%;height:4px;background:var(--b2);border-radius:2px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--blue);border:2.5px solid white;box-shadow:0 1px 4px rgba(37,99,235,.3);cursor:pointer;transition:transform .15s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}
+
+/* TOGGLE */
+.tw{display:flex;align-items:center;gap:8px}
+.tog{position:relative;width:38px;height:22px;flex-shrink:0;cursor:pointer}
+.tog input{opacity:0;width:0;height:0;position:absolute}
+.tt{position:absolute;inset:0;background:var(--b2);border-radius:11px;transition:background .2s}
+.tb{position:absolute;width:16px;height:16px;background:white;border-radius:50%;top:3px;left:3px;box-shadow:0 1px 3px rgba(0,0,0,.15);transition:transform .2s}
+.tog input:checked~.tt{background:var(--green)}
+.tog input:checked~.tb{transform:translateX(16px)}
+.tl{font-size:12px;font-weight:500;color:var(--ink2)}
+
+/* SCALE */
+.sg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:14px 20px 4px}
+.si{background:var(--s2);border-radius:var(--rs);padding:10px 12px;text-align:center}
+.si-l{font-size:10px;color:var(--ink3);font-weight:500;margin-bottom:4px}
+.si-v{font-family:var(--m);font-size:16px;font-weight:500;color:var(--blue)}
+.str{display:flex;align-items:center;justify-content:space-between;padding:12px 20px 16px;border-top:1px solid var(--border);background:var(--blu);margin-top:10px}
+.stl{font-size:12px;font-weight:500;color:var(--ink2)}
+.stf{font-size:10px;color:var(--ink3);font-family:var(--m);margin-top:2px}
+.stv{font-family:var(--m);font-size:22px;font-weight:600;color:var(--blue)}
+.dv{height:1px;background:var(--border)}
+
+/* RIGHT */
+.right{display:flex;flex-direction:column;gap:16px}
+
+/* KPI ROW — 5 cards */
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);padding:18px 20px 16px;position:relative;overflow:hidden;transition:box-shadow .2s,transform .15s;animation:fadeUp .35s ease both}
+.kpi:hover{box-shadow:var(--sh2);transform:translateY(-1px)}
+.kpi:nth-child(1){animation-delay:.05s}.kpi:nth-child(2){animation-delay:.1s}
+.kpi:nth-child(3){animation-delay:.15s}.kpi:nth-child(4){animation-delay:.2s}
+.kpi:nth-child(5){animation-delay:.25s}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0;background:var(--kc,var(--blue))}
+.kl{font-size:11px;font-weight:500;color:var(--ink3);letter-spacing:.02em;margin-bottom:8px}
+.kv{font-size:30px;font-weight:300;letter-spacing:-.02em;color:var(--ink);line-height:1;margin-bottom:4px;transition:opacity .2s}
+.kv.fl{opacity:.4}
+.ku{font-size:12px;color:var(--ink3)}
+.ksb{font-size:11px;color:var(--ink3);margin-top:6px;font-family:var(--m)}
+.ki{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:8px;display:grid;place-items:center;background:var(--kb,var(--blu));font-size:14px}
+
+/* HCl INFO BOX */
+.hcl-info{background:var(--olt);border:1px solid #fed7aa;border-radius:var(--rs);padding:12px 16px;display:none;gap:0;flex-wrap:wrap}
+.hcl-info.show{display:block}
+.hcl-info-title{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.hcl-info-title::before{content:'🏭';font-size:12px}
+.hcl-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.hcl-stat{background:rgba(255,255,255,.6);border-radius:var(--rs);padding:10px 12px;border:1px solid #fed7aa}
+.hcl-stat .lbl{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--orange);margin-bottom:4px}
+.hcl-stat .val{font-family:var(--m);font-size:18px;font-weight:600;color:var(--orange);line-height:1.2}
+.hcl-stat .sub{font-size:11px;color:var(--ink3);margin-top:2px}
+.hcl-rxn{font-family:var(--m);font-size:11px;color:var(--ink3);margin-top:10px;padding-top:8px;border-top:1px solid #fed7aa}
+
+/* FLOW */
+.fd{background:var(--s2);border-radius:var(--rs);padding:16px;display:flex;flex-direction:column;gap:10px}
+.ftt{font-size:10px;font-weight:600;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.ftrack{display:flex;align-items:center}
+.fn{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--rs);padding:8px 12px;text-align:center;flex-shrink:0}
+.fn-l{font-size:9px;font-weight:600;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase}
+.fn-v{font-family:var(--m);font-size:12px;font-weight:500;color:var(--ink);margin-top:2px}
+.fn.bl{border-color:var(--blum);background:var(--blu)}.fn.bl .fn-v{color:var(--blue)}
+.fn.te{border-color:#a5f3fc;background:var(--tlt)}.fn.te .fn-v{color:var(--teal)}
+.fn.gr{border-color:var(--gmd);background:var(--glt)}.fn.gr .fn-v{color:var(--green)}
+.fn.am{border-color:#fde68a;background:var(--alt)}.fn.am .fn-v{color:var(--amber)}
+.fn.vi{border-color:#ddd6fe;background:var(--vlt)}.fn.vi .fn-v{color:var(--violet)}
+.fn.or{border-color:#fed7aa;background:var(--olt)}.fn.or .fn-v{color:var(--orange)}
+.fa{flex:1;min-width:10px;display:flex;align-items:center;position:relative}
+.fa::before{content:'';position:absolute;left:0;right:6px;height:1.5px;background:var(--b2)}
+.fa::after{content:'';width:0;height:0;border-top:4px solid transparent;border-bottom:4px solid transparent;border-left:6px solid var(--b2);position:absolute;right:0}
+
+/* BALANCE */
+.bl-list{display:flex;flex-direction:column;gap:10px}
+.bh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+.bl-l{font-size:12px;color:var(--ink2)}
+.bl-n{font-family:var(--m);font-size:12px;font-weight:500;color:var(--ink)}
+.bt{height:6px;background:var(--s2);border-radius:3px;overflow:hidden}
+.bf{height:100%;border-radius:3px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+
+/* TABLE */
+.tw2{overflow-x:auto;padding:0 20px 16px}
+table{width:100%;border-collapse:collapse}
+thead th{font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);padding:10px 12px;text-align:right;background:var(--s2);border-bottom:1px solid var(--border);white-space:nowrap}
+thead th:first-child{text-align:left}
+tbody tr{border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s}
+tbody tr:hover{background:var(--s2)}
+tbody tr.act{background:var(--blu)}
+tbody tr.act td{color:var(--blue);font-weight:500}
+tbody tr.act td:first-child{font-weight:600}
+td{padding:9px 12px;text-align:right;font-size:12px;color:var(--ink2);font-family:var(--m)}
+td:first-child{text-align:left;font-family:var(--f);color:var(--ink)}
+.star{color:var(--blue);margin-left:3px}
+
+/* REACTIONS */
+.rg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:16px 20px}
+.rxn{background:var(--s2);border-radius:var(--rs);padding:12px 14px;border-left:3px solid var(--b2)}
+.rxn.dng{background:var(--rlt);border-left-color:var(--red)}
+.rw{font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:5px}
+.rxn.dng .rw{color:var(--red)}
+.re{font-family:var(--m);font-size:11px;color:var(--ink);line-height:1.6}
+.rxn.dng .re{color:var(--red)}
+.rn{font-size:10px;color:var(--ink3);margin-top:4px;font-style:italic}
+
+/* WARN */
+.wb{display:none;align-items:center;gap:8px;padding:10px 16px;background:var(--rlt);border:1px solid #fecaca;border-radius:var(--rs);font-size:12px;color:var(--red);font-weight:500}
+.wb.show{display:flex}
+.wb svg{width:16px;height:16px;stroke:var(--red);fill:none;stroke-width:2;flex-shrink:0}
+
+/* DETAIL GRID */
+.dg{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* FOOTER */
+footer{background:var(--surface);border-top:1px solid var(--border);padding:10px 28px;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--ink3);gap:16px;flex-wrap:wrap}
+.fi{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.fi span::before{content:'·';margin-right:20px;color:var(--b2)}
+.fi span:first-child::before{display:none}
+
+@media(max-width:1200px){.kpi-row{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:1000px){.page{grid-template-columns:1fr}.kpi-row{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:640px){.page{padding:16px}.kpi-row{grid-template-columns:1fr 1fr}.rg{grid-template-columns:1fr}.dg{grid-template-columns:1fr}.hr .pill:not(.live){display:none}.hcl-stats{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr">
+    <div class="hl">
+      <div class="logo">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <div>
+        <div class="ht">NAC Production Calculator</div>
+        <div class="hs">Chlor-Alkali Plant · Bouira, Algeria · NAC 4295-G-MAN-0001</div>
+      </div>
+    </div>
+    <div class="hr">
+      <span class="pill">Bluestar Electrolyzer</span>
+      <span class="pill">Conve &amp; AVS Inc.</span>
+      <span class="pill live">Live Calculation</span>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <!-- ══ LEFT ══ -->
+  <div>
+    <div class="card">
+      <div class="ch"><div class="chi" style="background:var(--blu)">⚡</div><h2>Electrolyzer Inputs</h2></div>
+
+      <div class="ig">
+        <div class="igt">Electrolyzer Settings</div>
+        <div class="ir">
+          <div class="il"><strong>Rectifier Current — I</strong><span>Design max: 16.2 kA</span></div>
+          <div class="ic"><input type="number" id="cur" value="11" min="1" max="16.2" step="0.1"><span class="u">kA</span></div>
+        </div>
+        <div class="sw"><input type="range" id="cur-s" min="1" max="16.2" step="0.1" value="11"></div>
+
+        <div class="ir">
+          <div class="il"><strong>Active Cells — N</strong><span>Design: 48 cells</span></div>
+          <div class="ic"><input type="number" id="cel" value="31" min="1" max="48" step="1"><span class="u">cells</span></div>
+        </div>
+        <div class="sw"><input type="range" id="cel-s" min="1" max="48" step="1" value="31"></div>
+
+        <div class="ir">
+          <div class="il"><strong>Current Efficiency — CE</strong><span>New 95.5% · End of life 92%</span></div>
+          <div class="ic"><input type="number" id="ce" value="96" min="85" max="100" step="0.5"><span class="u">%</span></div>
+        </div>
+      </div>
+
+      <div class="dv"></div>
+
+      <div class="ig">
+        <div class="igt">Hypochlorite Settings</div>
+        <div class="ir">
+          <div class="il"><strong>NaOCl Concentration</strong><span>Target range: 125 – 180 g/L</span></div>
+          <div class="ic"><input type="number" id="con" value="132" min="100" max="180" step="1"><span class="u">g/L</span></div>
+        </div>
+        <div class="sw"><input type="range" id="con-s" min="100" max="180" step="1" value="132"></div>
+
+        <div class="ir">
+          <div class="il"><strong>NaOH Dilution to Columns</strong><span>Keep below 22% — blockage risk</span></div>
+          <div class="ic"><input type="number" id="dil" value="19" min="15" max="22" step="0.5"><span class="u">%</span></div>
+        </div>
+
+        <div class="ir">
+          <div class="il"><strong>Caustic Excess in Product</strong><span>Target: 2 – 4 g/L</span></div>
+          <div class="ic"><input type="number" id="exs" value="3" min="0" max="8" step="0.5"><span class="u">g/L</span></div>
+        </div>
+      </div>
+
+      <div class="dv"></div>
+
+      <div class="ig">
+        <div class="igt">Unit Status</div>
+        <div class="ir">
+          <div class="il"><strong>HCl Unit — U-8101</strong></div>
+          <div class="tw">
+            <label class="tog"><input type="checkbox" id="hcl"><span class="tt"></span><span class="tb"></span></label>
+            <span class="tl" id="hcl-l">Off</span>
+          </div>
+        </div>
+        <div class="ir" id="hcl-pr" style="display:none">
+          <div class="il"><span>Cl₂ diverted to HCl unit</span></div>
+          <div class="ic"><input type="number" id="hcl-p" value="30" min="0" max="100" step="5"><span class="u">%</span></div>
+        </div>
+        <div class="ir" style="padding-bottom:14px">
+          <div class="il"><strong>FeCl₃ Unit</strong></div>
+          <div class="tw">
+            <label class="tog"><input type="checkbox" id="fe3"><span class="tt"></span><span class="tb"></span></label>
+            <span class="tl" id="fe3-l">Off</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scale card -->
+    <div class="card">
+      <div class="ch"><div class="chi" style="background:var(--blu)">⚖️</div><h2>Scaling Factors</h2></div>
+      <div class="sg">
+        <div class="si"><div class="si-l">Current ratio</div><div class="si-v" id="ri">1.000</div></div>
+        <div class="si"><div class="si-l">Cell ratio</div><div class="si-v" id="rn">1.000</div></div>
+        <div class="si"><div class="si-l">CE ratio</div><div class="si-v" id="rc">1.000</div></div>
+      </div>
+      <div class="str">
+        <div>
+          <div class="stl">Combined scale factor</div>
+          <div class="stf">Cl₂_base × (I/11) × (N/31) × (CE/0.96)</div>
+        </div>
+        <div class="stv" id="sc">1.000</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ RIGHT ══ -->
+  <div class="right">
+
+    <!-- Warning -->
+    <div class="wb" id="wb">
+      <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span id="wt"></span>
+    </div>
+
+    <!-- KPI Row -->
+    <div class="kpi-row">
+      <div class="kpi" style="--kc:var(--green);--kb:var(--glt)">
+        <div class="kl">NaOCl Solution</div>
+        <div class="kv" id="knaocl">3,149</div>
+        <div class="ku">L / hour</div>
+        <div class="ksb" id="snaocl">75.6 m³/day</div>
+        <div class="ki">🧪</div>
+      </div>
+      <div class="kpi" style="--kc:var(--blue);--kb:var(--blu)">
+        <div class="kl">Total Cl₂ Produced</div>
+        <div class="kv" id="kcl2">415.7</div>
+        <div class="ku">kg / hour</div>
+        <div class="ksb" id="scl2">9.98 MTPD</div>
+        <div class="ki">⚗️</div>
+      </div>
+      <div class="kpi" style="--kc:var(--orange);--kb:var(--olt)">
+        <div class="kl">Cl₂ to HCl Unit</div>
+        <div class="kv" id="khcl">—</div>
+        <div class="ku">kg / hour</div>
+        <div class="ksb" id="shcl">HCl unit is off</div>
+        <div class="ki">🏭</div>
+      </div>
+      <div class="kpi" style="--kc:var(--violet);--kb:var(--vlt)">
+        <div class="kl">Caustic Soda NaOH</div>
+        <div class="kv" id="knaoh">468</div>
+        <div class="ku">kg / hour (dry)</div>
+        <div class="ksb" id="snaoh">11.24 MTPD</div>
+        <div class="ki">🧊</div>
+      </div>
+      <div class="kpi" style="--kc:var(--amber);--kb:var(--alt)">
+        <div class="kl">Hydrogen H₂</div>
+        <div class="kv" id="kh2">11.7</div>
+        <div class="ku">kg / hour</div>
+        <div class="ksb" id="sh2">0.281 MTPD</div>
+        <div class="ki">💨</div>
+      </div>
+    </div>
+
+    <!-- HCl detail box — shown only when HCl unit is On -->
+    <div class="hcl-info" id="hcl-info">
+      <div class="hcl-info-title">HCl Unit U-8101 — Active Stream Details</div>
+      <div class="hcl-stats">
+        <div class="hcl-stat">
+          <div class="lbl">Cl₂ to HCl Unit</div>
+          <div class="val" id="hi-cl2h">—</div>
+          <div class="sub">kg / hour</div>
+        </div>
+        <div class="hcl-stat">
+          <div class="lbl">Cl₂ to HCl Unit</div>
+          <div class="val" id="hi-cl2d">—</div>
+          <div class="sub">MTPD</div>
+        </div>
+        <div class="hcl-stat">
+          <div class="lbl">HCl 32% Expected</div>
+          <div class="val" id="hi-hcl32">—</div>
+          <div class="sub">kg / hour (32% solution)</div>
+        </div>
+        <div class="hcl-stat">
+          <div class="lbl">Cl₂ Remaining → NaOCl</div>
+          <div class="val" id="hi-rem">—</div>
+          <div class="sub">kg / hour</div>
+        </div>
+      </div>
+      <div class="hcl-rxn" id="hi-rxn">Reaction: Cl₂ + H₂ → 2HCl &nbsp;|&nbsp; 71 g Cl₂ produces 73 g HCl dry &nbsp;|&nbsp; as 32% solution ÷ 0.32</div>
+    </div>
+
+    <!-- Flow + Balance -->
+    <div class="card">
+      <div class="ch"><div class="chi" style="background:var(--tlt)">🔄</div><h2>Process Flow &amp; Mass Balance</h2></div>
+      <div style="padding:16px 20px">
+        <div class="dg">
+          <div>
+            <div class="fd">
+              <div class="ftt">Process stream</div>
+              <div class="ftrack">
+                <div class="fn te"><div class="fn-l">Brine</div><div class="fn-v">NaCl+H₂O</div></div>
+                <div class="fa"></div>
+                <div class="fn bl"><div class="fn-l">Electrolyzer</div><div class="fn-v" id="fe">11kA·31cells</div></div>
+                <div class="fa"></div>
+                <div class="fn gr"><div class="fn-l">NaOCl out</div><div class="fn-v" id="fno">3,149 L/h</div></div>
+              </div>
+              <div style="display:flex;gap:8px;padding-left:122px;margin-top:8px;flex-wrap:wrap">
+                <div class="fn vi"><div class="fn-l">NaOH 32%</div><div class="fn-v" id="fnh">1 463 kg/h</div></div>
+                <div class="fn am"><div class="fn-l">H₂</div><div class="fn-v" id="fnh2">11.7 kg/h</div></div>
+                <div class="fn or" id="fn-hcl-node" style="display:none"><div class="fn-l">Cl₂ → HCl</div><div class="fn-v" id="fn-hcl-val">— kg/h</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px">NaOH Balance (kg/h dry)</div>
+            <div class="bl-list">
+              <div><div class="bh"><span class="bl-l">Produced by electrolyzer</span><span class="bl-n" id="bnp">468</span></div><div class="bt"><div class="bf" id="bbp" style="background:var(--violet);opacity:.7"></div></div></div>
+              <div><div class="bh"><span class="bl-l">Consumed by hypo reaction</span><span class="bl-n" id="bnr">468</span></div><div class="bt"><div class="bf" id="bbr" style="background:var(--blue);opacity:.7"></div></div></div>
+              <div><div class="bh"><span class="bl-l">HGW for NaOH dilution</span><span class="bl-n" id="bnh">1 002</span></div><div class="bt"><div class="bf" id="bbh" style="background:var(--teal);opacity:.7"></div></div></div>
+              <div><div class="bh"><span class="bl-l">Net NaOH for sale / storage</span><span class="bl-n" id="bnn" style="color:var(--green)">~0</span></div><div class="bt"><div class="bf" id="bbn" style="background:var(--green)"></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scenario table -->
+    <div class="card">
+      <div class="ch"><div class="chi" style="background:var(--alt)">📊</div><h2>Scenario Table <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px;color:var(--ink3);margin-left:4px">— click any row to apply</span></h2></div>
+      <div class="tw2">
+        <table><thead><tr>
+          <th>Current (kA)</th><th>Cells</th><th>Scale</th>
+          <th>NaOH (MTPD)</th><th>Total Cl₂ (kg/h)</th>
+          <th>NaOCl @132 g/L (L/h)</th>
+          <th>NaOCl @145 g/L (L/h)</th>
+          <th>NaOCl @125 g/L (L/h)</th>
+          <th>H₂ (kg/h)</th>
+        </tr></thead><tbody id="sb"></tbody></table>
+      </div>
+    </div>
+
+    <!-- Reactions -->
+    <div class="card">
+      <div class="ch"><div class="chi" style="background:var(--rlt)">🔬</div><h2>Chemical Reactions Reference</h2></div>
+      <div class="rg">
+        <div class="rxn" style="border-left-color:var(--blue)"><div class="rw">Anode (+) — main</div><div class="re">2Cl⁻ → Cl₂ + 2e⁻</div><div class="rn">Chlorine gas produced</div></div>
+        <div class="rxn" style="border-left-color:var(--violet)"><div class="rw">Cathode (−) — main</div><div class="re">2H₂O + 2e⁻ → H₂ + 2OH⁻</div><div class="rn">Hydrogen + hydroxide</div></div>
+        <div class="rxn" style="border-left-color:var(--teal)"><div class="rw">Overall cell</div><div class="re">2NaCl + 2H₂O →<br>Cl₂ + H₂ + 2NaOH</div><div class="rn">Net electrolysis</div></div>
+        <div class="rxn" style="border-left-color:var(--green)"><div class="rw">Hypo absorption C-6101</div><div class="re">Cl₂ + 2NaOH →<br>NaOCl + NaCl + H₂O</div><div class="rn">NaOH diluted to 18–20%</div></div>
+        <div class="rxn dng"><div class="rw">⚠ Hypo decomp — AVOID</div><div class="re">2NaOCl → 2NaCl + O₂</div><div class="rn">Above 38°C!</div></div>
+        <div class="rxn dng"><div class="rw">⚠ Chlorate form — AVOID</div><div class="re">3NaOCl → NaClO₃ + 2NaCl</div><div class="rn">Keep &lt;1 g/L in product</div></div>
+        <div class="rxn" style="border-left-color:var(--amber)"><div class="rw">Brine — Ca removal R-1201</div><div class="re">Na₂CO₃ + Ca²⁺ → CaCO₃↓ + 2Na⁺</div><div class="rn">Soda ash precipitation</div></div>
+        <div class="rxn" style="border-left-color:var(--amber)"><div class="rw">Brine — Mg removal R-1202</div><div class="re">2NaOH + Mg²⁺ → Mg(OH)₂↓ + 2Na⁺</div><div class="rn">Hardness &lt;20 ppb required</div></div>
+        <div class="rxn" style="border-left-color:var(--orange)"><div class="rw">HCl synthesis U-8101</div><div class="re">Cl₂ + H₂ → 2HCl</div><div class="rn">Combustion → 32% solution</div></div>
+        <div class="rxn" style="border-left-color:var(--ink3)"><div class="rw">FeCl₃ synthesis (2 steps)</div><div class="re">Fe + 2FeCl₃ → 3FeCl₂<br>2FeCl₂ + Cl₂ → 2FeCl₃</div><div class="rn">42% FeCl₃ product</div></div>
+        <div class="rxn" style="border-left-color:var(--teal)"><div class="rw">Fixed mass ratios</div><div class="re">71 g Cl₂ : 80 g NaOH : 2 g H₂</div><div class="rn">Always constant — Faraday</div></div>
+        <div class="rxn" style="border-left-color:var(--ink3)"><div class="rw">Ion exchange regeneration</div><div class="re">HCl 7.5% → removes Ca/Mg<br>NaOH 4% → Na-form</div><div class="rn">Every ~48h service cycle</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="fi">
+    <span>Field anchor: 11 kA · 31 cells · CE 96% · 132 g/L → <strong>3,149.1 L/h NaOCl</strong></span>
+    <span>Cl₂ base = 415.68 kg/h · NaOH base = 468.38 kg/h</span>
+    <span>CE = <span id="ftce">96.0</span>%</span>
+    <span>Scale: <span id="ftsc">1.000</span></span>
+    <span style="font-family:var(--m)" id="fttm">--:--:--</span>
+  </div>
+  <div>NAC 4295-G-MAN-0001 Rev A · Conve &amp; AVS Inc.®</div>
+</footer>
+
+<script>
+// ── FIELD-CONFIRMED ANCHOR ──
+// 11 kA · 31 cells · CE 96% · 132 g/L → 3149.1 L/h NaOCl
+const A_I    = 11;
+const A_N    = 31;
+const A_CE   = 0.96;
+const A_CONC = 132;       // g/L active Cl2
+const A_VOL  = 3149.1;    // L/h  ← your exact measurement
+
+// Derived base values from anchor
+const A_CL2  = A_VOL * A_CONC / 1000;        // kg/h = 415.6812 kg/h
+const A_NAOH = A_CL2 * (80 / 71);            // kg/h = 468.3776 kg/h
+
+const $    = id => document.getElementById(id);
+const fmt  = (n, d=1) => (+n).toLocaleString('en-US', {minimumFractionDigits:d, maximumFractionDigits:d});
+const fmt0 = n => Math.round(n).toLocaleString('en-US');
+const fmtL = n => (+n).toLocaleString('en-US', {minimumFractionDigits:1, maximumFractionDigits:1});
+
+// ── Sync sliders ──
+[['cur','cur-s'],['cel','cel-s'],['con','con-s']].forEach(([a,b]) => {
+  $(a).addEventListener('input', () => { $(b).value = $(a).value; calc(); });
+  $(b).addEventListener('input', () => { $(a).value = $(b).value; calc(); });
+});
+['ce','dil','exs','hcl-p'].forEach(id => $(id).addEventListener('input', calc));
+
+$('hcl').addEventListener('change', function(){
+  $('hcl-l').textContent   = this.checked ? 'On' : 'Off';
+  $('hcl-pr').style.display = this.checked ? 'flex' : 'none';
+  calc();
+});
+$('fe3').addEventListener('change', function(){
+  $('fe3-l').textContent = this.checked ? 'On' : 'Off';
+  calc();
+});
+
+function calc() {
+  const I    = +$('cur').value  || 0;
+  const N    = +$('cel').value  || 0;
+  const CE   = (+$('ce').value  || 0) / 100;
+  const conc = +$('con').value  || 132;
+  const dil  = (+$('dil').value || 19) / 100;
+  const exs  = +$('exs').value  || 0;
+  const hclOn = $('hcl').checked;
+  const hclP  = hclOn ? (+$('hcl-p').value || 0) / 100 : 0;
+
+  // ── Scale from field anchor ──
+  const rI  = I  / A_I;
+  const rN  = N  / A_N;
+  const rCE = CE / A_CE;
+  const sc  = rI * rN * rCE;
+
+  // ── Production ──
+  const cl2_total = A_CL2  * sc;          // kg/h total Cl2
+  const naoh_kgh  = A_NAOH * sc;          // kg/h NaOH dry
+  const naoh32    = naoh_kgh / 0.32;      // kg/h as 32% solution
+  const h2_kgh    = naoh_kgh * (2 / 80);  // kg/h H2
+
+  // Cl2 split
+  const cl2_hcl   = cl2_total * hclP;
+  const cl2_hypo  = cl2_total - cl2_hcl;
+
+  // HCl production: Cl2 + H2 → 2HCl  →  71g Cl2 → 73g HCl dry
+  const hcl_dry   = cl2_hcl * (73 / 71);
+  const hcl_32    = hcl_dry / 0.32;      // kg/h as 32% solution
+
+  // NaOCl — output in LITRES (user's preferred unit)
+  const naocl_lh  = cl2_hypo * 1000 / conc;   // L/h
+  const naocl_m3d = naocl_lh / 1000 * 24;     // m³/day
+
+  // NaOH balance
+  const naoh_rxn  = cl2_hypo * (80 / 71);
+  const naoh_exs  = naocl_lh * exs / 1000;
+  const naoh_cons = naoh_rxn + naoh_exs;
+  const naoh_net  = naoh_kgh - naoh_cons;
+  const hgw       = naoh_cons * (1 / dil - 1 / 0.32);
+
+  // ── UPDATE KPIs ──
+  fv('knaocl', fmtL(naocl_lh));
+  $('snaocl').textContent = fmt(naocl_m3d, 2) + ' m³/day';
+
+  fv('kcl2', fmt(cl2_total, 1));
+  $('scl2').textContent   = fmt(cl2_total * 24 / 1000, 2) + ' MTPD';
+
+  if (hclOn && cl2_hcl > 0) {
+    fv('khcl', fmt(cl2_hcl, 1));
+    $('shcl').textContent = fmt(cl2_hcl * 24 / 1000, 2) + ' MTPD → HCl unit';
+  } else {
+    $('khcl').textContent = '—';
+    $('shcl').textContent = 'HCl unit is off';
+  }
+
+  fv('knaoh', fmt0(naoh_kgh));
+  $('snaoh').textContent  = fmt(naoh_kgh * 24 / 1000, 2) + ' MTPD';
+
+  fv('kh2', fmt(h2_kgh, 1));
+  $('sh2').textContent    = fmt(h2_kgh * 24 / 1000, 3) + ' MTPD';
+
+  // ── HCl info box ──
+  const infoBox  = $('hcl-info');
+  const hclNode  = $('fn-hcl-node');
+  if (hclOn && cl2_hcl > 0) {
+    infoBox.classList.add('show');
+    hclNode.style.display = 'block';
+    $('hi-cl2h').textContent  = fmt(cl2_hcl, 1) + ' kg/h';
+    $('hi-cl2d').textContent  = fmt(cl2_hcl * 24 / 1000, 2) + ' MTPD';
+    $('hi-hcl32').textContent = fmt0(hcl_32) + ' kg/h';
+    $('hi-rem').textContent   = fmt(cl2_hypo, 1) + ' kg/h';
+    $('fn-hcl-val').textContent = fmt(cl2_hcl, 1) + ' kg/h';
+    $('hi-rxn').textContent   =
+      `Reaction: Cl₂ + H₂ → 2HCl  |  71 g Cl₂ → 73 g HCl dry  |  as 32% solution ÷ 0.32  |  ${(hclP*100).toFixed(0)}% of total Cl₂ diverted`;
+  } else {
+    infoBox.classList.remove('show');
+    hclNode.style.display = 'none';
+  }
+
+  // ── Scale display ──
+  $('ri').textContent = rI.toFixed(3);
+  $('rn').textContent = rN.toFixed(3);
+  $('rc').textContent = rCE.toFixed(3);
+  $('sc').textContent = sc.toFixed(3);
+
+  // ── Flow diagram ──
+  $('fe').textContent   = `${I} kA · ${N} cells`;
+  $('fno').textContent  = fmtL(naocl_lh) + ' L/h';
+  $('fnh').textContent  = fmt0(naoh32) + ' kg/h';
+  $('fnh2').textContent = fmt(h2_kgh, 1) + ' kg/h';
+
+  // ── Balance bars ──
+  const mx = Math.max(naoh_kgh, naoh_cons, hgw, 50);
+  setBar('bbp','bnp', naoh_kgh,  mx, fmt0(naoh_kgh)  + ' kg/h');
+  setBar('bbr','bnr', naoh_cons, mx, fmt0(naoh_cons) + ' kg/h');
+  setBar('bbh','bnh', hgw,       mx, fmt0(hgw)       + ' kg/h');
+  $('bbn').style.width = Math.min(100, Math.max(0, naoh_net / mx * 100)) + '%';
+  const ne = $('bnn');
+  ne.textContent = fmt(naoh_net, 1) + ' kg/h';
+  ne.style.color = naoh_net > 5 ? 'var(--green)' : naoh_net < -5 ? 'var(--red)' : 'var(--amber)';
+
+  // ── Footer ──
+  $('ftce').textContent = (CE * 100).toFixed(1);
+  $('ftsc').textContent = sc.toFixed(3);
+
+  // ── Warnings ──
+  const w = [];
+  if (+$('dil').value > 22)   w.push('NaOH dilution >22% — NaCl will crystallise and block columns C-6101/C-6102!');
+  if (+$('ce').value  < 92)   w.push('CE below 92% — membrane replacement is recommended!');
+  if (conc > 180)             w.push('NaOCl concentration above 180 g/L — outside design range!');
+  if (I > 16.2)               w.push('Current exceeds design maximum 16.2 kA!');
+  if (+$('exs').value > 6)    w.push('Caustic excess above 6 g/L — risk of accelerated hypo decomposition!');
+  $('wb').classList.toggle('show', !!w[0]);
+  if (w[0]) $('wt').textContent = w[0];
+
+  hl(I, N);
+}
+
+function fv(id, v) {
+  const e = $(id);
+  if (e.textContent === v) return;
+  e.classList.add('fl');
+  setTimeout(() => { e.textContent = v; e.classList.remove('fl'); }, 130);
+}
+
+function setBar(barId, numId, val, max, label) {
+  $(barId).style.width = Math.min(100, val / max * 100) + '%';
+  $(numId).textContent = label;
+}
+
+// ── Build scenario table (L/h) ──
+function buildTable() {
+  const KAs = [4, 6, 8, 10, 11, 12, 14, 16.2];
+  const Ns  = [16, 24, 31, 32, 40, 48];
+  const tb  = $('sb');
+  tb.innerHTML = '';
+
+  KAs.forEach(kA => Ns.forEach(n => {
+    const sc   = (kA / A_I) * (n / A_N);   // CE fixed at anchor for table
+    const cl2  = A_CL2  * sc;
+    const naoh = A_NAOH * sc;
+    const h2   = naoh * (2 / 80);
+    const lh132 = cl2 * 1000 / 132;
+    const lh145 = cl2 * 1000 / 145;
+    const lh125 = cl2 * 1000 / 125;
+    const isc  = kA === 11 && n === 31;
+
+    const tr = document.createElement('tr');
+    if (isc) tr.classList.add('act');
+    tr.dataset.k = kA;
+    tr.dataset.n = n;
+    tr.innerHTML = `
+      <td>${kA === 16.2 ? '16.2' : kA}${isc ? '<span class="star">★</span>' : ''}</td>
+      <td>${n}</td>
+      <td>${sc.toFixed(3)}</td>
+      <td>${(naoh * 24 / 1000).toFixed(2)}</td>
+      <td>${fmt(cl2, 1)}</td>
+      <td>${fmtL(lh132)}</td>
+      <td>${fmtL(lh145)}</td>
+      <td>${fmtL(lh125)}</td>
+      <td>${h2.toFixed(1)}</td>`;
+    tr.addEventListener('click', () => {
+      $('cur').value = $('cur-s').value = kA;
+      $('cel').value = $('cel-s').value = n;
+      calc();
+    });
+    tb.appendChild(tr);
+  }));
+}
+
+function hl(I, N) {
+  document.querySelectorAll('#sb tr').forEach(tr =>
+    tr.classList.toggle('act', +tr.dataset.k === +I && +tr.dataset.n === +N)
+  );
+}
+
+function tick() {
+  $('fttm').textContent = new Date().toLocaleTimeString('en-GB', {hour12: false});
+}
+setInterval(tick, 1000);
+tick();
+
+buildTable();
+calc();
+</script>
+</body>
+</html>
