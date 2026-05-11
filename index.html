@@ -8,76 +8,79 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#f7f8fa;--sf:#fff;--s2:#f0f2f5;--bd:#e4e7ed;--b2:#d0d5de;
-  --ink:#0f1117;--k2:#4a5168;--k3:#8b92a8;
-  --blue:#2563eb;--blu:#eff4ff;--blm:#bfcffe;
-  --teal:#0891b2;--tlt:#ecfeff;
-  --green:#059669;--glt:#ecfdf5;--gmd:#a7f3d0;
-  --amber:#d97706;--alt:#fffbeb;
-  --red:#dc2626;--rlt:#fef2f2;
-  --violet:#7c3aed;--vlt:#f5f3ff;
-  --orange:#ea580c;--olt:#fff7ed;
-  --r:12px;--rs:8px;
-  --sh:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.04);
-  --sh2:0 4px 12px rgba(0,0,0,.08),0 16px 40px rgba(0,0,0,.06);
+  --bg:#f0f2f5;--sf:#fff;--s2:#e8eaed;--bd:#d1d5db;--b2:#c0c4c9;
+  --ink:#1f2937;--k2:#4b5563;--k3:#9ca3af;
+  --blue:#3b82f6;--blu:#dbeafe;--blm:#93c5fd;
+  --teal:#0d9488;--tlt:#ccfbf1;--tmd:#5eead4;
+  --green:#10b981;--glt:#d1fae5;--gmd:#6ee7b7;
+  --amber:#f59e0b;--alt:#fef3c7;--amd:#fcd34d;
+  --red:#ef4444;--rlt:#fee2e2;--rdm:#fca5a5;
+  --violet:#8b5cf6;--vlt:#ede9fe;--vmd:#c4b5fd;
+  --orange:#f97316;--olt:#ffedd5;--omd:#fdba74;
+  --r:14px;--rs:10px;
+  --sh:0 2px 8px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.04);
+  --sh2:0 4px 16px rgba(0,0,0,.1),0 24px 48px rgba(0,0,0,.08);
   --f:'DM Sans',sans-serif;--m:'DM Mono',monospace;
 }
-html{font-size:14px}
-body{font-family:var(--f);background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+html{font-size:15px}
+body{font-family:var(--f);background:linear-gradient(135deg,#eef2f6 0%,#e0e5ec 100%);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
 
-header{background:var(--sf);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:100}
-.hdr{max-width:1440px;margin:0 auto;padding:0 24px;height:58px;display:flex;align-items:center;justify-content:space-between}
-.hl{display:flex;align-items:center;gap:12px}
-.logo{width:34px;height:34px;background:var(--blue);border-radius:9px;display:grid;place-items:center}
-.logo svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.ht{font-size:15px;font-weight:600;letter-spacing:-.01em}
-.hs{font-size:11px;color:var(--k3);margin-top:1px}
-.hr{display:flex;align-items:center;gap:8px}
-.pill{font-size:11px;font-weight:500;padding:4px 10px;border-radius:20px;border:1px solid var(--bd);color:var(--k3);white-space:nowrap}
-.pill.live{background:var(--glt);border-color:var(--gmd);color:var(--green)}
-.pill.live::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:5px;animation:blink 2s ease infinite;vertical-align:middle;margin-top:-1px}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+header{background:linear-gradient(180deg,#fff 0%,#f8fafc 100%);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:100;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.hdr{max-width:1500px;margin:0 auto;padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.hl{display:flex;align-items:center;gap:14px}
+.logo{width:40px;height:40px;background:linear-gradient(135deg,#3b82f6 0%,#1d4ed8 100%);border-radius:12px;display:grid;place-items:center;box-shadow:0 2px 8px rgba(59,130,246,.3)}
+.logo svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ht{font-size:17px;font-weight:600;letter-spacing:-.02em;background:linear-gradient(135deg,#1f2937 0%,#374151 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hs{font-size:11px;color:var(--k3);margin-top:2px}
+.hr{display:flex;align-items:center;gap:10px}
+.pill{font-size:11px;font-weight:500;padding:5px 12px;border-radius:20px;border:1px solid var(--bd);color:var(--k2);white-space:nowrap;transition:all .2s}
+.pill:hover{border-color:var(--blue);color:var(--blue)}
+.pill.live{background:linear-gradient(135deg,#d1fae5 0%,#a7f3d0 100%);border-color:var(--gmd);color:#047857}
+.pill.live::before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:#10b981;margin-right:6px;animation:blink 2s ease infinite;vertical-align:middle;margin-top:-1px}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.9)}}
 
-.page{max-width:1440px;margin:0 auto;padding:20px 24px 60px;display:grid;grid-template-columns:310px 1fr;gap:18px}
+.page{max-width:1500px;margin:0 auto;padding:24px 28px 80px;display:grid;grid-template-columns:320px 1fr;gap:20px}
 
-/* CARD */
-.card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;animation:fadeUp .4s ease both}
-.card+.card{margin-top:14px}
-.ch{padding:13px 18px 11px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:8px}
-.ch h2{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--k3)}
-.chi{width:20px;height:20px;border-radius:5px;display:grid;place-items:center;font-size:12px}
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+/* CARD - Enhanced */
+.card{background:linear-gradient(180deg,#fff 0%,#fafbfc 100%);border:1px solid #e5e7eb;border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;animation:fadeUp .4s ease both;transition:all .25s}
+.card:hover{box-shadow:var(--sh2);transform:translateY(-2px)}
+.card+.card{margin-top:16px}
+.ch{padding:16px 20px 14px;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;gap:10px;background:linear-gradient(180deg,#fafbfc 0%,#fff 100%)}
+.ch h2{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--k3)}
+.chi{width:24px;height:24px;border-radius:8px;display:grid;place-items:center;font-size:13px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
 /* INPUTS */
-.ig{padding:0 18px 4px}
-.igt{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--k3);padding:12px 0 8px}
-.ir{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--bd);gap:10px}
+.ig{padding:0 20px 6px}
+.igt{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--k3);padding:14px 0 10px}
+.ir{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0f0f0;gap:12px;transition:background .15s}
+.ir:hover{background:linear-gradient(90deg,rgba(59,130,246,.02) 0%,transparent 100%)}
 .ir:last-child{border-bottom:none}
-.il strong{display:block;font-size:12px;font-weight:500;color:var(--ink);line-height:1.2}
+.il strong{display:block;font-size:13px;font-weight:500;color:var(--ink);line-height:1.3}
 .il span{font-size:11px;color:var(--k3)}
-.ic{display:flex;align-items:center;gap:5px;flex-shrink:0}
-input[type=number]{width:74px;padding:5px 8px;border:1.5px solid var(--b2);border-radius:var(--rs);font-family:var(--m);font-size:13px;font-weight:500;color:var(--blue);background:var(--blu);outline:none;text-align:right;transition:border-color .15s,box-shadow .15s;-moz-appearance:textfield}
+.ic{display:flex;align-items:center;gap:6px;flex-shrink:0}
+input[type=number]{width:80px;padding:8px 10px;border:1.5px solid #e5e7eb;border-radius:10px;font-family:var(--m);font-size:13px;font-weight:500;color:var(--blue);background:linear-gradient(180deg,#f8fafc 0%,#fff 100%);outline:none;text-align:right;transition:all .2s;-moz-appearance:textfield}
 input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
-input[type=number]:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
-.u{font-size:11px;font-weight:500;color:var(--k3);min-width:22px}
+input[type=number]:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(59,130,246,.12),0 2px 8px rgba(59,130,246,.1)}
+.u{font-size:11px;font-weight:500;color:var(--k3);min-width:24px}
 
-.sw{padding:2px 0 8px}
-input[type=range]{-webkit-appearance:none;width:100%;height:4px;background:var(--b2);border-radius:2px;outline:none;cursor:pointer}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--blue);border:2.5px solid white;box-shadow:0 1px 4px rgba(37,99,235,.3);cursor:pointer;transition:transform .15s}
+.sw{padding:4px 0 10px}
+input[type=range]{-webkit-appearance:none;width:100%;height:6px;background:linear-gradient(90deg,#e5e7eb 0%,#d1d5db 100%);border-radius:3px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#3b82f6 0%,#1d4ed8 100%);border:3px solid white;box-shadow:0 2px 8px rgba(59,130,246,.4);cursor:pointer;transition:transform .15s}
 input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}
 
 /* TOGGLE */
-.tw{display:flex;align-items:center;gap:8px}
-.tog{position:relative;width:38px;height:22px;flex-shrink:0;cursor:pointer}
+.tw{display:flex;align-items:center;gap:10px}
+.tog{position:relative;width:44px;height:26px;flex-shrink:0;cursor:pointer}
 .tog input{opacity:0;width:0;height:0;position:absolute}
-.tt{position:absolute;inset:0;background:var(--b2);border-radius:11px;transition:background .2s}
-.tb{position:absolute;width:16px;height:16px;background:white;border-radius:50%;top:3px;left:3px;box-shadow:0 1px 3px rgba(0,0,0,.15);transition:transform .2s}
-.tog input:checked~.tt{background:var(--green)}
-.tog input:checked~.tb{transform:translateX(16px)}
+.tt{position:absolute;inset:0;background:linear-gradient(180deg,#d1d5db 0%,#c0c4c9 100%);border-radius:13px;transition:all .25s}
+.tb{position:absolute;width:20px;height:20px;background:white;border-radius:50%;top:3px;left:3px;box-shadow:0 2px 6px rgba(0,0,0,.15);transition:transform .25s}
+.tog input:checked~.tt{background:linear-gradient(180deg,#10b981 0%,#059669 100%)}
+.tog input:checked~.tb{transform:translateX(18px)}
 .tl{font-size:12px;font-weight:500;color:var(--k2)}
 
 /* SCALE */
-.sg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:12px 18px 4px}
+.sg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:14px 20px 6px}
 .si{background:var(--s2);border-radius:var(--rs);padding:9px 10px;text-align:center}
 .si-l{font-size:10px;color:var(--k3);font-weight:500;margin-bottom:3px}
 .si-v{font-family:var(--m);font-size:15px;font-weight:500;color:var(--blue)}
@@ -291,6 +294,8 @@ footer{background:var(--sf);border-top:1px solid var(--bd);padding:10px 24px;dis
           <div class="il"><strong>HCl Production Target</strong><span>Max unit capacity: 24 T/j</span></div>
           <div class="ic"><input type="number" id="hcl-t" value="23" min="0" max="24" step="0.5"><span class="u">T/j</span></div>
         </div>
+        <div class="sw" id="hcl-target-slider" style="display:none;padding:2px 18px 8px">
+          <input type="range" id="hcl-t-s" min="0" max="24" step="0.5" value="23"></div>
         <div class="ir" style="padding-bottom:12px">
           <div class="tw">
           </div>
@@ -341,18 +346,20 @@ footer{background:var(--sf);border-top:1px solid var(--bd);padding:10px 24px;dis
         <div class="ksb" id="scl2">9.98 MTPD</div>
         <div class="ki">⚗️</div>
       </div>
-      <div class="kpi" style="--kc:var(--orange);--kb:var(--olt)">
-        <div class="kl">Cl₂ → HCl Unit</div>
-        <div class="kv" id="khcl">—</div>
-        <div class="ku">kg / hour</div>
-        <div class="ksb" id="shcl">Unit is off</div>
-        <div class="ki">🏭</div>
-      </div>
+<div class="kpi" style="--kc:var(--orange);--kb:var(--olt)">
+          <div class="kl">Cl₂ → HCl Unit</div>
+          <div class="kv" id="khcl">—</div>
+          <div class="ku">kg / hour</div>
+          <div class="ksb" id="shcl">Unit is off</div>
+          <div class="ksb" id="shcl-m3" style="display:none">m³/h · m³/day</div>
+          <div class="ki">🏭</div>
+        </div>
       <div class="kpi" style="--kc:var(--violet);--kb:var(--vlt)">
         <div class="kl">Caustic Soda NaOH</div>
         <div class="kv" id="knaoh">468</div>
         <div class="ku">kg / hour (dry)</div>
         <div class="ksb" id="snaoh">11.24 MTPD</div>
+        <div class="ksb" id="snaoh-m3">m³/h · m³/day</div>
         <div class="ki">🧊</div>
       </div>
       <div class="kpi" style="--kc:var(--amber);--kb:var(--alt)">
@@ -488,7 +495,7 @@ footer{background:var(--sf);border-top:1px solid var(--bd);padding:10px 24px;dis
               <div><div class="bh"><span class="bl-l">Produced by electrolyzer</span><span class="bl-n" id="bnp">468</span></div><div class="bt"><div class="bf" id="bbp" style="background:var(--violet);opacity:.7"></div></div></div>
               <div><div class="bh"><span class="bl-l">Consumed by hypo reaction</span><span class="bl-n" id="bnr">468</span></div><div class="bt"><div class="bf" id="bbr" style="background:var(--blue);opacity:.7"></div></div></div>
               <div><div class="bh"><span class="bl-l">HGW for NaOH dilution</span><span class="bl-n" id="bnh">1002</span></div><div class="bt"><div class="bf" id="bbh" style="background:var(--teal);opacity:.7"></div></div></div>
-              <div><div class="bh"><span class="bl-l">Net NaOH for sale/storage</span><span class="bl-n" id="bnn" style="color:var(--green)">~0</span></div><div class="bt"><div class="bf" id="bbn" style="background:var(--green)"></div></div></div>
+              <div><div class="bh"><span class="bl-l">Net NaOH for sale/storage</span><span class="bl-n" id="bnn" style="color:var(--green)">~0</span></div><div class="bh"><span class="bl-n" id="bnn-m3" style="font-size:10px;color:var(--k3)">0 m³/h · 0 m³/day</span></div><div class="bt"><div class="bf" id="bbn" style="background:var(--green)"></div></div></div>
             </div>
           </div>
         </div>
@@ -558,6 +565,10 @@ const DMW_PER_NM3  = 760/110;      // DMW L per NM³ Cl₂ = 6.909 (constant fro
 const HCL_TJ_PER_NM3 = 24/110;    // HCl T/j per NM³/hr Cl₂ = 0.2182 (constant)
 // efficiency ~89.3% built into table already
 
+// ══ Solution densities (kg/m³) ══
+const HCL32_DENSITY = 1160;        // HCl 32% solution density ~1.16 g/cm³
+const NAOH32_DENSITY = 1350;       // NaOH 32% solution density ~1.35 g/cm³
+
 const NUBERG_TABLE = [
   {cl2_nm3:55,  h2_nm3:61,  dmw:380, hcl_tj:12},
   {cl2_nm3:68,  h2_nm3:76,  dmw:475, hcl_tj:15},
@@ -597,16 +608,17 @@ function buildNubergTable(cl2NM3Available) {
 }
 
 // ══ Sync sliders ══
-[['cur','cur-s'],['cel','cel-s'],['con','con-s']].forEach(([a,b])=>{
+[['cur','cur-s'],['cel','cel-s'],['con','con-s'],['hcl-t','hcl-t-s']].forEach(([a,b])=>{
   $(a).addEventListener('input',()=>{$(b).value=$(a).value;calc()});
   $(b).addEventListener('input',()=>{$(a).value=$(b).value;calc()});
 });
-['ce','dil','exs','hcl-t'].forEach(id=>{
+['ce','dil','exs'].forEach(id=>{
   const el=$(id); if(el) el.addEventListener('input',calc);
 });
 $('hcl').addEventListener('change',function(){
   $('hcl-l').textContent=this.checked?'On':'Off';
   $('hcl-target-row').style.display=this.checked?'flex':'none';
+  $('hcl-target-slider').style.display=this.checked?'block':'none';
   $('hcl-panel').classList.toggle('show',this.checked);
   $('fn-hcl').style.display=this.checked?'block':'none';
   calc();
@@ -692,13 +704,23 @@ function calc(){
   if(hclOn && cl2_to_hcl_kg > 0){
     fv('khcl', fmt(cl2_to_hcl_kg,1));
     $('shcl').textContent = fmt(hcl_tj_actual,1)+' T/j → U-8101';
+    // HCl volume
+    const hcl_m3h = hcl_kgh_32 / HCL32_DENSITY;
+    const hcl_m3d = hcl_m3h * 24;
+    $('shcl-m3').style.display = 'block';
+    $('shcl-m3').textContent = fmt(hcl_m3h,2)+' m³/h · '+fmt(hcl_m3d,2)+' m³/day';
   } else {
     $('khcl').textContent='—';
     $('shcl').textContent='Unit is off';
+    $('shcl-m3').style.display = 'none';
   }
 
   fv('knaoh', fmt0(naoh_kgh));
   $('snaoh').textContent = fmt(naoh_kgh*24/1000,2)+' MTPD';
+  // NaOH volume
+  const naoh_m3h = naoh32 / NAOH32_DENSITY;
+  const naoh_m3d = naoh_m3h * 24;
+  $('snaoh-m3').textContent = fmt(naoh_m3h,2)+' m³/h · '+fmt(naoh_m3d,2)+' m³/day';
 
   fv('kh2', fmt(h2_kgh,1));
   $('sh2').textContent = fmt(h2_kgh*24/1000,3)+' MTPD';
@@ -763,6 +785,12 @@ function calc(){
   const ne=$('bnn');
   ne.textContent=fmt(naoh_net,1)+' kg/h';
   ne.style.color=naoh_net>5?'var(--green)':naoh_net<-5?'var(--red)':'var(--amber)';
+  // Net NaOH volume
+  const naoh_net_m3h = naoh_net > 0 ? (naoh_net / 0.32) / NAOH32_DENSITY : 0;
+  const naoh_net_m3d = naoh_net_m3h * 24;
+  $('bnn-m3').textContent = naoh_net > 0 
+    ? fmt(naoh_net_m3h,2)+' m³/h · '+fmt(naoh_net_m3d,2)+' m³/day' 
+    : '—';
 
   // ── Footer ──
   $('ftce').textContent=(CE*100).toFixed(1);
