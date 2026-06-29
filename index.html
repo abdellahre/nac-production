@@ -8,29 +8,94 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#f0f2f5;--sf:#fff;--s2:#e8eaed;--bd:#d1d5db;--b2:#c0c4c9;
-  --ink:#1f2937;--k2:#4b5563;--k3:#9ca3af;
-  --blue:#3b82f6;--blu:#dbeafe;--blm:#93c5fd;
-  --teal:#0d9488;--tlt:#ccfbf1;
-  --green:#10b981;--glt:#d1fae5;--gmd:#6ee7b7;
-  --amber:#f59e0b;--alt:#fef3c7;
-  --red:#ef4444;--rlt:#fee2e2;
-  --violet:#8b5cf6;--vlt:#ede9fe;
-  --orange:#f97316;--olt:#ffedd5;
+  --bg:#eef2f7;--bg2:#d5dce6;
+  --sf:rgba(255,255,255,0.70);--s2:rgba(255,255,255,0.50);
+  --bd:rgba(255,255,255,0.80);--b2:rgba(0,0,0,0.06);
+  --ink:#1a1a2e;--k2:#4b5563;--k3:#94a3b8;
+  --blue:#3b82f6;--blu:rgba(59,130,246,0.10);--blm:#93c5fd;
+  --teal:#0d9488;--tlt:rgba(13,148,136,0.10);
+  --green:#10b981;--glt:rgba(16,185,129,0.10);--gmd:#6ee7b7;
+  --amber:#f59e0b;--alt:rgba(245,158,11,0.10);
+  --red:#ef4444;--rlt:rgba(239,68,68,0.10);
+  --violet:#8b5cf6;--vlt:rgba(139,92,246,0.10);
+  --orange:#f97316;--olt:rgba(249,115,22,0.10);
+  --pink:#ef9a9a;--plt:rgba(239,154,154,0.10);
+  --sh:0 4px 16px rgba(0,0,0,.04),0 1px 3px rgba(0,0,0,.02);
+  --sh-lg:0 8px 32px rgba(0,0,0,.06);
+  --gl-border:rgba(255,255,255,0.80);--gl-bg:rgba(255,255,255,0.70);
+  --hcl-bg:rgba(255,247,237,.9);--hcl-bd:#fed7aa;
+  --hcl-surface:rgba(255,255,255,.85);--hcl-track:#fde68a;--hcl-text:#9a3412;
+  --nub-bg:rgba(255,247,237,.7);--nub-bd:#fef3c7;--nub-row:#fffbeb;--nub-over:#fef2f2;
+  --pill-live:#047857;--warn-bg:#fee2e2;--warn-bd:#fecaca;--oc-bg:#ffedd5;--oc-bd:#fed7aa;
+  --naoh:#ff8a65;--cl2:#aed581;--h2:#fff176;--hcl:#b39ddb;--hypo:#ef9a9a;--brine:#4fc3f7;
 }
 [data-theme="dark"]{
-  --bg:#0f172a;--sf:#1e293b;--s2:#334155;--bd:#475569;--b2:#64748b;
-  --ink:#f1f5f9;--k2:#cbd5e1;--k3:#94a3b8;
-  --blue:#60a5fa;--blu:#1e3a5f;
-  --green:#34d399;--glt:#064e3b;
-  --amber:#fbbf24;--alt:#451a03;
-  --red:#f87171;--rlt:#450a0a;
-  --violet:#a78bfa;--vlt:#2e1065;
-  --orange:#fb923c;--olt:#431407;
+  --bg:#080c18;--bg2:#0f172a;
+  --sf:rgba(255,255,255,0.07);--s2:rgba(255,255,255,0.04);
+  --bd:rgba(255,255,255,0.10);--b2:rgba(255,255,255,0.06);
+  --ink:#f1f5f9;--k2:#94a3b8;--k3:#64748b;
+  --blue:#60a5fa;--blu:rgba(96,165,250,0.12);
+  --teal:#2dd4bf;--tlt:rgba(45,212,191,0.10);
+  --green:#34d399;--glt:rgba(52,211,153,0.12);--gmd:#6ee7b7;
+  --amber:#fbbf24;--alt:rgba(251,191,36,0.12);
+  --red:#f87171;--rlt:rgba(248,113,113,0.12);
+  --violet:#a78bfa;--vlt:rgba(167,139,250,0.12);
+  --orange:#fb923c;--olt:rgba(251,146,60,0.12);
+  --pink:#fca5a5;--plt:rgba(252,165,165,0.12);
+  --sh:0 4px 24px rgba(0,0,0,.50),0 1px 4px rgba(0,0,0,.40);
+  --sh-lg:0 8px 48px rgba(0,0,0,.60);
+  --gl-border:rgba(255,255,255,0.10);--gl-bg:rgba(15,23,42,0.80);
+  --hcl-bg:rgba(45,27,0,.95);--hcl-bd:#78350f;
+  --hcl-surface:rgba(0,0,0,.55);--hcl-track:#78350f;--hcl-text:#fdba74;
+  --nub-bg:rgba(28,25,23,.85);--nub-bd:#44403c;--nub-row:#292524;--nub-over:#450a0a;
+  --pill-live:#6ee7b7;--warn-bg:#450a0a;--warn-bd:#7f1d1d;--oc-bg:#431407;--oc-bd:#78350f;
+  --naoh:#ff8a65;--cl2:#aed581;--h2:#fff176;--hcl:#b39ddb;--hypo:#ef9a9a;--brine:#4fc3f7;
 }
+
+[data-theme="dark"] .logo{background:linear-gradient(135deg,#1e40af,#1d4ed8)}
+[data-theme="dark"] .exp-btn{background:var(--blue);color:#fff}
+[data-theme="dark"] .exp-btn:hover{background:#3b82f6}
+[data-theme="dark"] input[type=number]{background:rgba(0,0,0,0.35);border-color:rgba(255,255,255,0.15);color:#93c5fd}
+[data-theme="dark"] input[type=number]:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(96,165,250,0.20)}
+[data-theme="dark"] input[type=range]{background:rgba(255,255,255,0.10)}
+[data-theme="dark"] input[type=range]::-webkit-slider-thumb{background:var(--blue);border-color:rgba(255,255,255,0.20)}
+[data-theme="dark"] .card{box-shadow:0 8px 32px rgba(0,0,0,.40),0 2px 8px rgba(0,0,0,.30)}
+[data-theme="dark"] .kpi{box-shadow:0 4px 16px rgba(0,0,0,.35),0 1px 3px rgba(0,0,0,.25)}
+[data-theme="dark"] .spark-canvas{background:rgba(0,0,0,0.25);border-radius:4px}
+[data-theme="dark"] .gauge-bg{stroke:rgba(255,255,255,0.08)}
+[data-theme="dark"] .str{background:rgba(96,165,250,0.10)}
+[data-theme="dark"] .stv{color:var(--blue)}
+[data-theme="dark"] thead th{background:rgba(255,255,255,0.03)}
+[data-theme="dark"] tbody tr.act{background:rgba(96,165,250,0.15)}
+[data-theme="dark"] .nuberg-table th{background:rgba(0,0,0,0.30)}
+[data-theme="dark"] .si{background:rgba(0,0,0,0.25)}
+[data-theme="dark"] .fd{background:rgba(0,0,0,0.20)}
+[data-theme="dark"] .fn{background:rgba(0,0,0,0.30)}
+[data-theme="dark"] footer{background:rgba(15,23,42,0.85)}
+[data-theme="dark"] .rxn{background:rgba(0,0,0,0.25)}
+[data-theme="dark"] .th-btn{background:rgba(15,23,42,0.70);border-color:rgba(255,255,255,0.10);color:#94a3b8}
+[data-theme="dark"] .th-btn:hover{background:rgba(96,165,250,0.15);border-color:var(--blue);color:var(--blue)}
+[data-theme="dark"] .hamburger{background:rgba(15,23,42,0.70);border-color:rgba(255,255,255,0.10)}
+[data-theme="dark"] .hamburger:hover{background:rgba(96,165,250,0.15);border-color:var(--blue);color:var(--blue)}
+[data-theme="dark"] ::-webkit-scrollbar{width:8px;height:8px}
+[data-theme="dark"] ::-webkit-scrollbar-track{background:#0f172a}
+[data-theme="dark"] ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.12);border-radius:4px}
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.20)}
 html{font-size:15px}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
-header{background:var(--sf);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:radial-gradient(ellipse at 50% 0%, var(--bg) 0%, var(--bg2) 100%);
+  color:var(--ink);min-height:100vh;background-attachment:fixed;
+  background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1.2' fill='%23000' fill-opacity='0.035'/%3E%3C/svg%3E")
+}
+[data-theme="dark"] body{
+  background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1.2' fill='%23fff' fill-opacity='0.025'/%3E%3C/svg%3E")
+}
+*,*::before,*::after{transition:background-color .25s,border-color .25s,box-shadow .25s,backdrop-filter .25s}
+header{
+  background:var(--gl-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:100;box-shadow:var(--sh)
+}
 .hdr{max-width:1500px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .hl{display:flex;align-items:center;gap:12px}
 .logo{width:36px;height:36px;background:linear-gradient(135deg,#3b82f6,#1d4ed8);border-radius:10px;display:grid;place-items:center}
@@ -38,139 +103,192 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);position:sticky;to
 .ht{font-size:16px;font-weight:600;color:var(--ink)}
 .hs{font-size:10px;color:var(--k3)}
 .hr{display:flex;align-items:center;gap:8px}
-.pill{font-size:10px;font-weight:500;padding:4px 10px;border-radius:20px;border:1px solid var(--bd);color:var(--k2)}
-.pill.live{background:var(--glt);border-color:var(--gmd);color:#047857}
-.pill.live::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:5px;animation:blink 2s infinite}
+.pill{
+  font-size:10px;font-weight:500;padding:4px 10px;border-radius:20px;
+  background:var(--gl-bg);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border:1px solid var(--bd);color:var(--k2)
+}
+.pill.live{color:var(--pill-live)}.pill.live::before{
+  content:'';display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--green);margin-right:5px;animation:blink 2s infinite
+}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
 .hactions{display:flex;align-items:center;gap:8px}
-.th-btn{background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:500;color:var(--k2);cursor:pointer;display:flex;align-items:center;gap:6px}
-.th-btn:hover{background:var(--blu);border-color:var(--blue);color:var(--blue)}
+.th-btn{
+  background:var(--gl-bg);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border:1px solid var(--bd);border-radius:10px;padding:6px 14px;font-size:12px;
+  font-weight:500;color:var(--k2);cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:var(--sh)
+}
+.th-btn:hover{background:var(--blu);border-color:var(--blue);color:var(--blue);transform:translateY(-1px)}
 .th-btn svg{width:14px;height:14px}
-.exp-btn{background:var(--blue);color:#fff;border:none}
-.exp-btn:hover{background:#2563eb}
-
+.exp-btn{background:var(--blue);color:#fff;border:none}.exp-btn:hover{background:#2563eb}
 .page{max-width:1500px;margin:0 auto;padding:20px;display:grid;grid-template-columns:300px 1fr;gap:16px}
 @media(max-width:1100px){.page{grid-template-columns:1fr}}
 @media(max-width:640px){.page{padding:12px}.pill{display:none}.hdr{padding:0 12px}}
-
 .left-panel,.right-panel{display:flex;flex-direction:column;gap:12px}
-
-.card{background:var(--sf);border:1px solid var(--bd);border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.card{
+  background:var(--gl-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid var(--bd);border-radius:16px;box-shadow:var(--sh-lg)
+}
 .card+card{margin-top:12px}
-.ch{padding:14px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:8px;background:var(--s2);border-radius:14px 14px 0 0}
+.ch{
+  padding:14px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:8px;
+  background:var(--s2);border-radius:16px 16px 0 0
+}
 .ch h2{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--k3)}
 .chi{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;font-size:12px}
-
 .ig{padding:0 16px 4px}
 .igt{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--k3);padding:12px 0 8px}
-.ir{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--bd);gap:8px}
+.ir{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--b2);gap:8px}
 .ir:last-child{border-bottom:none}
 .il strong{display:block;font-size:12px;font-weight:500;color:var(--ink)}
 .il span{font-size:10px;color:var(--k3)}
 .ic{display:flex;align-items:center;gap:4px}
-input[type=number]{width:70px;padding:6px 8px;border:1.5px solid var(--bd);border-radius:8px;font-family:'DM Mono',monospace;font-size:12px;color:var(--blue);background:var(--sf);outline:none;text-align:right}
+input[type=number]{
+  width:70px;padding:6px 8px;border:1.5px solid var(--bd);border-radius:10px;
+  font-family:'DM Mono',monospace;font-size:12px;color:var(--blue);
+  background:var(--gl-bg);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  outline:none;text-align:right
+}
 input[type=number]:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,130,246,.15)}
 .u{font-size:10px;color:var(--k3);min-width:20px}
 .sw{padding:2px 0 8px}
 input[type=range]{-webkit-appearance:none;width:100%;height:5px;background:var(--b2);border-radius:3px;cursor:pointer}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--blue);border:2.5px solid var(--sf)}
-
 .tw{display:flex;align-items:center;gap:8px}
-.tog-btn{background:var(--b2);border:none;border-radius:12px;width:44px;height:24px;cursor:pointer;position:relative;transition:background .2s}
+.tog-btn{
+  background:var(--b2);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  border:none;border-radius:12px;width:44px;height:24px;cursor:pointer;position:relative;transition:background .2s,border-color .2s
+}
 .tog-btn.on{background:var(--green)}
-.tog-btn::after{content:'';position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.tog-btn::after{
+  content:'';position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;
+  top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.15)
+}
 .tog-btn.on::after{transform:translateX(20px)}
 .tl{font-size:11px;font-weight:500;color:var(--k2)}
-
-.sg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:12px 16px 4px}
-.si{background:var(--s2);border-radius:10px;padding:8px;text-align:center}
-.si-l{font-size:10px;color:var(--k3)}
-.si-v{font-family:'DM Mono',monospace;font-size:14px;font-weight:600;color:var(--blue)}
-.str{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-top:1px solid var(--bd);background:var(--blu);border-radius:0 0 14px 14px}
+.sg{display:grid;grid-template-columns:1fr;gap:8px;padding:12px 16px 4px}
+.si{
+  background:var(--gl-bg);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  border:1px solid var(--bd);border-radius:10px;padding:10px;text-align:center
+}
+.si-l{font-size:9px;color:var(--k3);text-transform:uppercase;letter-spacing:.05em}
+.si-v{font-family:'DM Mono',monospace;font-size:22px;font-weight:700;color:var(--ink)}
+.si-v .pct{font-size:13px;font-weight:400;color:var(--k3)}
+.str{
+  display:flex;align-items:center;justify-content:space-between;padding:12px 16px;
+  border-top:1px solid var(--bd);background:var(--blu);border-radius:0 0 16px 16px
+}
 .stl{font-size:11px;font-weight:500;color:var(--k2)}
 .stf{font-size:9px;color:var(--k3);font-family:'DM Mono',monospace}
 .stv{font-family:'DM Mono',monospace;font-size:20px;font-weight:700;color:var(--blue)}
-.dv{height:1px;background:var(--bd)}
-
+.dv{height:1px;background:var(--b2)}
 .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
 @media(max-width:900px){.kpi-row{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:500px){.kpi-row{grid-template-columns:1fr 1fr}}
-.kpi{background:var(--sf);border:1px solid var(--bd);border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);padding:14px;position:relative}
-.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0;background:var(--kc,var(--blue))}
+.kpi{
+  background:var(--gl-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid var(--bd);border-radius:14px;box-shadow:var(--sh);padding:14px;position:relative
+}
+.kpi::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  border-radius:14px 14px 0 0;background:var(--kc,var(--blue))
+}
 .kl{font-size:10px;font-weight:500;color:var(--k3);margin-bottom:4px}
 .kv{font-size:22px;font-weight:300;color:var(--ink);line-height:1.1;margin-bottom:2px}
 .ku{font-size:10px;color:var(--k3)}
 .ksb{font-size:10px;color:var(--k3);margin-top:4px;font-family:'DM Mono',monospace}
 .ki{position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:6px;display:grid;place-items:center;font-size:14px;background:var(--kb,var(--blu))}
-
-.bar-chart{display:flex;align-items:flex-end;justify-content:space-around;height:130px;gap:8px;padding:10px 0}
+.bar-chart{display:flex;align-items:flex-end;justify-content:space-around;height:130px;gap:8px;padding:10px 0;position:relative}
+.bar-chart::before{content:'150 m³/d max';position:absolute;right:0;top:0;font-size:7px;color:var(--k3);border-top:1px dashed var(--b2);width:100%;padding-top:2px;text-align:right}
 .bar-item{display:flex;flex-direction:column;align-items:center;flex:1;max-width:60px}
-.bar{width:100%;border-radius:4px 4px 0 0;transition:height .3s}
+.bar{
+  width:100%;border-radius:4px 4px 0 0;transition:height .3s,background .3s;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),inset 0 -1px 0 rgba(0,0,0,.1)
+}
 .bar-label{font-size:9px;color:var(--k3);margin-top:4px}
 .bar-value{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;color:var(--ink)}
-
-.hcl-panel{background:var(--olt);border:1px solid #fed7aa;border-radius:14px;display:none}
+.hcl-panel{
+  background:var(--hcl-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid var(--hcl-bd);border-radius:14px;display:none
+}
 .hcl-panel.show{display:block}
-.hcl-head{background:#fff7ed;border-bottom:1px solid #fed7aa;padding:12px 16px;border-radius:14px 14px 0 0;display:flex;align-items:center;justify-content:space-between}
+.hcl-head{
+  background:var(--hcl-surface);border-bottom:1px solid var(--hcl-bd);
+  padding:12px 16px;border-radius:14px 14px 0 0;display:flex;align-items:center;justify-content:space-between
+}
 .hcl-title{display:flex;align-items:center;gap:8px}
 .hcl-title h3{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--orange)}
 .hcl-badge{font-size:10px;font-weight:600;padding:3px 8px;border-radius:8px;background:var(--orange);color:#fff}
 .hcl-body{padding:14px 16px}
 .hcl-kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
 @media(max-width:600px){.hcl-kpi{grid-template-columns:1fr 1fr}}
-.hcl-k{background:rgba(255,255,255,.7);border:1px solid #fed7aa;border-radius:10px;padding:8px 10px}
+.hcl-k{
+  background:var(--hcl-surface);border:1px solid var(--hcl-bd);border-radius:10px;padding:8px 10px
+}
 .hcl-k .lbl{font-size:9px;font-weight:600;text-transform:uppercase;color:var(--orange)}
 .hcl-k .val{font-family:'DM Mono',monospace;font-size:16px;font-weight:600;color:var(--orange)}
 .hcl-k .sub{font-size:9px;color:var(--k3)}
-.valve-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;padding:8px 10px;background:rgba(255,255,255,.6);border:1px solid #fed7aa;border-radius:10px}
+.valve-row{
+  display:flex;align-items:center;gap:10px;margin-bottom:8px;padding:8px 10px;
+  background:var(--hcl-surface);border:1px solid var(--hcl-bd);border-radius:10px
+}
 .valve-name{font-size:10px;font-weight:600;color:var(--orange);width:80px}
-.valve-bar-wrap{flex:1;height:10px;background:#fde68a;border-radius:5px;overflow:hidden}
+.valve-bar-wrap{flex:1;height:10px;background:var(--hcl-track);border-radius:5px;overflow:hidden}
 .valve-bar{height:100%;border-radius:5px;background:var(--orange);transition:width .5s}
 .valve-pct{font-family:'DM Mono',monospace;font-size:12px;font-weight:600;color:var(--orange);width:40px;text-align:right}
 .valve-note{font-size:9px;color:var(--k3);width:100px}
 .nuberg-table{width:100%;border-collapse:collapse;font-size:10px}
-.nuberg-table th{background:#fff7ed;padding:6px 8px;text-align:center;font-size:9px;font-weight:600;color:var(--orange);border-bottom:1px solid #fed7aa}
-.nuberg-table td{padding:4px 8px;text-align:center;border-bottom:1px solid #fef3c7;font-family:'DM Mono',monospace;font-size:10px;color:var(--k2)}
-.nuberg-table tr.current-row td{background:#fffbeb;color:var(--orange);font-weight:600}
-.nuberg-table tr.over-cap td{color:#ef4444;background:#fef2f2}
-
+.nuberg-table th{
+  background:var(--hcl-surface);padding:6px 8px;text-align:center;
+  font-size:9px;font-weight:600;color:var(--orange);border-bottom:1px solid var(--hcl-bd)
+}
+.nuberg-table td{padding:4px 8px;text-align:center;border-bottom:1px solid var(--nub-bd);font-family:'DM Mono',monospace;font-size:10px;color:var(--k2)}
+.nuberg-table tr.current-row td{background:var(--nub-row);color:var(--orange);font-weight:600}
+.nuberg-table tr.over-cap td{color:#ef4444;background:var(--nub-over)}
 .dg2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:600px){.dg2{grid-template-columns:1fr}}
-.fd{background:var(--s2);border-radius:10px;padding:12px}
+.fd{background:var(--gl-bg);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid var(--bd);border-radius:12px;padding:12px}
 .ftt{font-size:10px;font-weight:600;color:var(--k3);text-transform:uppercase;margin-bottom:8px}
 .ftrack{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
-.fn{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:6px 8px;text-align:center;flex-shrink:0}
+.fn{
+  background:var(--gl-bg);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  border:1px solid var(--bd);border-radius:10px;padding:6px 8px;text-align:center;flex-shrink:0
+}
 .fn-l{font-size:7px;font-weight:600;color:var(--k3);text-transform:uppercase}
 .fn-v{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--ink);margin-top:2px}
 .fn.bl{border-color:var(--blm);background:var(--blu)}.fn.bl .fn-v{color:var(--blue)}
 .fn.gr{border-color:var(--gmd);background:var(--glt)}.fn.gr .fn-v{color:var(--green)}
 .fn.am{border-color:#fde68a;background:var(--alt)}.fn.am .fn-v{color:var(--amber)}
-.fn.or{border-color:#fed7aa;background:var(--olt)}.fn.or .fn-v{color:var(--orange)}
+.fn.or{border-color:var(--hcl-bd);background:var(--olt)}.fn.or .fn-v{color:var(--orange)}
 .fn.vi{border-color:#ddd6fe;background:var(--vlt)}.fn.vi .fn-v{color:var(--violet)}
-
 .bl-list{display:flex;flex-direction:column;gap:8px}
 .bh{display:flex;justify-content:space-between}
 .bl-l{font-size:10px;color:var(--k2)}
 .bl-n{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--ink)}
 .bt{height:5px;background:var(--s2);border-radius:3px;overflow:hidden}
 .bf{height:100%;border-radius:3px;transition:width .5s}
-
 .tw2{overflow-x:auto;padding:0 16px 12px}
 table{width:100%;border-collapse:collapse}
-thead th{font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--k3);padding:8px 10px;text-align:right;background:var(--s2);border-bottom:1px solid var(--bd);white-space:nowrap}
+thead th{
+  font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--k3);padding:8px 10px;text-align:right;background:var(--s2);border-bottom:1px solid var(--bd);white-space:nowrap
+}
 thead th:first-child{text-align:left}
-tbody tr{border-bottom:1px solid var(--bd);cursor:pointer}
+tbody tr{border-bottom:1px solid var(--b2);cursor:pointer}
 tbody tr:hover{background:var(--s2)}
 tbody tr.act{background:var(--blu)}
 tbody tr.act td{color:var(--blue);font-weight:500}
 td{padding:6px 10px;text-align:right;font-size:10px;color:var(--k2);font-family:'DM Mono',monospace}
 td:first-child{text-align:left;font-family:'DM Sans',sans-serif;color:var(--ink)}
 .star{color:var(--blue)}
-
 .rg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 16px}
 @media(max-width:700px){.rg{grid-template-columns:1fr 1fr}}
 @media(max-width:400px){.rg{grid-template-columns:1fr}}
-.rxn{background:var(--s2);border-radius:10px;padding:8px 10px;border-left:3px solid var(--b2)}
+.rxn{
+  background:var(--gl-bg);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  border:1px solid var(--bd);border-radius:10px;padding:8px 10px;border-left:3px solid var(--b2)
+}
 .rxn.dng{background:var(--rlt);border-left-color:var(--red)}
 .rxn.hcl-rxn{background:var(--olt);border-left-color:var(--orange)}
 .rw{font-size:8px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--k3);margin-bottom:3px}
@@ -180,17 +298,53 @@ td:first-child{text-align:left;font-family:'DM Sans',sans-serif;color:var(--ink)
 .rxn.dng .re{color:var(--red)}
 .rxn.hcl-rxn .re{color:var(--orange)}
 .rn{font-size:9px;color:var(--k3);margin-top:2px;font-style:italic}
-
-.wb{display:none;align-items:center;gap:8px;padding:10px 12px;background:var(--rlt);border:1px solid #fecaca;border-radius:10px;font-size:11px;color:var(--red);font-weight:500}
+.wb{
+  display:none;align-items:center;gap:8px;padding:10px 12px;
+  background:var(--warn-bg);border:1px solid var(--warn-bd);border-radius:10px;font-size:11px;color:var(--red);font-weight:500
+}
 .wb.show{display:flex}
 .wb svg{width:14px;height:14px;stroke:var(--red);fill:none;stroke-width:2}
-.overcap-warn{display:none;padding:8px 10px;background:var(--olt);border:1px solid #fed7aa;border-radius:10px;font-size:10px;color:var(--orange);margin-top:8px}
+.overcap-warn{
+  display:none;padding:8px 10px;background:var(--oc-bg);
+  border:1px solid var(--oc-bd);border-radius:10px;font-size:10px;color:var(--orange);margin-top:8px
+}
 .overcap-warn.show{display:block}
-
-footer{background:var(--sf);border-top:1px solid var(--bd);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;font-size:10px;color:var(--k3);gap:12px;flex-wrap:wrap}
+footer{
+  background:var(--gl-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-top:1px solid var(--bd);padding:12px 20px;display:flex;align-items:center;
+  justify-content:space-between;font-size:10px;color:var(--k3);gap:12px;flex-wrap:wrap;box-shadow:var(--sh)
+}
 .fi{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .fi span::before{content:'·';margin-right:14px;color:var(--b2)}
 .fi span:first-child::before{display:none}
+.np{font-size:8px;color:var(--k3);font-family:'DM Mono',monospace;margin-top:1px}
+
+/* === Collapsible Panel === */
+.hamburger{background:var(--gl-bg);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--bd);border-radius:10px;padding:6px 10px;font-size:14px;color:var(--k2);cursor:pointer;box-shadow:var(--sh);line-height:1}
+.hamburger:hover{background:var(--blu);border-color:var(--blue);color:var(--blue)}
+.page.collapsed .left-panel{display:none}
+.page.collapsed{grid-template-columns:1fr}
+@media(min-width:1101px){.page.collapsed .right-panel .kpi-row .kpi{font-size:90%}}
+
+/* === Sparkline === */
+.spark-canvas{width:100%;height:28px;margin-top:3px;border-radius:4px;display:block}
+
+/* === Circular Gauge === */
+.gauge-wrap{text-align:center;padding:4px 0}
+.gauge-svg{width:130px;height:130px;display:block;margin:0 auto}
+.gauge-bg{fill:none;stroke:var(--b2);stroke-width:10}
+.gauge-arc{fill:none;stroke:var(--blue);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .6s ease}
+.gauge-text{font-family:'DM Mono',monospace;font-size:20px;font-weight:700;fill:var(--ink)}
+.gauge-label{font-size:8px;fill:var(--k3);font-family:'DM Sans',sans-serif}
+
+/* === Heatmap on scenario table === */
+td.heat-0{background:rgba(16,185,129,0.18)!important}
+td.heat-1{background:rgba(16,185,129,0.10)!important}
+td.heat-2{background:transparent!important}
+td.heat-3{background:rgba(245,158,11,0.12)!important}
+td.heat-4{background:rgba(239,68,68,0.15)!important}
+td.heat-5{background:rgba(239,68,68,0.25)!important}
+tr.act td.heat-0,tr.act td.heat-1,tr.act td.heat-2,tr.act td.heat-3,tr.act td.heat-4,tr.act td.heat-5{background:var(--blu)!important}
 </style>
 </head>
 <body>
@@ -202,13 +356,15 @@ footer{background:var(--sf);border-top:1px solid var(--bd);padding:12px 20px;dis
       <div><div class="ht">NAC Production Calculator</div><div class="hs">Chlor-Alkali Plant · Bouira, Algeria</div></div>
     </div>
     <div class="hr">
-      <span class="pill">Bluestar Electrolyzer</span>
+      <span class="pill">Bluestar NBZ-2.7</span>
       <span class="pill">U-8101 Nuberg HCl</span>
       <span class="pill live">Live</span>
     </div>
     <div class="hactions">
+      <button class="th-btn hamburger" id="hamburgerBtn" title="Toggle panel">☰</button>
+      <a href="stock.html" class="th-btn" style="text-decoration:none">📦 Stock</a>
       <button class="th-btn" id="themeBtn">Dark</button>
-      <button class="th-btn exp-btn" id="exportBtn">PDF</button>
+      <button class="th-btn exp-btn" id="exportBtn">Print</button>
     </div>
   </div>
 </header>
@@ -221,8 +377,8 @@ footer{background:var(--sf);border-top:1px solid var(--bd);padding:12px 20px;dis
         <div class="igt">Electrolyzer Settings</div>
         <div class="ir"><div class="il"><strong>Rectifier Current — I</strong><span>Max: 16.2 kA</span></div><div class="ic"><input type="number" id="cur" value="11" min="0" max="16.2" step="0.1"><span class="u">kA</span></div></div>
         <div class="sw"><input type="range" id="cur-s" min="0" max="16.2" step="0.1" value="11"></div>
-        <div class="ir"><div class="il"><strong>Active Cells — N</strong><span>Max: 48 cells</span></div><div class="ic"><input type="number" id="cel" value="31" min="1" max="48" step="1"><span class="u">cells</span></div></div>
-        <div class="sw"><input type="range" id="cel-s" min="1" max="48" step="1" value="31"></div>
+        <div class="ir"><div class="il"><strong>Active Cells — N</strong><span>Max: 48 cells</span></div><div class="ic"><input type="number" id="cel" value="32" min="1" max="48" step="1"><span class="u">cells</span></div></div>
+        <div class="sw"><input type="range" id="cel-s" min="1" max="48" step="1" value="32"></div>
         <div class="ir"><div class="il"><strong>Current Efficiency — CE</strong><span>New 95.5% · End 92%</span></div><div class="ic"><input type="number" id="ce" value="96" min="85" max="100" step="0.5"><span class="u">%</span></div></div>
       </div>
       <div class="dv"></div>
@@ -232,6 +388,19 @@ footer{background:var(--sf);border-top:1px solid var(--bd);padding:12px 20px;dis
         <div class="sw"><input type="range" id="con-s" min="100" max="180" step="1" value="132"></div>
         <div class="ir"><div class="il"><strong>NaOH Dilution to Columns</strong><span>Keep below 22%</span></div><div class="ic"><input type="number" id="dil" value="19" min="15" max="22" step="0.5"><span class="u">%</span></div></div>
         <div class="ir"><div class="il"><strong>Caustic Excess in Product</strong><span>2–4 g/L</span></div><div class="ic"><input type="number" id="exs" value="3" min="0" max="8" step="0.5"><span class="u">g/L</span></div></div>
+      </div>
+      <div class="dv"></div>
+      <div class="ig">
+        <div class="igt">NBZ-2.7 Flow Design</div>
+        <div class="ir"><div class="il"><strong>Brine Inlet Conc.</strong><span>Saturated brine</span></div><div class="ic"><input type="number" id="brine-in" value="300" min="200" max="320" step="5"><span class="u">g/L</span></div></div>
+        <div class="ir"><div class="il"><strong>Spent Brine Conc.</strong><span>After electrolysis</span></div><div class="ic"><input type="number" id="brine-out" value="210" min="150" max="300" step="5"><span class="u">g/L</span></div></div>
+        <div class="ir"><div class="il"><strong>Cell Area — A<sub>cell</sub></strong><span>NBZ-2.7 spec</span></div><div class="ic"><input type="number" id="cell-area" value="2.7" min="1" max="5" step="0.1"><span class="u">m²</span></div></div>
+        <div class="ir"><div class="il"><strong>Brine Flow / Cell</strong><span>Manufacturer ref</span></div><div class="ic"><input type="number" id="brine-q" value="5.0" min="1" max="15" step="0.1"><span class="u">L/min</span></div></div>
+        <div class="ir"><div class="il"><strong>Catholyte Flow / Cell</strong><span>Manufacturer ref</span></div><div class="ic"><input type="number" id="cat-q" value="6.0" min="1" max="15" step="0.1"><span class="u">L/min</span></div></div>
+        <div class="ir"><div class="il"><strong>Cell Voltage — V<sub>cell</sub></strong><span>NBZ-2.7 ≤2.96V</span></div><div class="ic"><input type="number" id="vcell" value="2.96" min="2.0" max="4.0" step="0.01"><span class="u">V</span></div></div>
+        <div class="sw"><input type="range" id="vcell-s" min="2.0" max="4.0" step="0.01" value="2.96"></div>
+        <div class="ir"><div class="il"><strong>Catholyte ΔT</strong><span>Temp rise across cell</span></div><div class="ic"><input type="number" id="cat-dt" value="6" min="1" max="15" step="0.5"><span class="u">°C</span></div></div>
+        <div class="sw"><input type="range" id="cat-dt-s" min="1" max="15" step="0.5" value="6"></div>
       </div>
       <div class="dv"></div>
       <div class="ig">
@@ -247,15 +416,19 @@ footer{background:var(--sf);border-top:1px solid var(--bd);padding:12px 20px;dis
       </div>
     </div>
     <div class="card">
-      <div class="ch"><div class="chi" style="background:var(--blu)">⚖️</div><h2>Scaling Factors</h2></div>
-      <div class="sg">
-        <div class="si"><div class="si-l">Current ratio</div><div class="si-v" id="ri">1.000</div></div>
-        <div class="si"><div class="si-l">Cell ratio</div><div class="si-v" id="rn">1.000</div></div>
-        <div class="si"><div class="si-l">CE ratio</div><div class="si-v" id="rc">1.000</div></div>
+      <div class="ch"><div class="chi" style="background:var(--blu)">⚖️</div><h2>Capacity Utilization</h2></div>
+      <div class="gauge-wrap">
+        <svg class="gauge-svg" viewBox="0 0 130 130">
+          <circle class="gauge-bg" cx="65" cy="65" r="50"/>
+          <circle class="gauge-arc" id="gauge-arc" cx="65" cy="65" r="50" transform="rotate(-90 65 65)"
+            stroke-dasharray="314.16" stroke-dashoffset="314.16"/>
+          <text class="gauge-text" id="gauge-text" x="65" y="62" text-anchor="middle">—</text>
+          <text class="gauge-label" x="65" y="78" text-anchor="middle">of 15 MTPD</text>
+        </svg>
       </div>
       <div class="str">
-        <div><div class="stl">Combined scale factor</div><div class="stf">Cl₂ × (I/11) × (N/31) × (CE/0.96)</div></div>
-        <div class="stv" id="sc">1.000</div>
+        <div><div class="stl">Status</div><div class="stf" id="util-status">Set current & cells</div></div>
+        <div class="stv" id="util-label">—</div>
       </div>
     </div>
   </div>
@@ -264,25 +437,33 @@ footer{background:var(--sf);border-top:1px solid var(--bd);padding:12px 20px;dis
     <div class="wb" id="wb"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span id="wt"></span></div>
 
     <div class="kpi-row">
-      <div class="kpi" style="--kc:var(--green);--kb:var(--glt)"><div class="kl">NaOCl Solution</div><div class="kv" id="knaocl">3,149</div><div class="ku">L / hour</div><div class="ksb" id="snaocl">75.6 m³/day</div><div class="ki">🧪</div></div>
-      <div class="kpi" style="--kc:var(--blue);--kb:var(--blu)"><div class="kl">Total Cl₂ Produced</div><div class="kv" id="kcl2">415.7</div><div class="ku">kg / hour</div><div class="ksb" id="scl2">9.98 MTPD</div><div class="ki">⚗️</div></div>
-      <div class="kpi" style="--kc:var(--orange);--kb:var(--olt)"><div class="kl">Cl₂ → HCl Unit</div><div class="kv" id="khcl">—</div><div class="ku">kg / hour</div><div class="ksb" id="shcl">Unit is off</div><div class="ksb" id="shcl-m3" style="display:none"></div><div class="ki">🏭</div></div>
-      <div class="kpi" style="--kc:var(--violet);--kb:var(--vlt)"><div class="kl">Caustic Soda NaOH</div><div class="kv" id="knaoh">468</div><div class="ku">kg / hour</div><div class="ksb" id="snaoh">11.24 MTPD</div><div class="ksb" id="snaoh-m3">m³/h · m³/day</div><div class="ki">🧊</div></div>
-      <div class="kpi" style="--kc:var(--amber);--kb:var(--alt)"><div class="kl">Hydrogen H₂</div><div class="kv" id="kh2">11.7</div><div class="ku">kg / hour</div><div class="ksb" id="sh2">0.281 MTPD</div><div class="ki">💨</div></div>
+      <div class="kpi" style="--kc:var(--hypo);--kb:var(--plt)"><div class="kl">NaOCl Solution</div><div class="kv" id="knaocl">—</div><div class="ku">L / hour</div><div class="ksb" id="snaocl"></div><div class="ki">🧪</div><canvas class="spark-canvas" data-spark="naocl" width="200" height="30"></canvas></div>
+      <div class="kpi" style="--kc:var(--cl2);--kb:var(--glt)"><div class="kl">Total Cl₂ Produced</div><div class="kv" id="kcl2">—</div><div class="ku">kg / hour</div><div class="ksb" id="scl2"></div><div class="ki">⚗️</div><canvas class="spark-canvas" data-spark="cl2" width="200" height="30"></canvas></div>
+      <div class="kpi" style="--kc:var(--orange);--kb:var(--olt)"><div class="kl">Cl₂ → HCl Unit</div><div class="kv" id="khcl">—</div><div class="ku">kg / hour</div><div class="ksb" id="shcl">Unit is off</div><div class="ksb" id="shcl-m3" style="display:none"></div><div class="ki">🏭</div><canvas class="spark-canvas" data-spark="hcl" width="200" height="30"></canvas></div>
+      <div class="kpi" style="--kc:var(--naoh);--kb:var(--olt)"><div class="kl">Caustic Soda NaOH</div><div class="kv" id="knaoh">—</div><div class="ku">kg / hour</div><div class="ksb" id="snaoh"></div><div class="ksb" id="snaoh-m3"></div><div class="ki">🧊</div><canvas class="spark-canvas" data-spark="naoh" width="200" height="30"></canvas></div>
+      <div class="kpi" style="--kc:var(--h2);--kb:var(--alt)"><div class="kl">Hydrogen H₂</div><div class="kv" id="kh2">—</div><div class="ku">kg / hour</div><div class="ksb" id="sh2"></div><div class="ki">💨</div><canvas class="spark-canvas" data-spark="h2" width="200" height="30"></canvas></div>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi" style="--kc:var(--brine);--kb:var(--tlt)"><div class="kl">Brine Feed (Anolyte)</div><div class="kv" id="kbrine">—</div><div class="ku">m³ / hour</div><div class="ksb" id="sbrine">per cell: — L/min</div><div class="ki">🌊</div><canvas class="spark-canvas" data-spark="brine" width="200" height="30"></canvas></div>
+      <div class="kpi" style="--kc:#6366f1;--kb:rgba(99,102,241,.10)"><div class="kl">Catholyte Recirc.</div><div class="kv" id="kcat">—</div><div class="ku">m³ / hour</div><div class="ksb" id="scat">per cell: — L/min</div><div class="ki">♻️</div><canvas class="spark-canvas" data-spark="cat" width="200" height="30"></canvas></div>
+      <div class="kpi" style="--kc:#ec4899;--kb:rgba(236,72,153,.10)"><div class="kl">Current Density</div><div class="kv" id="kj">—</div><div class="ku">kA / m²</div><div class="ksb" id="sj"></div><div class="ki">📐</div><canvas class="spark-canvas" data-spark="j" width="200" height="30"></canvas></div>
+      <div class="kpi" style="--kc:#14b8a6;--kb:rgba(20,184,166,.10)"><div class="kl">NaOH / Cell</div><div class="kv" id="knaoh-c">—</div><div class="ku">kg / hour</div><div class="ksb" id="snaoh-c">Faraday: — g/A·h</div><div class="ki">⚛️</div><canvas class="spark-canvas" data-spark="naoh_cell" width="200" height="30"></canvas></div>
+      <div class="kpi" style="--kc:#f59e0b;--kb:rgba(245,158,11,.10)"><div class="kl">Cell Voltage</div><div class="kv" id="kvcell">—</div><div class="ku">V</div><div class="ksb" id="svcell"></div><div class="ki">⚡</div><canvas class="spark-canvas" data-spark="vcell" width="200" height="30"></canvas></div>
     </div>
 
     <div class="card">
       <div class="ch"><div class="chi" style="background:var(--tlt)">📊</div><h2>Production Volume (m³/day)</h2></div>
       <div style="padding:16px">
         <div class="bar-chart">
-          <div class="bar-item"><div class="bar" style="background:var(--green);height:80px" id="bar-naocl"></div><div class="bar-label">NaOCl</div><div class="bar-value" id="bar-naocl-v">3.15</div><div style="font-size:8px;color:var(--k3)">m³/h</div></div>
-          <div class="bar-item"><div class="bar" style="background:var(--orange);height:60px" id="bar-hcl"></div><div class="bar-label">HCl 32%</div><div class="bar-value" id="bar-hcl-v">0.83</div><div style="font-size:8px;color:var(--k3)">m³/h</div></div>
-          <div class="bar-item"><div class="bar" style="background:var(--violet);height:70px" id="bar-naoh"></div><div class="bar-label">NaOH Net</div><div class="bar-value" id="bar-naoh-v">1.08</div><div style="font-size:8px;color:var(--k3)">m³/h</div></div>
+          <div class="bar-item"><div class="bar" style="background:var(--hypo);height:80px" id="bar-naocl"></div><div class="bar-label">NaOCl</div><div class="bar-value" id="bar-naocl-v">—</div><div style="font-size:8px;color:var(--k3)">m³/h</div></div>
+          <div class="bar-item"><div class="bar" style="background:var(--hcl);height:60px" id="bar-hcl"></div><div class="bar-label">HCl 32%</div><div class="bar-value" id="bar-hcl-v">—</div><div style="font-size:8px;color:var(--k3)">m³/h</div></div>
+          <div class="bar-item"><div class="bar" style="background:var(--naoh);height:70px" id="bar-naoh"></div><div class="bar-label">NaOH Net</div><div class="bar-value" id="bar-naoh-v">—</div><div style="font-size:8px;color:var(--k3)">m³/h</div></div>
         </div>
         <div style="display:flex;justify-content:center;gap:20px;margin-top:12px;flex-wrap:wrap;align-items:center">
-          <div style="text-align:center;min-width:70px"><div style="font-size:10px;color:var(--k3)">NaOCl</div><div style="font-family:'DM Mono',monospace;font-size:13px;font-weight:600;color:var(--green)" id="naocl-total">75.6 m³/d</div></div>
-          <div style="text-align:center;min-width:70px"><div style="font-size:10px;color:var(--k3)">HCl 32%</div><div style="font-family:'DM Mono',monospace;font-size:13px;font-weight:600;color:var(--orange)" id="hcl-total">— m³/d</div></div>
-          <div style="text-align:center;min-width:70px"><div style="font-size:10px;color:var(--k3)">NaOH Net</div><div style="font-family:'DM Mono',monospace;font-size:13px;font-weight:600;color:var(--violet)" id="naoh-total">26.0 m³/d</div></div>
+          <div style="text-align:center;min-width:70px"><div style="font-size:10px;color:var(--k3)">NaOCl</div><div style="font-family:'DM Mono',monospace;font-size:13px;font-weight:600;color:var(--hypo)" id="naocl-total">— m³/d</div></div>
+          <div style="text-align:center;min-width:70px"><div style="font-size:10px;color:var(--k3)">HCl 32%</div><div style="font-family:'DM Mono',monospace;font-size:13px;font-weight:600;color:var(--hcl)" id="hcl-total">— m³/d</div></div>
+          <div style="text-align:center;min-width:70px"><div style="font-size:10px;color:var(--k3)">NaOH Net</div><div style="font-family:'DM Mono',monospace;font-size:13px;font-weight:600;color:var(--naoh)" id="naoh-total">— m³/d</div></div>
         </div>
       </div>
     </div>
@@ -294,16 +475,16 @@ footer{background:var(--sf);border-top:1px solid var(--bd);padding:12px 20px;dis
       </div>
       <div class="hcl-body">
         <div class="hcl-kpi">
-          <div class="hcl-k"><div class="lbl">HCl 32% Output</div><div class="val" id="hk-hcl-tj">23.0</div><div class="sub">T/j</div></div>
-          <div class="hcl-k"><div class="lbl">HCl 32% Output</div><div class="val" id="hk-hcl-kgh">958</div><div class="sub">kg / hour</div></div>
-          <div class="hcl-k"><div class="lbl">DMW Consumption</div><div class="val" id="hk-dmw">760</div><div class="sub">L / hour</div></div>
-          <div class="hcl-k"><div class="lbl">Cl₂ → NaOCl</div><div class="val" id="hk-rem-cl2">67.0</div><div class="sub">kg/h → <span id="hk-rem-naocl">508</span> L/h</div></div>
+          <div class="hcl-k"><div class="lbl">HCl 32% Output</div><div class="val" id="hk-hcl-tj">—</div><div class="sub">T/j</div></div>
+          <div class="hcl-k"><div class="lbl">HCl 32% Output</div><div class="val" id="hk-hcl-kgh">—</div><div class="sub">kg / hour</div></div>
+          <div class="hcl-k"><div class="lbl">DMW Consumption</div><div class="val" id="hk-dmw">—</div><div class="sub">L / hour</div></div>
+          <div class="hcl-k"><div class="lbl">Cl₂ → NaOCl</div><div class="val" id="hk-rem-cl2">—</div><div class="sub">kg/h → <span id="hk-rem-naocl">—</span> L/h</div></div>
         </div>
         <div style="margin-bottom:8px">
           <div style="font-size:9px;font-weight:600;color:var(--orange);text-transform:uppercase;margin-bottom:6px">Valve Opening</div>
-          <div class="valve-row"><span class="valve-name">FV-Cl₂</span><div class="valve-bar-wrap"><div class="valve-bar" id="vbar-cl2"></div></div><span class="valve-pct" id="vpct-cl2">100%</span><span class="valve-note" id="vnote-cl2">110 NM³/hr max</span></div>
-          <div class="valve-row"><span class="valve-name">FV-H₂</span><div class="valve-bar-wrap"><div class="valve-bar" id="vbar-h2"></div></div><span class="valve-pct" id="vpct-h2">100%</span><span class="valve-note" id="vnote-h2">122 NM³/hr max</span></div>
-          <div class="valve-row" style="background:rgba(236,253,245,.6);border-color:var(--gmd)"><span class="valve-name" style="color:var(--green)">FV-Hypo</span><div class="valve-bar-wrap" style="background:var(--gmd)"><div class="valve-bar" id="vbar-hypo" style="background:var(--green)"></div></div><span class="valve-pct" id="vpct-hypo" style="color:var(--green)">0%</span><span class="valve-note" id="vnote-hypo">remainder</span></div>
+          <div class="valve-row"><span class="valve-name">FV-Cl₂</span><div class="valve-bar-wrap"><div class="valve-bar" id="vbar-cl2"></div></div><span class="valve-pct" id="vpct-cl2">—</span><span class="valve-note" id="vnote-cl2">—</span></div>
+          <div class="valve-row"><span class="valve-name">FV-H₂</span><div class="valve-bar-wrap"><div class="valve-bar" id="vbar-h2"></div></div><span class="valve-pct" id="vpct-h2">—</span><span class="valve-note" id="vnote-h2">—</span></div>
+          <div class="valve-row" style="background:rgba(236,253,245,.6);border-color:var(--gmd)"><span class="valve-name" style="color:var(--green)">FV-Hypo</span><div class="valve-bar-wrap" style="background:var(--gmd)"><div class="valve-bar" id="vbar-hypo" style="background:var(--green)"></div></div><span class="valve-pct" id="vpct-hypo" style="color:var(--green)">—</span><span class="valve-note" id="vnote-hypo">remainder</span></div>
         </div>
         <div class="overcap-warn" id="overcap-warn">⚠ Cl₂ available (<span id="oc-avail">0</span>) &lt; required (<span id="oc-req">0</span>)</div>
         <div style="margin-top:10px">
@@ -323,15 +504,15 @@ footer{background:var(--sf);border-top:1px solid var(--bd);padding:12px 20px;dis
             <div class="fd">
               <div class="ftt">Process stream</div>
               <div class="ftrack">
-                <div class="fn" style="border-color:#cffafe;background:var(--tlt)"><div class="fn-l">Brine</div><div class="fn-v">NaCl</div></div>
+                <div class="fn" style="border-color:var(--brine);background:var(--tlt)"><div class="fn-l">Brine</div><div class="fn-v">NaCl</div></div>
                 <span style="color:var(--k3)">→</span>
-                <div class="fn bl"><div class="fn-l">Electrolyzer</div><div class="fn-v" id="fe">11kA·31</div></div>
+                <div class="fn bl"><div class="fn-l">Electrolyzer</div><div class="fn-v" id="fe">—</div></div>
                 <span style="color:var(--k3)">→</span>
-                <div class="fn gr"><div class="fn-l">NaOCl</div><div class="fn-v" id="fno">3,149 L/h</div></div>
+                <div class="fn gr"><div class="fn-l">NaOCl</div><div class="fn-v" id="fno">—</div></div>
               </div>
               <div style="display:flex;gap:6px;padding-left:60px;margin-top:6px;flex-wrap:wrap">
-                <div class="fn vi"><div class="fn-l">NaOH 32%</div><div class="fn-v" id="fnh">1,463 kg/h</div></div>
-                <div class="fn am"><div class="fn-l">H₂</div><div class="fn-v" id="fnh2">11.7 kg/h</div></div>
+                <div class="fn vi"><div class="fn-l">NaOH 32%</div><div class="fn-v" id="fnh">—</div></div>
+                <div class="fn am"><div class="fn-l">H₂</div><div class="fn-v" id="fnh2">—</div></div>
                 <div class="fn or" id="fn-hcl" style="display:none"><div class="fn-l">→ HCl</div><div class="fn-v" id="fn-hcl-v">—</div></div>
               </div>
             </div>
@@ -339,20 +520,55 @@ footer{background:var(--sf);border-top:1px solid var(--bd);padding:12px 20px;dis
           <div>
             <div style="font-size:10px;font-weight:600;text-transform:uppercase;color:var(--k3);margin-bottom:8px">NaOH Balance (kg/h)</div>
             <div class="bl-list">
-              <div><div class="bh"><span class="bl-l">Produced</span><span class="bl-n" id="bnp">468</span></div><div class="bt"><div class="bf" id="bbp" style="background:var(--violet);opacity:.7"></div></div></div>
-              <div><div class="bh"><span class="bl-l">Consumed</span><span class="bl-n" id="bnr">468</span></div><div class="bt"><div class="bf" id="bbr" style="background:var(--blue);opacity:.7"></div></div></div>
-              <div><div class="bh"><span class="bl-l">HGW dilution</span><span class="bl-n" id="bnh">1,002</span></div><div class="bt"><div class="bf" id="bbh" style="background:var(--teal);opacity:.7"></div></div></div>
-              <div><div class="bh"><span class="bl-l">Net sale</span><span class="bl-n" id="bnn" style="color:var(--green)">~0</span></div><div class="bt"><div class="bf" id="bbn" style="background:var(--green)"></div></div></div>
+              <div><div class="bh"><span class="bl-l">Produced</span><span class="bl-n" id="bnp">—</span></div><div class="bt"><div class="bf" id="bbp" style="background:var(--naoh);opacity:.7"></div></div></div>
+              <div><div class="bh"><span class="bl-l">Consumed</span><span class="bl-n" id="bnr">—</span></div><div class="bt"><div class="bf" id="bbr" style="background:var(--blue);opacity:.7"></div></div></div>
+              <div><div class="bh"><span class="bl-l">HGW dilution</span><span class="bl-n" id="bnh">—</span></div><div class="bt"><div class="bf" id="bbh" style="background:var(--teal);opacity:.7"></div></div></div>
+              <div><div class="bh"><span class="bl-l">Net sale</span><span class="bl-n" id="bnn" style="color:var(--green)">—</span></div><div class="bt"><div class="bf" id="bbn" style="background:var(--green)"></div></div></div>
             </div>
-            <div style="font-size:9px;color:var(--k3);margin-top:6px" id="bnn-m3">— m³/h</div>
+            <div style="font-size:9px;color:var(--k3);margin-top:6px" id="bnn-m3">—</div>
           </div>
         </div>
       </div>
     </div>
 
     <div class="card">
+      <div class="ch"><div class="chi" style="background:rgba(8,145,178,.10)">📐</div><h2>NBZ-2.7 Flow Summary</h2></div>
+      <div style="padding:12px 16px">
+        <div class="dg2">
+          <div>
+            <div class="fd">
+              <div class="ftt">Brine (Anolyte) Flow</div>
+              <div class="bl-list">
+                <div><div class="bh"><span class="bl-l">Total brine feed</span><span class="bl-n" id="fb-total">— m³/h</span></div><div class="bt"><div class="bf" id="bb-brine" style="background:var(--brine)"></div></div></div>
+                <div><div class="bh"><span class="bl-l">Per cell</span><span class="bl-n" id="fb-cell">— L/min</span></div></div>
+                <div><div class="bh"><span class="bl-l">NaCl consumed</span><span class="bl-n" id="fb-nacl">— kg/h</span></div></div>
+                <div><div class="bh"><span class="bl-l">Spent brine out</span><span class="bl-n" id="fb-out">— g/L</span></div></div>
+                <div><div class="bh"><span class="bl-l">Water transport</span><span class="bl-n" id="fb-water">— kg/h</span></div></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="fd">
+              <div class="ftt">Catholyte (NaOH) Flow</div>
+              <div class="bl-list">
+                <div><div class="bh"><span class="bl-l">Total recirculation</span><span class="bl-n" id="fc-total">— m³/h</span></div><div class="bt"><div class="bf" id="bb-cat" style="background:#6366f1"></div></div></div>
+                <div><div class="bh"><span class="bl-l">Per cell</span><span class="bl-n" id="fc-cell">— L/min</span></div></div>
+                <div><div class="bh"><span class="bl-l">Heat generated</span><span class="bl-n" id="fc-heat">— kW</span></div></div>
+                <div><div class="bh"><span class="bl-l">Cell voltage</span><span class="bl-n" id="fc-voltage">2.96 V</span></div></div>
+                <div><div class="bh"><span class="bl-l">Current density</span><span class="bl-n" id="fc-j">— kA/m²</span></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:10px;padding:8px 10px;background:var(--s2);border-radius:10px;font-size:9px;color:var(--k3);line-height:1.5">
+          <strong>Formulas:</strong> j = I / A<sub>cell</sub> · Q<sub>brine</sub> = (NaCl − C<sub>out</sub>·W<sub>tr</sub>) / ΔC · m<sub>NaOH</sub> = N × I × 1.493 × CE
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
       <div class="ch"><div class="chi" style="background:var(--alt)">📋</div><h2>Scenario Table — click to apply</h2></div>
-      <div class="tw2"><table><thead><tr><th>kA</th><th>Cells</th><th>Scale</th><th>NaOH MTPD</th><th>Cl₂ kg/h</th><th>NaOCl L/h</th><th>H₂ kg/h</th></tr></thead><tbody id="sb"></tbody></table></div>
+      <div class="tw2"><table><thead><tr><th>kA</th><th>Cells</th><th>j kA/m²</th><th>Brine m³/h</th><th>Cat. m³/h</th><th>NaOH kg/h</th><th>Cl₂ kg/h</th></tr></thead><tbody id="sb"></tbody></table></div>
     </div>
 
     <div class="card">
@@ -373,12 +589,12 @@ footer{background:var(--sf);border-top:1px solid var(--bd);padding:12px 20px;dis
 </div>
 
 <footer>
-  <div class="fi"><span>Anchor: 11 kA · 31 cells → <strong id="ft-anchor">3,149 L/h NaOCl</strong></span><span>HCl: Nuberg EPC · Max 24 T/j</span><span>CE: <span id="ftce">96.0</span>%</span><span>Scale: <span id="ftsc">1.000</span></span><span style="font-family:'DM Mono',monospace" id="fttm">--:--:--</span></div>
+  <div class="fi"><span>Config: <strong id="ft-anki">11 kA · 32 cells</strong></span><span>Brine: <span id="ft-brine">—</span> m³/h</span><span>Cat.: <span id="ft-cat">—</span> m³/h</span><span>j: <span id="ft-j">—</span> kA/m²</span><span>CE: <span id="ftce">96.0</span>%</span><span style="font-family:'DM Mono',monospace" id="fttm">--:--:--</span></div>
   <div>NAC 4295-G-MAN-0001 · Nuberg EPC 9630</div>
 </footer>
 
 <script>
-const A_I=11, A_N=31, A_CE=0.96, A_CL2=415.68, A_NAOH=468.38;
+const P_NAOH=17, P_CL2=15, P_H2=0.5, P_HCL=23, P_NAOCL=150;
 const CL2_DENSITY = 71/22.4;
 const H2_DENSITY = 2/22.4;
 const HCL_UNIT_MAX_NM3 = 110;
@@ -413,31 +629,104 @@ if(localStorage.getItem('theme') === 'dark'){
   $('themeBtn').textContent = 'Light';
 }
 
-// Export PDF
+// Export Print
 $('exportBtn').onclick = function(){
   const I = +$('cur').value||0;
   const N = +$('cel').value||0;
   const CE = (+$('ce').value||0)/100;
   const conc = +$('con').value||132;
-  const sc = (I/A_I)*(N/A_N)*(CE/A_CE);
-  const cl2_kgh = A_CL2 * sc;
-  const naoh_kgh = A_NAOH * sc;
-  const h2_kgh = naoh_kgh * (2/80);
-  const naocl_lh = cl2_kgh * 1000 / conc;
+  const A_cell = +$('cell-area').value||2.7;
+  const brine_in = +$('brine-in').value||300;
+  const brine_out = +$('brine-out').value||210;
+  const V_cell = +$('vcell').value||2.96;
+  const cat_dt = +$('cat-dt').value||6;
+  const delta_conc = brine_in - brine_out;
+  const cl2_kgh = N * I * 1.324 * CE;
+  const naoh_kgh = N * I * 1.493 * CE;
+  const h2_kgh = N * I * 0.0376 * CE;
+  const naocl_lh = cl2_kgh * 1000 * (74.44/70.906) / conc;
+  const j = A_cell > 0 ? I / A_cell : 0;
+  const nacl_total_export = cl2_kgh * (116.88 / 71);
+  const wt_export = N * (I * 1000 / 96485) * 18.015 * 3 * 3.6;
+  const wdisp_export = wt_export / 1150;
+  const brine_total = delta_conc > 0 ? (nacl_total_export - brine_out * wdisp_export) / delta_conc : 0;
+  const Q_heat_w = N * I * 1000 * (V_cell - 2.18) * 0.5;
+  const cat_total = cat_dt > 0 ? Q_heat_w / (1300 * 3300 * cat_dt) * 3600 : 0;
   const printWin = window.open('','_blank');
-  printWin.document.write('<!DOCTYPE html><html><head><title>NAC Report</title><style>body{font-family:Arial;padding:20px}table{width:100%;border-collapse:collapse;margin:10px 0}th,td{padding:8px;border:1px solid #ddd;text-align:left}th{background:#f3f4f6}</style></head><body><h1>NAC Production Calculator</h1><table><tr><td>Current</td><td>'+I+' kA</td></tr><tr><td>Cells</td><td>'+N+'</td></tr><tr><td>CE</td><td>'+(CE*100).toFixed(1)+'%</td></tr><tr><td>Scale</td><td>'+sc.toFixed(3)+'</td></tr><tr><td>Cl₂</td><td>'+cl2_kgh.toFixed(1)+' kg/h</td></tr><tr><td>NaOCl</td><td>'+naocl_lh.toFixed(0)+' L/h</td></tr><tr><td>NaOH</td><td>'+naoh_kgh.toFixed(0)+' kg/h</td></tr><tr><td>H₂</td><td>'+h2_kgh.toFixed(1)+' kg/h</td></tr><tr><td>HCl Unit</td><td>'+(hclOn?'ON':'OFF')+'</td></tr></table></body></html>');
+  printWin.document.write('<!DOCTYPE html><html><head><title>NAC Report</title><style>body{font-family:Arial;padding:20px}table{width:100%;border-collapse:collapse;margin:10px 0}th,td{padding:8px;border:1px solid #ddd;text-align:left}th{background:#f3f4f6}</style></head><body><h1>NAC Production Calculator</h1><h3>Production (Faraday)</h3><table><tr><td>Current</td><td>'+I+' kA</td></tr><tr><td>Cells</td><td>'+N+'</td></tr><tr><td>CE</td><td>'+(CE*100).toFixed(1)+'%</td></tr><tr><td>Cl₂</td><td>'+cl2_kgh.toFixed(1)+' kg/h</td></tr><tr><td>NaOCl</td><td>'+naocl_lh.toFixed(0)+' L/h</td></tr><tr><td>NaOH</td><td>'+naoh_kgh.toFixed(0)+' kg/h</td></tr><tr><td>H₂</td><td>'+h2_kgh.toFixed(1)+' kg/h</td></tr><tr><td>NaCl consumed</td><td>'+nacl_total_export.toFixed(0)+' kg/h</td></tr></table><h3>NBZ-2.7 Flow</h3><table><tr><td>Current Density</td><td>'+j.toFixed(3)+' kA/m²</td></tr><tr><td>Brine Feed</td><td>'+brine_total.toFixed(2)+' m³/h</td></tr><tr><td>Catholyte Recirc.</td><td>'+cat_total.toFixed(2)+' m³/h</td></tr><tr><td>HCl Unit</td><td>'+(window.hclOn?'ON':'OFF')+'</td></tr></table></body></html>');
   printWin.document.close();
   printWin.print();
 };
 
 // Sync sliders
-[['cur','cur-s'],['cel','cel-s'],['con','con-s'],['hcl-t','hcl-t-s']].forEach(function(arr){
-  $(arr[0]).addEventListener('input',function(){$('cur-s').value=$(arr[0]).value;calc()});
+[['cur','cur-s'],['cel','cel-s'],['con','con-s'],['hcl-t','hcl-t-s'],['vcell','vcell-s'],['cat-dt','cat-dt-s']].forEach(function(arr){
+  $(arr[0]).addEventListener('input',function(){$(arr[1]).value=$(arr[0]).value;calc()});
   $(arr[1]).addEventListener('input',function(){$(arr[0]).value=$(arr[1]).value;calc()});
 });
-['ce','dil','exs'].forEach(function(id){$(id).addEventListener('input',calc)});
+['ce','dil','exs','brine-in','brine-out','cell-area','brine-q','cat-q'].forEach(function(id){$(id).addEventListener('input',calc)});
 
-// HCl toggle - using a global variable
+// === HAMBURGER TOGGLE ===
+$('hamburgerBtn').onclick = function(){ document.querySelector('.page').classList.toggle('collapsed') };
+
+// === SPARKLINE DATA ===
+const SPARK = {};
+['naocl','cl2','hcl','naoh','h2','brine','cat','j','naoh_cell','vcell'].forEach(function(k){SPARK[k]=[]});
+function drawSpark(id, val, maxVal){
+  const arr = SPARK[id];
+  arr.push(val);
+  if(arr.length > 40) arr.shift();
+  const canvas = document.querySelector('canvas[data-spark="'+id+'"]');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0,0,W,H);
+  if(arr.length < 2) return;
+  const mx = maxVal > 0 ? maxVal : Math.max.apply(null, arr)||1;
+  const mn = Math.min.apply(null, arr)||0;
+  const range = mx - mn || 1;
+  ctx.beginPath();
+  ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--blue').trim() || '#3b82f6';
+  ctx.lineWidth = 1.5;
+  arr.forEach(function(v,i){
+    const x = i/(arr.length-1)*W;
+    const y = H - (v-mn)/range*(H-4) - 2;
+    i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+  const lastVal = arr[arr.length-1];
+  const ly = H - (lastVal-mn)/range*(H-4) - 2;
+  ctx.lineTo(W, ly); ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath();
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  ctx.fillStyle = isDark ? 'rgba(96,165,250,0.08)' : 'rgba(59,130,246,0.06)';
+  ctx.fill();
+}
+
+// === CIRCULAR GAUGE ===
+function drawGauge(pct){
+  const arc = $('gauge-arc');
+  const txt = $('gauge-text');
+  const circum = 2 * Math.PI * 50;
+  const offset = circum - (pct/100)*circum;
+  arc.setAttribute('stroke-dasharray', circum);
+  arc.setAttribute('stroke-dashoffset', offset);
+  const hue = pct > 90 ? '#10b981' : pct > 60 ? '#3b82f6' : pct > 30 ? '#f59e0b' : '#ef4444';
+  arc.setAttribute('stroke', hue);
+  txt.textContent = pct > 0 ? fmt(pct,1)+'%' : '—';
+  arc.style.transition = 'stroke-dashoffset .6s ease';
+}
+
+// === HEATMAP CLASS ===
+function heatClass(v, maxV){
+  if(!v) return 'heat-2';
+  const pct = v / maxV;
+  if(pct < 0.3) return 'heat-0';
+  if(pct < 0.5) return 'heat-1';
+  if(pct < 0.7) return 'heat-2';
+  if(pct < 0.85) return 'heat-3';
+  if(pct < 1.0) return 'heat-4';
+  return 'heat-5';
+}
+
 window.hclOn = false;
 function toggleHcl(){
   window.hclOn = !window.hclOn;
@@ -461,7 +750,6 @@ function toggleHcl(){
   calc();
 }
 
-// Build Nuberg table
 function buildNubergTable(cl2NM3Available){
   const tb = $('nuberg-tbody');
   tb.innerHTML = '';
@@ -486,18 +774,49 @@ function calc(){
   const dil = (+$('dil').value||19)/100;
   const exs = +$('exs').value||0;
   const hclTarget_tj = window.hclOn ? (+$('hcl-t').value||23) : 0;
-  
-  const rI = I / A_I, rN = N / A_N, rCE = CE / A_CE;
-  const sc = rI * rN * rCE;
-  const cl2_kgh = A_CL2 * sc;
-  const naoh_kgh = A_NAOH * sc;
-  const h2_kgh = naoh_kgh * (2/80);
+
+  const A_cell = +$('cell-area').value||2.7;
+  const brine_in = +$('brine-in').value||300;
+  const brine_out = +$('brine-out').value||210;
+  const brine_q_ref = +$('brine-q').value||5.0;
+  const cat_q_ref = +$('cat-q').value||6.0;
+  const V_cell = +$('vcell').value||2.96;
+  const cat_dt = +$('cat-dt').value||6;
+
+  const j = A_cell > 0 ? I / A_cell : 0;
+  const i_amp = I * 1000;
+
+  const naoh_kgh = N * I * 1.493 * CE;
+  const cl2_kgh = N * I * 1.324 * CE;
+  const h2_kgh = N * I * 0.0376 * CE;
   const naoh32 = naoh_kgh / 0.32;
   const cl2_nm3 = cl2_kgh / CL2_DENSITY;
-  
+  const naoh_cell_kgh = I * 1.493 * CE;
+
+  const n_h2o_per_na = 3;
+  const water_transport = N * (i_amp / 96485) * 18.015 * n_h2o_per_na * 3.6;
+
+  const delta_conc = brine_in - brine_out;
+  const nacl_total = cl2_kgh * (116.88 / 71);
+  const W_disp = water_transport / 1150;
+  const Q_brine_far = delta_conc > 0 ? (nacl_total - brine_out * W_disp) / delta_conc : 0;
+  const Q_brine_mfr = N > 0 ? brine_q_ref * I * N / 16.2 * 60 / 1000 : 0;
+  const brine_far_lmin = N > 0 ? Q_brine_far * 1000 / 60 / N : 0;
+  const brine_mfr_lmin = N > 0 ? Q_brine_mfr * 1000 / 60 / N : 0;
+  const brine_out_far = delta_conc > 0 && Q_brine_far > 0 ? (brine_in * Q_brine_far - nacl_total) / (Q_brine_far - W_disp) : brine_in;
+
+  const V_rev = 2.18;
+  const Q_heat_w = N * i_amp * (V_cell - V_rev) * 0.5;
+  const Q_heat_kw = Q_heat_w / 1000;
+  const Q_heat_cell = N > 0 ? Q_heat_kw / N : 0;
+  const rho_cat = 1300;
+  const cp_cat = 3300;
+  const Q_cat = cat_dt > 0 ? Q_heat_w / (rho_cat * cp_cat * cat_dt) * 3600 : 0;
+  const Q_cat_lmin = N > 0 ? Q_cat * 1000 / 60 / N : 0;
+
   let cl2_to_hcl_nm3 = 0, cl2_to_hcl_kg = 0, h2_to_hcl_nm3 = 0, dmw_lh = 0, hcl_tj_actual = 0, hcl_kgh_32 = 0;
   let valve_cl2_pct = 0, valve_h2_pct = 0, isOverCap = false;
-  
+
   if(window.hclOn && hclTarget_tj > 0){
     const cl2_needed_nm3 = hclTarget_tj / HCL_TJ_PER_NM3;
     isOverCap = cl2_needed_nm3 > cl2_nm3;
@@ -510,23 +829,34 @@ function calc(){
     valve_cl2_pct = Math.min(100, cl2_to_hcl_nm3 / HCL_UNIT_MAX_NM3 * 100);
     valve_h2_pct = Math.min(100, h2_to_hcl_nm3 / (HCL_UNIT_MAX_NM3 * H2_CL2_RATIO) * 100);
   }
-  
+
   const cl2_hypo = cl2_kgh - cl2_to_hcl_kg;
-  const naocl_lh = Math.max(0, cl2_hypo * 1000 / conc);
+  const naocl_lh = Math.max(0, cl2_hypo * 1000 * (74.44/70.906) / conc);
   const valve_hypo_pct = cl2_kgh > 0 ? (cl2_hypo / cl2_kgh * 100) : 0;
-  
+
   const naoh_rxn = cl2_hypo * (80/71);
   const naoh_exs = naocl_lh * exs / 1000;
-  const naoh_cons = naoh_rxn + naoh_exs;
-  const naoh_net = naoh_kgh - naoh_cons;
-  const hgw = naoh_cons * (1/dil - 1/0.32);
-  
-  // KPIs
+  const naoh_cons = naoh_rxn;
+  const naoh_to_hypo = naoh_rxn + naoh_exs;
+  const naoh_net = naoh_kgh - naoh_rxn;
+  const hgw = naoh_to_hypo * (1/dil - 1/0.32);
+
+  // === CAPACITY UTILIZATION ===
+  const cl2_mtpd = cl2_kgh * 24 / 1000;
+  const util_pct = P_CL2 > 0 ? (cl2_mtpd / P_CL2 * 100) : 0;
+  drawGauge(util_pct);
+  if(util_pct >= 95) { $('util-status').textContent = 'Near full capacity'; $('util-label').textContent = '✅'; }
+  else if(util_pct >= 70) { $('util-status').textContent = 'Normal operation'; $('util-label').textContent = '✓'; }
+  else if(util_pct >= 40) { $('util-status').textContent = 'Partial load'; $('util-label').textContent = '◷'; }
+  else if(util_pct > 0) { $('util-status').textContent = 'Low load'; $('util-label').textContent = '○'; }
+  else { $('util-status').textContent = 'Set current & cells'; $('util-label').textContent = '—'; }
+
+  // === PRODUCTION KPIs ===
   $('knaocl').textContent = fmtL(naocl_lh);
   $('snaocl').textContent = fmt(naocl_lh/1000*24,2)+' m³/day';
   $('kcl2').textContent = fmt(cl2_kgh,1);
-  $('scl2').textContent = fmt(cl2_kgh*24/1000,2)+' MTPD';
-  
+  $('scl2').textContent = fmt(cl2_mtpd,2)+' of '+P_CL2+' MTPD';
+
   if(window.hclOn && cl2_to_hcl_kg > 0){
     $('khcl').textContent = fmt(cl2_to_hcl_kg,1);
     $('shcl').textContent = fmt(hcl_tj_actual,1)+' T/j';
@@ -538,45 +868,70 @@ function calc(){
     $('shcl').textContent = 'Unit is off';
     $('shcl-m3').style.display = 'none';
   }
-  
+
   $('knaoh').textContent = fmt0(naoh_kgh);
-  $('snaoh').textContent = fmt(naoh_kgh*24/1000,2)+' MTPD';
+  $('snaoh').textContent = fmt(naoh_kgh*24/1000,2)+' of '+P_NAOH+' MTPD';
   const naoh_m3h = naoh32 / NAOH32_DENSITY;
   $('snaoh-m3').textContent = fmt(naoh_m3h,2)+' m³/h · '+fmt(naoh_m3h*24,2)+' m³/day';
   $('kh2').textContent = fmt(h2_kgh,1);
-  $('sh2').textContent = fmt(h2_kgh*24/1000,3)+' MTPD';
-  
-  // Charts
+  $('sh2').textContent = fmt(h2_kgh*24/1000,3)+' of '+P_H2+' MTPD';
+
+  // === SPARKLINES ===
+  drawSpark('naocl', naocl_lh);
+  drawSpark('cl2', cl2_kgh, P_CL2*1000/24);
+  drawSpark('hcl', window.hclOn ? cl2_to_hcl_kg : 0);
+  drawSpark('naoh', naoh_kgh, P_NAOH*1000/24);
+  drawSpark('h2', h2_kgh, P_H2*1000/24);
+  drawSpark('brine', Q_brine_far);
+  drawSpark('cat', Q_cat);
+  drawSpark('j', j, 6.0);
+  drawSpark('naoh_cell', naoh_cell_kgh);
+  drawSpark('vcell', V_cell, 3.5);
+
+  // === FLOW KPIs ===
+  $('kbrine').textContent = fmt(Q_brine_far,2);
+  $('sbrine').textContent = 'per cell: '+fmt(brine_far_lmin,2)+' L/min';
+  $('kcat').textContent = fmt(Q_cat,2);
+  $('scat').textContent = 'per cell: '+fmt(Q_cat_lmin,2)+' L/min';
+  $('kj').textContent = fmt(j,3);
+  $('sj').textContent = 'I = '+fmt(I,1)+' kA → j = '+fmt(j,3)+' kA/m²';
+  $('knaoh-c').textContent = fmt(naoh_cell_kgh,2);
+  $('snaoh-c').textContent = fmt(I*1.493*CE,1)+' g/A·h (Faraday)';
+  $('kvcell').textContent = fmt(V_cell,2);
+  $('svcell').textContent = 'P = '+fmt(Q_heat_kw,1)+' kW total';
+
+  // === CHARTS ===
   const naocl_m3h = naocl_lh / 1000;
   const hcl_m3h = hcl_kgh_32 / HCL32_DENSITY;
   const naoh_net_m3h = naoh_net / 0.32 / NAOH32_DENSITY;
   const MAX_BAR_HEIGHT = 120;
-  const MAX_M3H = 4.5;
-  
+  const MAX_M3H = 7;
+
   $('bar-naocl').style.height = Math.min(MAX_BAR_HEIGHT, (naocl_m3h/MAX_M3H*MAX_BAR_HEIGHT))+'px';
   $('bar-hcl').style.height = Math.min(MAX_BAR_HEIGHT, (hcl_m3h/MAX_M3H*MAX_BAR_HEIGHT))+'px';
   $('bar-hcl').style.opacity = window.hclOn ? '1' : '0.3';
-  
+
   const naohBarHeight = naoh_net >= 0 ? Math.min(MAX_BAR_HEIGHT, (naoh_net_m3h/MAX_M3H*MAX_BAR_HEIGHT)) : Math.min(MAX_BAR_HEIGHT, (Math.abs(naoh_net_m3h)/MAX_M3H*MAX_BAR_HEIGHT));
   $('bar-naoh').style.height = naohBarHeight+'px';
-  $('bar-naoh').style.background = naoh_net >= 0 ? 'var(--violet)' : 'var(--red)';
+  $('bar-naoh').style.background = naoh_net >= 0 ? 'var(--naoh)' : 'var(--red)';
   $('bar-naoh').style.opacity = naoh_net !== 0 ? '1' : '0.3';
-  
+
   $('bar-naocl-v').textContent = fmt(naocl_m3h,2);
   $('bar-hcl-v').textContent = window.hclOn ? fmt(hcl_m3h,2) : '—';
   $('bar-naoh-v').textContent = fmt(Math.abs(naoh_net_m3h),2);
+
   $('naocl-total').textContent = fmt(naocl_m3h*24,1)+' m³/d';
   $('hcl-total').textContent = window.hclOn ? fmt(hcl_m3h*24,1)+' m³/d' : '— m³/d';
-  
+
   if(naoh_net >= 0){
     $('naoh-total').textContent = fmt(naoh_net_m3h*24,1)+' m³/d';
-    $('naoh-total').style.color = 'var(--violet)';
+    $('naoh-total').style.color = 'var(--naoh)';
   } else {
     $('naoh-total').textContent = fmt(Math.abs(naoh_net_m3h)*24,1)+' m³/d used';
     $('naoh-total').style.color = 'var(--red)';
   }
-  
-  // HCl panel
+
+  // === HCl PANEL ===
   if(window.hclOn){
     $('hk-hcl-tj').textContent = fmt(hcl_tj_actual,1);
     $('hk-hcl-kgh').textContent = fmt0(hcl_kgh_32);
@@ -592,12 +947,12 @@ function calc(){
     $('vnote-cl2').textContent = fmt(cl2_to_hcl_nm3,1)+' NM³/hr';
     $('vnote-h2').textContent = fmt(h2_to_hcl_nm3,1)+' NM³/hr';
     $('vnote-hypo').textContent = fmt(cl2_hypo/CL2_DENSITY,1)+' NM³/hr';
-    
+
     const badge = $('hcl-cap-badge');
     if(isOverCap){ badge.textContent='⚠ INSUFFICIENT'; badge.style.background='#ef4444'; }
     else if(hcl_tj_actual>=23){ badge.textContent='FULL CAPACITY'; badge.style.background='var(--green)'; }
     else { badge.textContent='PARTIAL '+fmt(hcl_tj_actual,1)+' T/j'; badge.style.background='var(--orange)'; }
-    
+
     const ocw = $('overcap-warn');
     if(isOverCap){
       ocw.classList.add('show');
@@ -609,69 +964,103 @@ function calc(){
     $('fn-hcl-v').textContent = fmt(cl2_to_hcl_kg,1)+' kg/h';
     buildNubergTable(cl2_nm3);
   }
-  
-  // Scale
-  $('ri').textContent = rI.toFixed(3);
-  $('rn').textContent = rN.toFixed(3);
-  $('rc').textContent = rCE.toFixed(3);
-  $('sc').textContent = sc.toFixed(3);
-  
-  // Flow
+
+  // === FLOW SUMMARY ===
+  $('fb-total').textContent = fmt(Q_brine_far,2)+' m³/h';
+  $('fb-cell').textContent = fmt(brine_far_lmin,2)+' L/min';
+  $('fb-nacl').textContent = fmt0(nacl_total)+' kg/h';
+  $('fb-out').textContent = fmt(brine_out_far,0)+' g/L';
+  $('fb-water').textContent = fmt(water_transport,1)+' kg/h';
+  $('bb-brine').style.width = Math.min(100, Q_brine_far/12*100)+'%';
+  $('fc-total').textContent = fmt(Q_cat,2)+' m³/h';
+  $('fc-cell').textContent = fmt(Q_cat_lmin,2)+' L/min';
+  $('fc-heat').textContent = fmt(Q_heat_kw,1)+' kW';
+  $('fc-voltage').textContent = fmt(V_cell,2)+' V';
+  $('fc-j').textContent = fmt(j,3)+' kA/m²';
+  $('bb-cat').style.width = Math.min(100, Q_cat/15*100)+'%';
+
+  // === PROCESS FLOW ===
   $('fe').textContent = I+'kA·'+N;
   $('fno').textContent = fmtL(naocl_lh)+' L/h';
   $('fnh').textContent = fmt0(naoh32)+' kg/h';
   $('fnh2').textContent = fmt(h2_kgh,1)+' kg/h';
-  
-  // Balance
+
+  // === NaOH BALANCE ===
   const mx = Math.max(naoh_kgh, naoh_cons, hgw, 50);
   $('bbp').style.width = Math.min(100, naoh_kgh/mx*100)+'%';
   $('bbn').style.width = Math.min(100, Math.abs(naoh_net)/mx*100)+'%';
+  $('bbn').style.background = naoh_net < -5 ? 'var(--red)' : 'var(--naoh)';
   $('bbr').style.width = Math.min(100, naoh_cons/mx*100)+'%';
   $('bbh').style.width = Math.min(100, hgw/mx*100)+'%';
   $('bnp').textContent = fmt0(naoh_kgh)+' kg/h';
   $('bnr').textContent = fmt0(naoh_cons)+' kg/h';
   $('bnh').textContent = fmt0(hgw)+' kg/h';
-  $('bnn').textContent = fmt(naoh_net,1)+' kg/h';
-  $('bnn').style.color = naoh_net>5?'var(--green)':naoh_net<-5?'var(--red)':'var(--amber)';
-  $('bnn-m3').textContent = naoh_net > 0 ? fmt(naoh_net_m3h,2)+' m³/h for sale' : '—';
-  
-  // Footer
+  if(naoh_net < -5){
+    $('bnn').textContent = '⚠ '+fmt(naoh_net,1)+' kg/h deficit';
+    $('bnn').style.color = 'var(--red)';
+    $('bnn-m3').textContent = '⚠ Reduce hypo production or increase current';
+  } else {
+    $('bnn').textContent = fmt(naoh_net,1)+' kg/h';
+    $('bnn').style.color = naoh_net>5?'var(--green)':'var(--amber)';
+    $('bnn-m3').textContent = naoh_net > 0 ? fmt(naoh_net_m3h,2)+' m³/h for sale' : '—';
+  }
+
+  // === FOOTER ===
   $('ftce').textContent = (CE*100).toFixed(1);
-  $('ftsc').textContent = sc.toFixed(3);
-  $('ft-anchor').textContent = fmtL(naocl_lh)+' L/h NaOCl';
-  
-  // Warnings
+  $('ft-anki').textContent = I+' kA · '+N+' cells';
+  $('ft-brine').textContent = fmt(Q_brine_far,2);
+  $('ft-cat').textContent = fmt(Q_cat,2);
+  $('ft-j').textContent = fmt(j,3);
+
+  // === WARNINGS ===
   const w=[];
   if(+$('dil').value>22) w.push('NaOH dilution >22% — NaCl will crystallize!');
   if(+$('ce').value<92) w.push('CE below 92% — membrane replacement recommended!');
   if(conc>180) w.push('NaOCl concentration above 180 g/L!');
-  if(I>16.2) w.push('Current exceeds design maximum 16.2 kA!');
+  if(I>16.2) w.push('Rectifier current '+I+' kA exceeds max per cell 16.2 kA!');
+  if(j>6.0) w.push('Current density '+j.toFixed(2)+' kA/m² exceeds NBZ-2.7 max 6.0!');
+  if(j<0.5&&N>0&&I>0) w.push('Current density '+j.toFixed(2)+' kA/m² — too low for natural circulation!');
+  if(V_cell>3.5) w.push('Cell voltage '+V_cell.toFixed(2)+'V > 3.5V — check membrane!');
   if(window.hclOn && isOverCap) w.push('HCl target requires more Cl₂. Increase current.');
   $('wb').classList.toggle('show',!!w[0]);
   if(w[0]) $('wt').textContent = w[0];
-  
-  // Highlight scenario row
+
+  // === SCENARIO TABLE ===
+  document.querySelectorAll('#sb tr').forEach(function(tr){tr.classList.toggle('act',+tr.dataset.k===+I&&+tr.dataset.n===+N)});
+  buildTable();
   document.querySelectorAll('#sb tr').forEach(function(tr){tr.classList.toggle('act',+tr.dataset.k===+I&&+tr.dataset.n===+N)});
 }
 
-// Build scenario table
 function buildTable(){
   const KAs=[4,6,8,10,11,12,14,16.2];
-  const Ns=[16,24,31,32,40,48];
+  const Ns=[16,24,32,40,48];
+  const A_cell = +($('cell-area')?$('cell-area').value:2.7)||2.7;
+  const brine_in = +($('brine-in')?$('brine-in').value:300)||300;
+  const brine_out = +($('brine-out')?$('brine-out').value:210)||210;
+  const delta_c = brine_in - brine_out;
+  const CE_val = (+($('ce')?$('ce').value:96)||96)/100;
+  const V_cell_val = +($('vcell')?$('vcell').value:2.96)||2.96;
+  const cat_dt_val = +($('cat-dt')?$('cat-dt').value:6)||6;
   const tb = $('sb');
   tb.innerHTML = '';
   KAs.forEach(function(kA){
     Ns.forEach(function(n){
-      const sc = (kA/A_I)*(n/A_N);
-      const cl2 = A_CL2 * sc;
-      const naoh = A_NAOH * sc;
-      const h2 = naoh*(2/80);
-      const v132 = cl2*1000/132;
-      const isc = kA===11&&n===31;
+      const j_sc = A_cell > 0 ? kA / A_cell : 0;
+      const naoh_sc = n * kA * 1.493 * CE_val;
+      const cl2_sc = n * kA * 1.324 * CE_val;
+      const wt_sc = n * (kA * 1000 / 96485) * 18.015 * 3 * 3.6;
+      const wdisp_sc = wt_sc / 1150;
+      const Q_brine_far_sc = delta_c > 0 ? (n * kA * 2.18 * CE_val - brine_out * wdisp_sc) / delta_c : 0;
+      const Q_heat_sc = n * kA * 1000 * (V_cell_val - 2.18) * 0.5;
+      const Q_cat_sc = cat_dt_val > 0 ? Q_heat_sc / (1300 * 3300 * cat_dt_val) * 3600 : 0;
+      const isc = kA===11&&n===32;
       const tr = document.createElement('tr');
       if(isc) tr.classList.add('act');
       tr.dataset.k=kA; tr.dataset.n=n;
-      tr.innerHTML = '<td>'+(kA===16.2?'16.2':kA)+(isc?'<span class="star">★</span>':'')+'</td><td>'+n+'</td><td>'+sc.toFixed(3)+'</td><td>'+(naoh*24/1000).toFixed(2)+'</td><td>'+fmt(cl2,1)+'</td><td>'+fmtL(v132)+'</td><td>'+h2.toFixed(1)+'</td>';
+      const jStr = j_sc.toFixed(3);
+      const maxJKAs = 6.0;
+      const hc = heatClass(j_sc, maxJKAs);
+      tr.innerHTML = '<td>'+(kA===16.2?'16.2':kA)+(isc?'<span class="star">★</span>':'')+'</td><td>'+n+'</td><td class="'+hc+'">'+jStr+'</td><td class="'+hc+'">'+fmt(Q_brine_far_sc,2)+'</td><td class="'+hc+'">'+fmt(Q_cat_sc,2)+'</td><td class="'+hc+'">'+fmt0(naoh_sc)+'</td><td class="'+hc+'">'+fmt(cl2_sc,1)+'</td>';
       tr.onclick = function(){$('cur').value=$('cur-s').value=kA;$('cel').value=$('cel-s').value=n;calc()};
       tb.appendChild(tr);
     });
@@ -681,7 +1070,6 @@ function buildTable(){
 function tick(){$('fttm').textContent = new Date().toLocaleTimeString('en-GB',{hour12:false})}
 setInterval(tick,1000);tick();
 
-buildTable();
 calc();
 </script>
 </body>
