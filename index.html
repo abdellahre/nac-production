@@ -49,11 +49,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text"
 
 .shell{margin-left:52px;display:flex;flex-direction:column;min-height:100vh;transition:margin-left .2s ease}
 .rail:hover~.shell{margin-left:180px}
+.hamburger{display:none;position:fixed;top:10px;left:10px;z-index:300;width:40px;height:40px;border-radius:10px;border:1px solid var(--bd);background:var(--sf);color:var(--ink);cursor:pointer;place-items:center;padding:0}
+.hamburger svg{width:20px;height:20px}
+.rail.rail-open~.hamburger{left:148px}
 @media(max-width:640px){
+  .hamburger{display:grid}
   .rail{width:0;overflow:hidden}
-  .rail:hover{width:180px}
+  .rail.rail-open{width:180px}
+  .rail.rail-open .rail-label{opacity:1;width:auto}
+  .rail.rail-open .rail-btn{width:100%;justify-content:flex-start}
   .shell{margin-left:0}
-  .rail:hover~.shell{margin-left:0}
+  .rail.rail-open~.shell{margin-left:180px}
+  .rail-backdrop{display:none;position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.4)}
+  .rail.rail-open~.rail-backdrop{display:block}
   .foot{padding-left:24px}
   .ticker-item{min-width:120px;padding:6px 10px}
   .prod-hero{grid-template-columns:1fr 1fr}
@@ -266,6 +274,11 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
   <div class="rail-spacer"></div>
   <button class="rail-btn theme-rail" id="themeBtn" title="Toggle theme"><span class="rail-icon">🌙</span><span class="rail-label">Theme</span></button>
 </nav>
+
+<button class="hamburger" id="hamburgerBtn">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
+<div class="rail-backdrop" id="railBackdrop"></div>
 
 <div class="shell">
   <div class="ticker">
@@ -519,8 +532,8 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
   </div>
 
   <footer class="foot">
-    <div class="foot-items"><span>Anchor: 11 kA · 31 cells → <strong id="ft-anchor">—</strong></span><span>HCl: Nuberg EPC · Max 24 T/j</span><span>CE: <span id="ftce">96.0</span>%</span><span class="mono" id="fttm">--:--:--</span></div>
-    <div>NAC 4295-G-MAN-0001 · Nuberg EPC 9630</div>
+    <div class="foot-items"><span>Anchor: 11 kA · 31 cells → <strong id="ft-anchor">—</strong></span><span>HCl: · Max 24 T/j</span><span>CE: <span id="ftce">96.0</span>%</span><span class="mono" id="fttm">--:--:--</span></div>
+    <div>NAC </div>
   </footer>
 </div>
 
@@ -541,8 +554,12 @@ document.querySelectorAll('.rail-btn[data-tab]').forEach(function(btn){
     btn.classList.add('active');
     document.querySelectorAll('.tab-page').forEach(function(p){p.classList.remove('active')});
     $('page-'+btn.dataset.tab).classList.add('active');
+    if(window.innerWidth<=640)$('rail').classList.remove('rail-open');
   });
 });
+
+$('hamburgerBtn').onclick=function(){$('rail').classList.toggle('rail-open')};
+$('railBackdrop').onclick=function(){$('rail').classList.remove('rail-open')};
 
 $('themeBtn').onclick=function(){
   const h=document.documentElement;
