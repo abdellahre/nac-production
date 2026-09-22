@@ -8,48 +8,57 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#111118;--sf:#191a22;--s2:#1f2029;--s3:#262733;--bd:#31323f;--b2:#44455a;
-  --ink:#eaecf4;--k2:#9899ae;--k3:#5d5e72;
-  --lime:#a3e635;--limed:#65a30d;--limel:rgba(163,230,53,.1);
-  --amber:#fbbf24;--amberd:#d97706;--amberl:rgba(251,191,36,.1);
-  --red:#fb7185;--redd:#e11d48;--redl:rgba(251,113,133,.1);
-  --blue:#60a5fa;--blued:#2563eb;--bluel:rgba(96,165,250,.1);
-  --purple:#c084fc;--purpled:#9333ea;--purplel:rgba(192,132,252,.1);
-  --teal:#2dd4bf;--teald:#0d9488;--teall:rgba(45,212,191,.1);
-  --orange:#fb923c;--orangel:rgba(251,146,60,.1);
+  --bg:#1a1a2e;--sf:#16162a;--s2:#1e1e36;--s3:#24243c;--bd:#2e2e4a;--b2:#3e3e5c;
+  --ink:#e8eaf0;--k2:#a0a3b8;--k3:#6b6e8a;
+  --green:#22c55e;--greend:#16a34a;--greenl:rgba(34,197,94,.10);
+  --blue:#3b82f6;--blued:#2563eb;--bluel:rgba(59,130,246,.10);
+  --red:#ef4444;--redd:#dc2626;--redl:rgba(239,68,68,.10);
+  --yellow:#eab308;--yellowd:#ca8a04;--yellowl:rgba(234,179,8,.10);
+  --teal:#14b8a6;--teald:#0d9488;--teall:rgba(20,184,166,.10);
+  --purple:#a78bfa;--purpled:#7c3aed;--purplel:rgba(167,139,250,.10);
+  --orange:#f97316;--orangel:rgba(249,115,22,.10);
+  --mono:'IBM Plex Mono',monospace;--sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --radius:14px;--radius-sm:10px;--radius-lg:18px;
+  --neu-raised:6px 6px 14px #0d0d1a,-6px -6px 14px #272742;
+  --neu-pressed:inset 4px 4px 10px #0d0d1a,inset -4px -4px 10px #272742;
+  --neu-flat:3px 3px 8px #0d0d1a,-3px -3px 8px #272742;
 }
 [data-theme="light"]{
-  --bg:#f3f4f8;--sf:#ffffff;--s2:#f7f8fa;--s3:#ebedf3;--bd:#d8dae3;--b2:#b8bac6;
+  --bg:#e8eaf0;--sf:#f5f6fa;--s2:#ecedf3;--s3:#dddee8;--bd:#c8c9d6;--b2:#a8a9ba;
   --ink:#191a22;--k2:#5d5e72;--k3:#9899ae;
-  --lime:#65a30d;--limed:#4d7c0f;--limel:rgba(101,163,13,.08);
-  --amber:#d97706;--amberd:#b45309;--amberl:rgba(217,119,6,.08);
-  --red:#e11d48;--redd:#be123c;--redl:rgba(225,29,72,.08);
+  --green:#16a34a;--greend:#15803d;--greenl:rgba(22,163,74,.08);
   --blue:#2563eb;--blued:#1d4ed8;--bluel:rgba(37,99,235,.08);
-  --purple:#9333ea;--purpled:#7e22ce;--purplel:rgba(147,51,234,.08);
+  --red:#dc2626;--redd:#b91c1c;--redl:rgba(220,38,38,.08);
+  --yellow:#ca8a04;--yellowd:#a16207;--yellowl:rgba(202,138,4,.08);
   --teal:#0d9488;--teald:#0f766e;--teall:rgba(13,148,136,.08);
+  --purple:#7c3aed;--purpled:#6d28d9;--purplel:rgba(124,58,237,.08);
   --orange:#ea580c;--orangel:rgba(234,88,12,.08);
+  --neu-raised:6px 6px 14px #c8c9d6,-6px -6px 14px #ffffff;
+  --neu-pressed:inset 4px 4px 10px #c8c9d6,inset -4px -4px 10px #ffffff;
+  --neu-flat:3px 3px 8px #c8c9d6,-3px -3px 8px #ffffff;
 }
 html{font-size:15px}
-body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter","Helvetica Neue",sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column}
 
-.rail{position:fixed;left:0;top:0;bottom:0;width:52px;background:var(--sf);border-right:1px solid var(--bd);z-index:200;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:4px;transition:width .2s ease}
+/* ── Rail Navigation ── */
+.rail{position:fixed;left:0;top:0;bottom:0;width:52px;background:var(--sf);box-shadow:var(--neu-raised);z-index:200;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:4px;transition:width .2s ease}
 .rail:hover{width:180px}
-.rail-logo{width:32px;height:32px;background:linear-gradient(135deg,var(--lime),var(--teal));border-radius:8px;display:grid;place-items:center;margin-bottom:8px;flex-shrink:0}
+.rail-logo{width:32px;height:32px;background:linear-gradient(135deg,var(--green),var(--teal));border-radius:10px;display:grid;place-items:center;margin-bottom:8px;flex-shrink:0;box-shadow:var(--neu-raised)}
 .rail-logo svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round}
-.rail-btn{width:38px;height:38px;border-radius:10px;border:none;background:transparent;color:var(--k3);font-size:16px;cursor:pointer;display:flex;align-items:center;gap:10px;padding:0 9px;transition:all .15s;position:relative;overflow:hidden;white-space:nowrap}
+.rail-btn{width:38px;height:38px;border-radius:var(--radius-sm);border:none;background:transparent;color:var(--k3);cursor:pointer;display:flex;align-items:center;gap:10px;padding:0 9px;transition:all .2s;position:relative;overflow:hidden;white-space:nowrap;text-decoration:none}
 .rail:hover .rail-btn{width:100%;justify-content:flex-start}
-.rail-btn:hover{background:var(--s2);color:var(--k2)}
-.rail-btn.active{background:var(--limel);color:var(--lime)}
-.rail-btn.active::before{content:'';position:absolute;left:-8px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:var(--lime)}
-.rail-icon{flex-shrink:0;width:20px;text-align:center}
+.rail-btn:hover{background:var(--s2);color:var(--k2);box-shadow:var(--neu-flat)}
+.rail-btn.active{background:var(--greenl);color:var(--green);box-shadow:var(--neu-raised)}
+.rail-btn.active::before{content:'';position:absolute;left:-8px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:var(--green)}
+.rail-icon{flex-shrink:0;width:20px;text-align:center;display:flex;align-items:center;justify-content:center}
+.rail-icon svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .rail-label{font-size:11px;font-weight:500;opacity:0;width:0;transition:opacity .15s,width .15s}
 .rail:hover .rail-label{opacity:1;width:auto}
 .rail-spacer{flex:1}
-.rail-btn.theme-rail .rail-icon{font-size:14px}
 
 .shell{margin-left:52px;display:flex;flex-direction:column;min-height:100vh;transition:margin-left .2s ease}
 .rail:hover~.shell{margin-left:180px}
-.hamburger{display:none;position:fixed;top:10px;left:10px;z-index:300;width:40px;height:40px;border-radius:10px;border:1px solid var(--bd);background:var(--sf);color:var(--ink);cursor:pointer;place-items:center;padding:0}
+.hamburger{display:none;position:fixed;top:10px;left:10px;z-index:300;width:40px;height:40px;border-radius:var(--radius-sm);border:1px solid var(--bd);background:var(--sf);color:var(--ink);cursor:pointer;place-items:center;padding:0}
 .hamburger svg{width:20px;height:20px}
 .rail.rail-open~.hamburger{left:148px}
 @media(max-width:640px){
@@ -68,211 +77,232 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text"
   .flow-detail{grid-template-columns:1fr}
 }
 
-.ticker{position:sticky;top:0;z-index:100;background:var(--sf);border-bottom:1px solid var(--bd)}
+/* ── Ticker Bar ── */
+.ticker{position:sticky;top:0;z-index:100;background:var(--sf);box-shadow:var(--neu-flat)}
 .ticker-inner{display:flex;align-items:stretch;height:48px;overflow-x:auto;scrollbar-width:none}
 .ticker-inner::-webkit-scrollbar{display:none}
 .ticker-item{flex:0 0 auto;min-width:140px;padding:6px 14px;border-right:1px solid var(--bd);display:flex;flex-direction:column;justify-content:center;gap:1px;cursor:default;transition:background .1s;position:relative}
 .ticker-item:hover{background:var(--s2)}
 .ticker-item:last-child{border-right:none}
 .tk-label{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--k3)}
-.tk-val{font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;line-height:1.2}
-.tk-val.green{color:var(--lime)}.tk-val.blue{color:var(--blue)}.tk-val.orange{color:var(--amber)}.tk-val.purple{color:var(--purple)}.tk-val.teal{color:var(--teal)}.tk-val.red{color:var(--red)}
-.tk-sub{font-size:8.5px;color:var(--k3);font-family:'IBM Plex Mono',monospace}
-.tk-spark{position:absolute;bottom:2px;left:4px;right:4px;height:14px;opacity:.4}
-.tk-live{display:flex;align-items:center;gap:5px;padding:0 14px;font-size:8.5px;font-weight:600;color:var(--lime);letter-spacing:.06em;text-transform:uppercase;border-left:1px solid var(--bd);white-space:nowrap}
-.tk-live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--lime);animation:blink 2s infinite}
+.tk-val{font-family:var(--mono);font-size:15px;font-weight:600;line-height:1.2}
+.tk-val.green{color:var(--green)}.tk-val.blue{color:var(--blue)}.tk-val.orange{color:var(--yellow)}.tk-val.purple{color:var(--purple)}.tk-val.teal{color:var(--teal)}.tk-val.red{color:var(--red)}
+.tk-sub{font-size:8.5px;color:var(--k3);font-family:var(--mono)}
+.tk-live{display:flex;align-items:center;gap:5px;padding:0 14px;font-size:8.5px;font-weight:600;color:var(--green);letter-spacing:.06em;text-transform:uppercase;border-left:1px solid var(--bd);white-space:nowrap}
+.tk-live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 .tk-actions{display:flex;align-items:center;gap:6px;padding:0 12px;border-left:1px solid var(--bd)}
-.tk-btn{padding:5px 12px;border-radius:6px;border:1px solid var(--bd);background:var(--sf);color:var(--k2);font-size:10px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .12s;white-space:nowrap}
-.tk-btn:hover{background:var(--s2);border-color:var(--b2);color:var(--ink)}
-.tk-btn.primary{background:var(--lime);border-color:var(--lime);color:#1a1a00}
-.tk-btn.primary:hover{background:#bef264}
+.tk-btn{padding:5px 12px;border-radius:var(--radius-sm);border:none;background:var(--sf);color:var(--k2);font-size:10px;font-weight:600;cursor:pointer;font-family:var(--sans);transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:5px;text-decoration:none;box-shadow:var(--neu-flat)}
+.tk-btn:hover{background:var(--s2);color:var(--ink);box-shadow:var(--neu-raised)}
+.tk-btn.primary{background:var(--green);border:none;color:#0a0a00;box-shadow:var(--neu-raised)}
+.tk-btn.primary:hover{background:#16a34a}
+.tk-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-.warn-strip{display:none;align-items:center;gap:8px;padding:8px 20px;background:var(--redl);border-bottom:1px solid rgba(251,113,133,.2);font-size:11px;color:var(--red);font-weight:500}
+/* ── Warning Strip ── */
+.warn-strip{display:none;align-items:center;gap:8px;padding:8px 20px;background:var(--redl);border-bottom:none;font-size:11px;color:var(--red);font-weight:500;box-shadow:var(--neu-flat)}
 .warn-strip.show{display:flex}
 .warn-strip svg{width:14px;height:14px;stroke:var(--red);fill:none;stroke-width:2;flex-shrink:0}
 
+/* ── Page / Tabs ── */
 .page{flex:1;padding:20px 24px 24px}
 .tab-page{display:none}
 .tab-page.active{display:block}
 
-.card{background:var(--sf);border:1px solid var(--bd);border-radius:12px;overflow:hidden;margin-bottom:16px}
-.card-head{padding:12px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:8px;background:var(--s2)}
-.card-icon{width:24px;height:24px;border-radius:6px;display:grid;place-items:center;font-size:12px}
+/* ── Cards ── */
+.card{background:var(--sf);box-shadow:var(--neu-raised);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:16px}
+.card-head{padding:12px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:8px;background:var(--s2);border-radius:var(--radius-lg) var(--radius-lg) 0 0}
+.card-icon{width:24px;height:24px;border-radius:var(--radius-sm);display:grid;place-items:center}
+.card-icon svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .card-title{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--k3)}
 
+/* ── Input Grid ── */
 .inputs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
 .input-group{padding:14px 16px}
 .input-group+.input-group{border-top:1px solid var(--bd)}
 .ig-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--k3);margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.ig-label::before{content:'';width:3px;height:12px;border-radius:2px;background:var(--lime)}
+.ig-label::before{content:'';width:3px;height:12px;border-radius:2px;background:var(--green)}
 .field-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--s3)}
 .field-row:last-child{border-bottom:none}
 .field-meta strong{display:block;font-size:12px;font-weight:500;color:var(--ink);line-height:1.3}
 .field-meta span{font-size:9.5px;color:var(--k3)}
 .field-ctrl{display:flex;align-items:center;gap:5px}
-.field-ctrl input[type=number]{width:68px;padding:5px 7px;border:1.5px solid var(--bd);border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--lime);background:var(--s2);outline:none;text-align:right;transition:border-color .12s}
-.field-ctrl input[type=number]:focus{border-color:var(--lime);box-shadow:0 0 0 3px var(--limel)}
+.field-ctrl input[type=number]{width:68px;padding:5px 7px;border:none;border-radius:var(--radius-sm);font-family:var(--mono);font-size:12px;color:var(--green);background:var(--sf);outline:none;text-align:right;transition:all .2s;box-shadow:var(--neu-pressed)}
+.field-ctrl input[type=number]:focus{box-shadow:var(--neu-pressed),0 0 0 2px var(--green)}
 .field-unit{font-size:9px;color:var(--k3);min-width:16px;font-weight:500}
 .slider-row{padding:2px 0 6px}
-input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:var(--s3);border-radius:2px;cursor:pointer;outline:none}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--lime);border:2px solid var(--sf);box-shadow:0 0 8px rgba(163,230,53,.25)}
+input[type=range]{-webkit-appearance:none;width:100%;height:4px;background:var(--s3);border-radius:2px;cursor:pointer;outline:none;box-shadow:var(--neu-pressed)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--green);border:2px solid var(--sf);box-shadow:var(--neu-raised);cursor:pointer}
 .toggle-wrap{display:flex;align-items:center;gap:8px}
-.toggle{width:38px;height:20px;border-radius:10px;background:var(--s3);cursor:pointer;position:relative;transition:background .2s;border:1px solid var(--bd)}
-.toggle.on{background:var(--lime);border-color:var(--lime)}
-.toggle::after{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;top:2px;left:2px;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle{width:38px;height:20px;border-radius:10px;background:var(--sf);cursor:pointer;position:relative;transition:all .2s;border:none;box-shadow:var(--neu-pressed)}
+.toggle.on{background:var(--green);box-shadow:var(--neu-raised)}
+.toggle::after{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform .2s;box-shadow:var(--neu-flat)}
 .toggle.on::after{transform:translateX(18px)}
 .toggle-lbl{font-size:10px;font-weight:500;color:var(--k2)}
 
+/* ── Gauge ── */
 .gauge-wrap{text-align:center;padding:16px}
 .gauge-svg{width:140px;height:140px;display:block;margin:0 auto}
 .gauge-bg{fill:none;stroke:var(--s3);stroke-width:10}
-.gauge-arc{fill:none;stroke:var(--lime);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .6s ease}
-.gauge-text{font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:700;fill:var(--ink)}
-.gauge-label{font-size:8px;fill:var(--k3);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter","Helvetica Neue",sans-serif}
+.gauge-arc{fill:none;stroke:var(--green);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .6s ease}
+.gauge-text{font-family:var(--mono);font-size:24px;font-weight:700;fill:var(--ink)}
+.gauge-label{font-size:8px;fill:var(--k3);font-family:var(--sans)}
 
+/* ── Hero Cards (Production) ── */
 .prod-hero{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:16px}
 @media(max-width:1200px){.prod-hero{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:700px){.prod-hero{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:400px){.prod-hero{grid-template-columns:1fr}}
-.hero-card{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:14px;position:relative;overflow:hidden}
-.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--hc,var(--lime))}
+.hero-card{background:var(--sf);box-shadow:var(--neu-raised);border-radius:var(--radius);padding:14px;position:relative;overflow:hidden}
+.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--hc,var(--green));border-radius:var(--radius) var(--radius) 0 0}
 .hero-card .hc-l{font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--k3);margin-bottom:4px}
-.hero-card .hc-v{font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:300;color:var(--ink);line-height:1}
+.hero-card .hc-v{font-family:var(--mono);font-size:24px;font-weight:300;color:var(--ink);line-height:1}
 .hero-card .hc-u{font-size:10px;color:var(--k3);margin-top:2px}
-.hero-card .hc-s{font-size:9.5px;color:var(--k3);margin-top:4px;font-family:'IBM Plex Mono',monospace}
+.hero-card .hc-s{font-size:9.5px;color:var(--k3);margin-top:4px;font-family:var(--mono)}
 
+/* ── Bar Chart ── */
 .chart-wrap{padding:20px}
 .hbar-chart{display:flex;align-items:flex-end;justify-content:space-around;height:160px;gap:16px}
 .hbar-col{display:flex;flex-direction:column;align-items:center;flex:1;max-width:80px}
-.hbar-val{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:var(--ink);margin-bottom:4px}
-.hbar{width:100%;border-radius:6px 6px 0 0;transition:height .4s cubic-bezier(.4,0,.2,1)}
+.hbar-val{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.hbar{width:100%;border-radius:var(--radius-sm) var(--radius-sm) 0 0;transition:height .4s cubic-bezier(.4,0,.2,1);box-shadow:var(--neu-flat)}
 .hbar-name{font-size:9px;color:var(--k3);margin-top:6px;font-weight:500}
 .hbar-unit{font-size:8px;color:var(--k3);margin-top:1px}
 .chart-totals{display:flex;justify-content:center;gap:32px;margin-top:20px;flex-wrap:wrap}
 .ct-item{text-align:center;min-width:80px}
 .ct-item .ct-l{font-size:9px;color:var(--k3);margin-bottom:2px}
-.ct-item .ct-v{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600}
+.ct-item .ct-v{font-family:var(--mono);font-size:14px;font-weight:600}
 
+/* ── HCl Cards ── */
 .hcl-hero{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
 @media(max-width:700px){.hcl-hero{grid-template-columns:1fr 1fr}}
-.hcl-h-card{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:14px;position:relative;overflow:hidden}
-.hcl-h-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent,var(--amber))}
+.hcl-h-card{background:var(--sf);box-shadow:var(--neu-raised);border-radius:var(--radius);padding:14px;position:relative;overflow:hidden}
+.hcl-h-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,var(--yellow));border-radius:var(--radius) var(--radius) 0 0}
 .hcl-h-card .hh-l{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--k3);margin-bottom:4px}
-.hcl-h-card .hh-v{font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:600;color:var(--accent,var(--amber))}
+.hcl-h-card .hh-v{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--accent,var(--yellow))}
 .hcl-h-card .hh-s{font-size:9px;color:var(--k3);margin-top:2px}
 
+/* ── Valve Grid ── */
 .valve-grid{display:flex;flex-direction:column;gap:10px}
-.valve-entry{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--s2);border:1px solid var(--bd);border-radius:8px}
-.valve-lbl{font-size:10px;font-weight:600;color:var(--amber);width:70px;font-family:'IBM Plex Mono',monospace}
-.valve-track{flex:1;height:8px;background:var(--s3);border-radius:4px;overflow:hidden}
-.valve-fill{height:100%;border-radius:4px;background:var(--amber);transition:width .5s}
-.valve-pct{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--amber);width:45px;text-align:right}
+.valve-entry{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--sf);border-radius:var(--radius-sm);box-shadow:var(--neu-raised)}
+.valve-lbl{font-size:10px;font-weight:600;color:var(--yellow);width:70px;font-family:var(--mono)}
+.valve-track{flex:1;height:8px;background:var(--sf);border-radius:4px;overflow:hidden;box-shadow:var(--neu-pressed)}
+.valve-fill{height:100%;border-radius:4px;background:var(--yellow);transition:width .5s}
+.valve-pct{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--yellow);width:45px;text-align:right}
 .valve-info{font-size:8.5px;color:var(--k3);width:90px;text-align:right}
-.valve-entry.green-valve{border-color:var(--teald);background:var(--teall)}
+.valve-entry.green-valve{box-shadow:var(--neu-raised)}
 .valve-entry.green-valve .valve-lbl{color:var(--teal)}
-.valve-entry.green-valve .valve-track{background:rgba(45,212,191,.15)}
+.valve-entry.green-valve .valve-track{background:var(--sf)}
 .valve-entry.green-valve .valve-fill{background:var(--teal)}
 .valve-entry.green-valve .valve-pct{color:var(--teal)}
 
-.overcap-box{display:none;padding:10px 14px;background:var(--redl);border:1px solid rgba(251,113,133,.2);border-radius:8px;font-size:10px;color:var(--red);font-weight:500}
+.overcap-box{display:none;padding:10px 14px;background:var(--redl);border-radius:var(--radius-sm);font-size:10px;color:var(--red);font-weight:500;box-shadow:var(--neu-flat)}
 .overcap-box.show{display:block}
 
+/* ── Tables ── */
 .nuberg-tbl{width:100%;border-collapse:collapse;font-size:10px}
-.nuberg-tbl th{background:var(--amberl);padding:6px 8px;text-align:center;font-size:8.5px;font-weight:700;color:var(--amber);letter-spacing:.04em;text-transform:uppercase;border-bottom:1px solid rgba(251,191,36,.15)}
-.nuberg-tbl td{padding:5px 8px;text-align:center;border-bottom:1px solid var(--bd);font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--k2)}
-.nuberg-tbl tr.cur td{background:var(--amberl);color:var(--amber);font-weight:600}
+.nuberg-tbl th{background:var(--yellowl);padding:6px 8px;text-align:center;font-size:8.5px;font-weight:700;color:var(--yellow);letter-spacing:.04em;text-transform:uppercase;border-bottom:1px solid var(--bd)}
+.nuberg-tbl td{padding:5px 8px;text-align:center;border-bottom:1px solid var(--bd);font-family:var(--mono);font-size:10px;color:var(--k2)}
+.nuberg-tbl tr.cur td{background:var(--yellowl);color:var(--yellow);font-weight:600;box-shadow:var(--neu-flat)}
 .nuberg-tbl tr.over td{color:var(--red);background:var(--redl)}
 
+/* ── Balance ── */
 .bal-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:750px){.bal-grid{grid-template-columns:1fr}}
-.bal-card{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:16px}
+.bal-card{background:var(--sf);box-shadow:var(--neu-raised);border-radius:var(--radius);padding:16px}
 .bal-card-title{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--k3);margin-bottom:12px;display:flex;align-items:center;gap:6px}
 .bal-card-title::before{content:'';width:3px;height:10px;border-radius:2px;background:var(--purple)}
 
 .stream-flow{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
-.snode{background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:6px 10px;text-align:center}
+.snode{background:var(--sf);border-radius:var(--radius-sm);padding:6px 10px;text-align:center;box-shadow:var(--neu-flat)}
 .snode .sn-l{font-size:7px;font-weight:700;color:var(--k3);text-transform:uppercase;letter-spacing:.06em}
-.snode .sn-v{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;color:var(--ink);margin-top:2px}
+.snode .sn-v{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--ink);margin-top:2px}
 .sarrow{color:var(--k3);font-size:10px}
-.snode.c-n{border-color:var(--teald);background:var(--teall)}.snode.c-n .sn-v{color:var(--teal)}
-.snode.c-l{border-color:var(--limed);background:var(--limel)}.snode.c-l .sn-v{color:var(--lime)}
-.snode.c-p{border-color:var(--purpled);background:var(--purplel)}.snode.c-p .sn-v{color:var(--purple)}
-.snode.c-a{border-color:var(--amberd);background:var(--amberl)}.snode.c-a .sn-v{color:var(--amber)}
-.snode.c-o{border-color:var(--amberd);background:var(--amberl)}.snode.c-o .sn-v{color:var(--amber)}
+.snode.c-n{box-shadow:var(--neu-raised)}.snode.c-n .sn-v{color:var(--teal)}
+.snode.c-l{box-shadow:var(--neu-raised)}.snode.c-l .sn-v{color:var(--green)}
+.snode.c-p{box-shadow:var(--neu-raised)}.snode.c-p .sn-v{color:var(--purple)}
+.snode.c-a{box-shadow:var(--neu-raised)}.snode.c-a .sn-v{color:var(--yellow)}
+.snode.c-o{box-shadow:var(--neu-raised)}.snode.c-o .sn-v{color:var(--yellow)}
 
 .bal-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
 .bal-row .br-l{font-size:10px;color:var(--k2);width:85px;flex-shrink:0}
-.bal-row .br-v{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;color:var(--ink);width:80px;text-align:right;flex-shrink:0}
-.bal-bar{flex:1;height:6px;background:var(--s3);border-radius:3px;overflow:hidden}
+.bal-row .br-v{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--ink);width:80px;text-align:right;flex-shrink:0}
+.bal-bar{flex:1;height:6px;background:var(--sf);border-radius:3px;overflow:hidden;box-shadow:var(--neu-pressed)}
 .bal-fill{height:100%;border-radius:3px;transition:width .5s}
 .bal-m3{font-size:9px;color:var(--k3);margin-top:8px;font-style:italic}
 
 .flow-detail{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-.fd-card{background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:12px}
+.fd-card{background:var(--sf);border-radius:var(--radius-sm);padding:12px;box-shadow:var(--neu-flat)}
 .fd-title{font-size:8px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--k3);margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .fd-title::before{content:'';width:3px;height:10px;border-radius:2px;background:var(--blue)}
 .fd-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--s3)}
 .fd-row:last-child{border-bottom:none}
 .fd-row .fd-l{font-size:9px;color:var(--k2)}
-.fd-row .fd-v{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;color:var(--ink)}
-.fd-bar{height:4px;background:var(--s3);border-radius:2px;margin-top:4px;overflow:hidden}
+.fd-row .fd-v{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--ink)}
+.fd-bar{height:4px;background:var(--sf);border-radius:2px;margin-top:4px;overflow:hidden;box-shadow:var(--neu-pressed)}
 .fd-bar-fill{height:100%;border-radius:2px;transition:width .5s}
-.formula-hint{margin-top:10px;padding:8px 10px;background:var(--s2);border-radius:8px;font-size:8px;color:var(--k3);line-height:1.6;font-family:'IBM Plex Mono',monospace}
+.formula-hint{margin-top:10px;padding:8px 10px;background:var(--sf);border-radius:var(--radius-sm);font-size:8px;color:var(--k3);line-height:1.6;font-family:var(--mono);box-shadow:var(--neu-pressed)}
 
+/* ── Scenario Table ── */
 .sc-wrap{overflow-x:auto}
 .sc-tbl{width:100%;border-collapse:collapse}
 .sc-tbl th{font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--k3);padding:8px 10px;text-align:right;background:var(--s2);border-bottom:1px solid var(--bd);white-space:nowrap}
 .sc-tbl th:first-child{text-align:left}
-.sc-tbl tr{border-bottom:1px solid var(--bd);cursor:pointer;transition:background .1s}
-.sc-tbl tr:hover{background:var(--s2)}
-.sc-tbl tr.active{background:var(--limel)}
-.sc-tbl tr.active td{color:var(--lime);font-weight:500}
-.sc-tbl td{padding:6px 10px;text-align:right;font-size:10px;color:var(--k2);font-family:'IBM Plex Mono',monospace}
-.sc-tbl td:first-child{text-align:left;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter","Helvetica Neue",sans-serif;color:var(--ink)}
-.sc-tbl .star{color:var(--lime)}
-td.heat-0{background:rgba(163,230,53,.18)!important}
-td.heat-1{background:rgba(163,230,53,.10)!important}
+.sc-tbl tr{border-bottom:1px solid var(--bd);cursor:pointer;transition:all .2s}
+.sc-tbl tr:hover{background:var(--s2);box-shadow:var(--neu-flat)}
+.sc-tbl tr.active{background:var(--greenl);box-shadow:var(--neu-raised)}
+.sc-tbl tr.active td{color:var(--green);font-weight:500}
+.sc-tbl td{padding:6px 10px;text-align:right;font-size:10px;color:var(--k2);font-family:var(--mono)}
+.sc-tbl td:first-child{text-align:left;font-family:var(--sans);color:var(--ink)}
+.sc-tbl .star{color:var(--green)}
+td.heat-0{background:rgba(34,197,94,.15)!important}
+td.heat-1{background:rgba(34,197,94,.08)!important}
 td.heat-2{background:transparent!important}
-td.heat-3{background:rgba(251,191,36,.12)!important}
-td.heat-4{background:rgba(251,113,133,.15)!important}
-td.heat-5{background:rgba(251,113,133,.25)!important}
-tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,tr.active td.heat-4,tr.active td.heat-5{background:var(--limel)!important}
+td.heat-3{background:rgba(234,179,8,.10)!important}
+td.heat-4{background:rgba(239,68,68,.12)!important}
+td.heat-5{background:rgba(239,68,68,.22)!important}
+tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,tr.active td.heat-4,tr.active td.heat-5{background:var(--greenl)!important}
 
+/* ── Reactions ── */
 .rx-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 @media(max-width:750px){.rx-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:420px){.rx-grid{grid-template-columns:1fr}}
-.rx-card{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:12px;border-left:3px solid var(--b2)}
-.rx-card.danger{background:var(--redl);border-left-color:var(--red)}
-.rx-card.hcl-r{background:var(--amberl);border-left-color:var(--amber)}
+.rx-card{background:var(--sf);border-radius:var(--radius);padding:12px;border-left:3px solid var(--b2);box-shadow:var(--neu-raised)}
+.rx-card.danger{background:var(--redl);border-left-color:var(--red);box-shadow:var(--neu-raised)}
+.rx-card.hcl-r{background:var(--yellowl);border-left-color:var(--yellow);box-shadow:var(--neu-raised)}
 .rx-card .rx-type{font-size:7.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--k3);margin-bottom:3px}
 .rx-card.danger .rx-type{color:var(--red)}
-.rx-card.hcl-r .rx-type{color:var(--amber)}
-.rx-card .rx-eq{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink);line-height:1.5}
+.rx-card.hcl-r .rx-type{color:var(--yellow)}
+.rx-card .rx-eq{font-family:var(--mono);font-size:10px;color:var(--ink);line-height:1.5}
 .rx-card.danger .rx-eq{color:var(--red)}
-.rx-card.hcl-r .rx-eq{color:var(--amber)}
+.rx-card.hcl-r .rx-eq{color:var(--yellow)}
 .rx-card .rx-note{font-size:8.5px;color:var(--k3);margin-top:3px;font-style:italic}
 
-.foot{background:var(--sf);border-top:1px solid var(--bd);padding:10px 24px 10px 76px;display:flex;align-items:center;justify-content:space-between;font-size:9px;color:var(--k3);gap:12px;flex-wrap:wrap}
+/* ── Footer ── */
+.foot{background:var(--sf);box-shadow:var(--neu-flat);padding:10px 24px 10px 76px;display:flex;align-items:center;justify-content:space-between;font-size:9px;color:var(--k3);gap:12px;flex-wrap:wrap}
 .foot-items{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .foot-items span::before{content:'·';margin-right:14px;color:var(--b2)}
 .foot-items span:first-child::before{display:none}
 .foot-items strong{color:var(--k2)}
-.foot-items .mono{font-family:'IBM Plex Mono',monospace}
+.foot-items .mono{font-family:var(--mono)}
+
+/* ── Cell Status Grid ── */
+.cell-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:750px){.cell-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
 <nav class="rail" id="rail">
   <div class="rail-logo"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-  <button class="rail-btn active" data-tab="inputs" title="Inputs"><span class="rail-icon">⚡</span><span class="rail-label">Inputs</span></button>
-  <button class="rail-btn" data-tab="production" title="Production"><span class="rail-icon">📊</span><span class="rail-label">Production</span></button>
-  <button class="rail-btn" data-tab="hcl" title="HCl Unit"><span class="rail-icon">🏭</span><span class="rail-label">HCl Unit</span></button>
-  <button class="rail-btn" data-tab="balance" title="Balance & Flow"><span class="rail-icon">⚖️</span><span class="rail-label">Balance</span></button>
-  <button class="rail-btn" data-tab="scenarios" title="Scenarios"><span class="rail-icon">📋</span><span class="rail-label">Scenarios</span></button>
-  <button class="rail-btn" data-tab="reactions" title="Reactions"><span class="rail-icon">🔬</span><span class="rail-label">Reactions</span></button>
+  <button class="rail-btn active" data-tab="inputs" title="Inputs"><span class="rail-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg></span><span class="rail-label">Inputs</span></button>
+  <button class="rail-btn" data-tab="production" title="Production"><span class="rail-icon"><svg viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="9"/><rect x="10" y="7" width="4" height="14"/><rect x="17" y="3" width="4" height="18"/></svg></span><span class="rail-label">Production</span></button>
+  <button class="rail-btn" data-tab="hcl" title="HCl Unit"><span class="rail-icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg></span><span class="rail-label">HCl Unit</span></button>
+  <button class="rail-btn" data-tab="balance" title="Balance & Flow"><span class="rail-icon"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12l9-9 9 9"/></svg></span><span class="rail-label">Balance</span></button>
+  <button class="rail-btn" data-tab="scenarios" title="Scenarios"><span class="rail-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></span><span class="rail-label">Scenarios</span></button>
+  <button class="rail-btn" data-tab="reactions" title="Reactions"><span class="rail-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></span><span class="rail-label">Reactions</span></button>
   <div class="rail-spacer"></div>
-  <button class="rail-btn theme-rail" id="themeBtn" title="Toggle theme"><span class="rail-icon">🌙</span><span class="rail-label">Theme</span></button>
+  <button class="rail-btn" id="themeBtn" title="Toggle theme"><span class="rail-icon" id="themeIcon"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span><span class="rail-label">Theme</span></button>
+  <a href="stock.html" class="rail-btn" title="Stock"><span class="rail-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span><span class="rail-label">Stock</span></a>
 </nav>
 
 <button class="hamburger" id="hamburgerBtn">
@@ -283,7 +313,7 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
 <div class="shell">
   <div class="ticker">
     <div class="ticker-inner">
-      <div class="ticker-item" style="min-width:200px;border-right:1px solid var(--bd)"><div class="tk-label">Plant</div><div class="tk-val" style="color:var(--ink);font-size:12px;font-weight:600">North Africa Chemical — Équipe B</div></div>
+      <div class="ticker-item" style="min-width:200px;border-right:1px solid var(--bd)"><div class="tk-label">Plant</div><div class="tk-val" style="color:var(--ink);font-size:12px;font-weight:600">North Africa Chemical</div></div>
       <div class="ticker-item"><div class="tk-label">NaOCl</div><div class="tk-val green" id="t-naocl">—</div><div class="tk-sub" id="t-naocl-s">—</div></div>
       <div class="ticker-item"><div class="tk-label">Cl₂ Total</div><div class="tk-val blue" id="t-cl2">—</div><div class="tk-sub" id="t-cl2-s">—</div></div>
       <div class="ticker-item"><div class="tk-label">Cl₂ → HCl</div><div class="tk-val orange" id="t-hcl">—</div><div class="tk-sub" id="t-hcl-s">Unit off</div></div>
@@ -292,6 +322,7 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
       <div class="ticker-item"><div class="tk-label">H₂</div><div class="tk-val teal" id="t-h2">—</div><div class="tk-sub" id="t-h2-s">—</div></div>
       <div class="tk-live">Live</div>
       <div class="tk-actions">
+        <button class="tk-btn" onclick="window.location.href='stock.html'"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg> Stock</button>
         <button class="tk-btn primary" id="exportBtn">Export PDF</button>
       </div>
     </div>
@@ -305,24 +336,24 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
     <div class="tab-page active" id="page-inputs">
       <div class="inputs-grid">
         <div class="card">
-          <div class="card-head"><div class="card-icon" style="background:var(--limel)">⚡</div><div class="card-title">Electrolyzer</div></div>
+          <div class="card-head"><div class="card-icon" style="background:var(--greenl);color:var(--green)"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><div class="card-title">Electrolyzer</div></div>
           <div class="input-group">
             <div class="ig-label">Settings</div>
             <div class="field-row"><div class="field-meta"><strong>Rectifier Current — I</strong><span>Max: 16.2 kA</span></div><div class="field-ctrl"><input type="number" id="cur" value="11" min="0" max="16.2" step="0.1"><span class="field-unit">kA</span></div></div>
             <div class="slider-row"><input type="range" id="cur-s" min="0" max="16.2" step="0.1" value="11"></div>
-            <div class="field-row"><div class="field-meta"><strong>Active Cells — N</strong><span>Max: 48 cells</span></div><div class="field-ctrl"><input type="number" id="cel" value="31" min="1" max="48" step="1"><span class="field-unit">cells</span></div></div>
-            <div class="slider-row"><input type="range" id="cel-s" min="1" max="48" step="1" value="31"></div>
+            <div class="field-row"><div class="field-meta"><strong>Active Cells — N</strong><span>Phase 1: 32 → 17 MTPD · Phase 2: 46 → 24 MTPD</span></div><div class="field-ctrl"><input type="number" id="cel" value="32" min="1" max="48" step="1"><span class="field-unit">cells</span></div></div>
+            <div class="slider-row"><input type="range" id="cel-s" min="1" max="48" step="1" value="32"></div>
             <div class="field-row"><div class="field-meta"><strong>Current Efficiency — CE</strong><span>New 95.5% · End 92%</span></div><div class="field-ctrl"><input type="number" id="ce" value="96" min="85" max="100" step="0.5"><span class="field-unit">%</span></div></div>
           </div>
           <div class="input-group">
             <div class="ig-label">Cell Specs</div>
             <div class="field-row"><div class="field-meta"><strong>Cell Area — A<sub>cell</sub></strong><span>NBZ-2.7 spec</span></div><div class="field-ctrl"><input type="number" id="cell-area" value="2.7" min="1" max="5" step="0.1"><span class="field-unit">m²</span></div></div>
-            <div class="field-row"><div class="field-meta"><strong>Cell Voltage — V<sub>cell</sub></strong><span>NBZ-2.7 ≤2.96V</span></div><div class="field-ctrl"><input type="number" id="vcell" value="2.96" min="2.0" max="4.0" step="0.01"><span class="field-unit">V</span></div></div>
-            <div class="slider-row"><input type="range" id="vcell-s" min="2.0" max="4.0" step="0.01" value="2.96"></div>
+            <div class="field-row"><div class="field-meta"><strong>Cell Voltage — V<sub>cell</sub></strong><span>NBZ-2.7 initial 3.0V</span></div><div class="field-ctrl"><input type="number" id="vcell" value="3.0" min="2.0" max="4.0" step="0.01"><span class="field-unit">V</span></div></div>
+            <div class="slider-row"><input type="range" id="vcell-s" min="2.0" max="4.0" step="0.01" value="3.0"></div>
           </div>
         </div>
         <div class="card">
-          <div class="card-head"><div class="card-icon" style="background:var(--teall)">🧪</div><div class="card-title">Hypochlorite</div></div>
+          <div class="card-head"><div class="card-icon" style="background:var(--teall);color:var(--teal)"><svg viewBox="0 0 24 24"><path d="M6 3v18M18 3v18M6 12h12"/></svg></div><div class="card-title">Hypochlorite</div></div>
           <div class="input-group">
             <div class="ig-label">Settings</div>
             <div class="field-row"><div class="field-meta"><strong>NaOCl Concentration</strong><span>125–180 g/L</span></div><div class="field-ctrl"><input type="number" id="con" value="132" min="100" max="180" step="1"><span class="field-unit">g/L</span></div></div>
@@ -332,26 +363,26 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
           </div>
         </div>
         <div class="card">
-          <div class="card-head"><div class="card-icon" style="background:var(--amberl)">🏭</div><div class="card-title">HCl Unit</div></div>
+          <div class="card-head"><div class="card-icon" style="background:var(--yellowl);color:var(--yellow)"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg></div><div class="card-title">HCl Unit</div></div>
           <div class="input-group">
             <div class="ig-label">Unit Status</div>
             <div class="field-row">
-              <div class="field-meta"><strong>HCl Unit — U-8101</strong><span>Max 24 T/j</span></div>
+              <div class="field-meta"><strong>HCl Unit — U-8101</strong><span>Max 23 T/j</span></div>
               <div class="toggle-wrap"><div class="toggle" id="hcl-btn" onclick="toggleHcl()"></div><span class="toggle-lbl" id="hcl-lbl">Off</span></div>
             </div>
             <div id="hcl-target-row" class="field-row" style="display:none">
-              <div class="field-meta"><strong>HCl Production Target</strong><span>Max: 24 T/j</span></div><div class="field-ctrl"><input type="number" id="hcl-t" value="23" min="0" max="24" step="0.5"><span class="field-unit">T/j</span></div>
+              <div class="field-meta"><strong>HCl Production Target</strong><span>Max: 23 T/j</span></div><div class="field-ctrl"><input type="number" id="hcl-t" value="23" min="0" max="23" step="0.5"><span class="field-unit">T/j</span></div>
             </div>
-            <div class="slider-row" id="hcl-target-slider" style="display:none"><input type="range" id="hcl-t-s" min="0" max="24" step="0.5" value="23"></div>
+            <div class="slider-row" id="hcl-target-slider" style="display:none"><input type="range" id="hcl-t-s" min="0" max="23" step="0.5" value="23"></div>
           </div>
         </div>
         <div class="card">
-          <div class="card-head"><div class="card-icon" style="background:var(--bluel)">🌊</div><div class="card-title">Brine & Catholyte</div></div>
+          <div class="card-head"><div class="card-icon" style="background:var(--bluel);color:var(--blue)"><svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg></div><div class="card-title">Brine & Catholyte</div></div>
           <div class="input-group">
             <div class="ig-label">Brine Flow</div>
             <div class="field-row"><div class="field-meta"><strong>Brine Inlet Conc.</strong><span>Saturated brine</span></div><div class="field-ctrl"><input type="number" id="brine-in" value="300" min="200" max="320" step="5"><span class="field-unit">g/L</span></div></div>
             <div class="field-row"><div class="field-meta"><strong>Spent Brine Conc.</strong><span>After electrolysis</span></div><div class="field-ctrl"><input type="number" id="brine-out" value="210" min="150" max="300" step="5"><span class="field-unit">g/L</span></div></div>
-            <div class="field-row"><div class="field-meta"><strong>Brine Flow / Cell</strong><span>Manufacturer ref</span></div><div class="field-ctrl"><input type="number" id="brine-q" value="5.0" min="1" max="15" step="0.1"><span class="field-unit">L/min</span></div></div>
+            <div class="field-row"><div class="field-meta"><strong>Brine Flow / Cell</strong><span>Manual: 6.72 m³/h total</span></div><div class="field-ctrl"><input type="number" id="brine-q" value="3.5" min="1" max="15" step="0.1"><span class="field-unit">L/min</span></div></div>
           </div>
           <div class="input-group">
             <div class="ig-label">Catholyte Flow</div>
@@ -366,9 +397,9 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
 
     <!-- ══════ PRODUCTION ══════ -->
     <div class="tab-page" id="page-production">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+      <div class="cell-grid">
         <div class="card" style="margin-bottom:0">
-          <div class="card-head"><div class="card-icon" style="background:var(--limel)">🎯</div><div class="card-title">Capacity Utilization</div></div>
+          <div class="card-head"><div class="card-icon" style="background:var(--greenl);color:var(--green)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div class="card-title">Capacity Utilization</div></div>
           <div class="gauge-wrap">
             <svg class="gauge-svg" viewBox="0 0 140 140">
               <circle class="gauge-bg" cx="70" cy="70" r="55"/>
@@ -379,34 +410,34 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
           </div>
         </div>
         <div class="card" style="margin-bottom:0">
-          <div class="card-head"><div class="card-icon" style="background:var(--bluel)">⚡</div><div class="card-title">Cell Status</div></div>
+          <div class="card-head"><div class="card-icon" style="background:var(--bluel);color:var(--blue)"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="card-title">Cell Status</div></div>
           <div style="padding:16px">
-            <div class="field-row"><div class="field-meta"><strong>Current Density — j</strong></div><div class="field-ctrl"><span class="field-unit" id="kj" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--blue)">— kA/m²</span></div></div>
-            <div class="field-row"><div class="field-meta"><strong>Cell Voltage</strong></div><div class="field-ctrl"><span class="field-unit" id="kvcell" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--amber)">— V</span></div></div>
-            <div class="field-row"><div class="field-meta"><strong>NaOH / Cell</strong></div><div class="field-ctrl"><span class="field-unit" id="knaoh-c" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--purple)">— kg/h</span></div></div>
-            <div class="field-row"><div class="field-meta"><strong>Heat Generated</strong></div><div class="field-ctrl"><span class="field-unit" id="kheat" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--red)">— kW</span></div></div>
+            <div class="field-row"><div class="field-meta"><strong>Current Density — j</strong></div><div class="field-ctrl"><span class="field-unit" id="kj" style="font-family:var(--mono);font-size:12px;color:var(--blue)">— kA/m²</span></div></div>
+            <div class="field-row"><div class="field-meta"><strong>Cell Voltage</strong></div><div class="field-ctrl"><span class="field-unit" id="kvcell" style="font-family:var(--mono);font-size:12px;color:var(--yellow)">— V</span></div></div>
+            <div class="field-row"><div class="field-meta"><strong>NaOH / Cell</strong></div><div class="field-ctrl"><span class="field-unit" id="knaoh-c" style="font-family:var(--mono);font-size:12px;color:var(--purple)">— kg/h</span></div></div>
+            <div class="field-row"><div class="field-meta"><strong>Heat Generated</strong></div><div class="field-ctrl"><span class="field-unit" id="kheat" style="font-family:var(--mono);font-size:12px;color:var(--red)">— kW</span></div></div>
           </div>
         </div>
       </div>
       <div class="prod-hero">
-        <div class="hero-card" style="--hc:var(--lime)"><div class="hc-l">NaOCl Solution</div><div class="hc-v" id="knaocl">—</div><div class="hc-u">L / hour</div><div class="hc-s" id="snaocl">—</div></div>
+        <div class="hero-card" style="--hc:var(--green)"><div class="hc-l">NaOCl Solution</div><div class="hc-v" id="knaocl">—</div><div class="hc-u">L / hour</div><div class="hc-s" id="snaocl">—</div></div>
         <div class="hero-card" style="--hc:var(--blue)"><div class="hc-l">Total Cl₂ Produced</div><div class="hc-v" id="kcl2">—</div><div class="hc-u">kg / hour</div><div class="hc-s" id="scl2">—</div></div>
-        <div class="hero-card" style="--hc:var(--amber)"><div class="hc-l">Cl₂ → HCl Unit</div><div class="hc-v" id="khcl">—</div><div class="hc-u">kg / hour</div><div class="hc-s" id="shcl">Unit is off</div><div class="hc-s" id="shcl-m3" style="display:none"></div></div>
+        <div class="hero-card" style="--hc:var(--yellow)"><div class="hc-l">Cl₂ → HCl Unit</div><div class="hc-v" id="khcl">—</div><div class="hc-u">kg / hour</div><div class="hc-s" id="shcl">Unit is off</div><div class="hc-s" id="shcl-m3" style="display:none"></div></div>
         <div class="hero-card" style="--hc:var(--teal)"><div class="hc-l">H₂ → HCl Unit</div><div class="hc-v" id="kh2hcl">—</div><div class="hc-u">kg / hour</div><div class="hc-s" id="sh2hcl">Unit is off</div></div>
         <div class="hero-card" style="--hc:var(--purple)"><div class="hc-l">Caustic Soda NaOH</div><div class="hc-v" id="knaoh">—</div><div class="hc-u">kg / hour</div><div class="hc-s" id="snaoh">—</div><div class="hc-s" id="snaoh-m3"></div></div>
         <div class="hero-card" style="--hc:var(--teal)"><div class="hc-l">Hydrogen H₂</div><div class="hc-v" id="kh2">—</div><div class="hc-u">kg / hour</div><div class="hc-s" id="sh2">—</div></div>
       </div>
       <div class="card">
-        <div class="card-head"><div class="card-icon" style="background:var(--bluel)">📊</div><div class="card-title">Production Volume (m³/day)</div></div>
+        <div class="card-head"><div class="card-icon" style="background:var(--bluel);color:var(--blue)"><svg viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="9"/><rect x="10" y="7" width="4" height="14"/><rect x="17" y="3" width="4" height="18"/></svg></div><div class="card-title">Production Volume (m³/day)</div></div>
         <div class="chart-wrap">
           <div class="hbar-chart">
-            <div class="hbar-col"><div class="hbar-val" id="bar-naocl-v">—</div><div class="hbar" style="background:var(--lime);height:0px" id="bar-naocl"></div><div class="hbar-name">NaOCl</div><div class="hbar-unit">m³/h</div></div>
-            <div class="hbar-col"><div class="hbar-val" id="bar-hcl-v">—</div><div class="hbar" style="background:var(--amber);height:0px" id="bar-hcl"></div><div class="hbar-name">HCl 32%</div><div class="hbar-unit">m³/h</div></div>
+            <div class="hbar-col"><div class="hbar-val" id="bar-naocl-v">—</div><div class="hbar" style="background:var(--green);height:0px" id="bar-naocl"></div><div class="hbar-name">NaOCl</div><div class="hbar-unit">m³/h</div></div>
+            <div class="hbar-col"><div class="hbar-val" id="bar-hcl-v">—</div><div class="hbar" style="background:var(--yellow);height:0px" id="bar-hcl"></div><div class="hbar-name">HCl 32%</div><div class="hbar-unit">m³/h</div></div>
             <div class="hbar-col"><div class="hbar-val" id="bar-naoh-v">—</div><div class="hbar" style="background:var(--purple);height:0px" id="bar-naoh"></div><div class="hbar-name">NaOH Net</div><div class="hbar-unit">m³/h</div></div>
           </div>
           <div class="chart-totals">
-            <div class="ct-item"><div class="ct-l">NaOCl</div><div class="ct-v" style="color:var(--lime)" id="naocl-total">— m³/d</div></div>
-            <div class="ct-item"><div class="ct-l">HCl 32%</div><div class="ct-v" style="color:var(--amber)" id="hcl-total">— m³/d</div></div>
+            <div class="ct-item"><div class="ct-l">NaOCl</div><div class="ct-v" style="color:var(--green)" id="naocl-total">— m³/d</div></div>
+            <div class="ct-item"><div class="ct-l">HCl 32%</div><div class="ct-v" style="color:var(--yellow)" id="hcl-total">— m³/d</div></div>
             <div class="ct-item"><div class="ct-l">NaOH Net</div><div class="ct-v" style="color:var(--purple)" id="naoh-total">— m³/d</div></div>
           </div>
         </div>
@@ -416,13 +447,13 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
     <!-- ══════ HCL ══════ -->
     <div class="tab-page" id="page-hcl">
       <div id="hcl-off-msg" style="text-align:center;padding:60px 20px;color:var(--k3);font-size:13px">
-        <div style="font-size:40px;margin-bottom:12px;opacity:.4">🏭</div>
-        HCl Unit is <strong style="color:var(--amber)">Off</strong><br><span style="font-size:11px">Enable it in the Inputs tab to see HCl production details.</span>
+        <svg viewBox="0 0 24 24" style="width:40px;height:40px;stroke:var(--k3);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin-bottom:12px;opacity:.4"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg>
+        HCl Unit is <strong style="color:var(--yellow)">Off</strong><br><span style="font-size:11px">Enable it in the Inputs tab to see HCl production details.</span>
       </div>
       <div id="hcl-content" style="display:none">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-          <div style="display:flex;align-items:center;gap:10px"><span style="font-size:20px">🏭</span><span style="font-size:14px;font-weight:600">HCl Unit U-8101</span></div>
-          <span id="hcl-cap-badge" style="font-size:9px;font-weight:700;padding:5px 12px;border-radius:6px;background:var(--amber);color:#000;letter-spacing:.04em">RUNNING</span>
+          <div style="display:flex;align-items:center;gap:10px"><svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--yellow);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg><span style="font-size:14px;font-weight:600">HCl Unit U-8101</span></div>
+          <span id="hcl-cap-badge" style="font-size:9px;font-weight:700;padding:5px 12px;border-radius:var(--radius-sm);background:var(--yellow);color:#000;letter-spacing:.04em">RUNNING</span>
         </div>
         <div class="hcl-hero">
           <div class="hcl-h-card"><div class="hh-l">HCl 32% Output</div><div class="hh-v" id="hk-hcl-tj">—</div><div class="hh-s">T/j</div></div>
@@ -431,18 +462,18 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
           <div class="hcl-h-card"><div class="hh-l">Cl₂ → NaOCl</div><div class="hh-v" id="hk-rem-cl2">—</div><div class="hh-s">kg/h → <span id="hk-rem-naocl">—</span> L/h</div></div>
         </div>
         <div class="card">
-          <div class="card-head"><div class="card-icon" style="background:var(--amberl)">🔧</div><div class="card-title">Valve Opening</div></div>
+          <div class="card-head"><div class="card-icon" style="background:var(--yellowl);color:var(--yellow)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div><div class="card-title">Valve Opening</div></div>
           <div style="padding:14px 16px">
             <div class="valve-grid">
               <div class="valve-entry"><span class="valve-lbl">FV-Cl₂</span><div class="valve-track"><div class="valve-fill" id="vbar-cl2"></div></div><span class="valve-pct" id="vpct-cl2">—</span><span class="valve-info" id="vnote-cl2">—</span></div>
               <div class="valve-entry"><span class="valve-lbl">FV-H₂</span><div class="valve-track"><div class="valve-fill" id="vbar-h2"></div></div><span class="valve-pct" id="vpct-h2">—</span><span class="valve-info" id="vnote-h2">—</span></div>
               <div class="valve-entry green-valve"><span class="valve-lbl">FV-Hypo</span><div class="valve-track"><div class="valve-fill" id="vbar-hypo"></div></div><span class="valve-pct" id="vpct-hypo">—</span><span class="valve-info" id="vnote-hypo">remainder</span></div>
             </div>
-            <div class="overcap-box" id="overcap-warn" style="margin-top:12px">⚠ Cl₂ available (<span id="oc-avail">0</span>) &lt; required (<span id="oc-req">0</span>)</div>
+            <div class="overcap-box" id="overcap-warn" style="margin-top:12px">Cl₂ available (<span id="oc-avail">0</span>) &lt; required (<span id="oc-req">0</span>)</div>
           </div>
         </div>
         <div class="card">
-          <div class="card-head"><div class="card-icon" style="background:var(--amberl)">📋</div><div class="card-title">Nuberg EPC Production Table</div></div>
+          <div class="card-head"><div class="card-icon" style="background:var(--yellowl);color:var(--yellow)"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg></div><div class="card-title">Nuberg EPC Production Table</div></div>
           <div style="overflow-x:auto;padding:0 0 4px">
             <table class="nuberg-tbl"><thead><tr><th>Cl₂ NM³/h</th><th>kg/h</th><th>H₂ NM³/h</th><th>DMW L/h</th><th>HCl T/j</th><th>kg/h</th><th>Status</th></tr></thead><tbody id="nuberg-tbody"></tbody></table>
           </div>
@@ -454,7 +485,7 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
     <div class="tab-page" id="page-balance">
       <div class="bal-grid">
         <div class="card">
-          <div class="card-head"><div class="card-icon" style="background:var(--teall)">🔄</div><div class="card-title">Process Stream</div></div>
+          <div class="card-head"><div class="card-icon" style="background:var(--teall);color:var(--teal)"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></div><div class="card-title">Process Stream</div></div>
           <div style="padding:16px">
             <div class="stream-flow">
               <div class="snode" style="border-color:var(--teald);background:var(--teall)"><div class="sn-l">Brine</div><div class="sn-v">NaCl</div></div>
@@ -471,12 +502,12 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
           </div>
         </div>
         <div class="card">
-          <div class="card-head"><div class="card-icon" style="background:var(--purplel)">⚖️</div><div class="card-title">NaOH Balance (kg/h)</div></div>
+          <div class="card-head"><div class="card-icon" style="background:var(--purplel);color:var(--purple)"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12l9-9 9 9"/></svg></div><div class="card-title">NaOH Balance (kg/h)</div></div>
           <div style="padding:16px">
             <div class="bal-row"><span class="br-l">Produced</span><div class="bal-bar"><div class="bal-fill" id="bbp" style="background:var(--purple);opacity:.7"></div></div><span class="br-v" id="bnp">—</span></div>
             <div class="bal-row"><span class="br-l">Consumed</span><div class="bal-bar"><div class="bal-fill" id="bbr" style="background:var(--blue);opacity:.7"></div></div><span class="br-v" id="bnr">—</span></div>
             <div class="bal-row"><span class="br-l">HGW dilution</span><div class="bal-bar"><div class="bal-fill" id="bbh" style="background:var(--teal);opacity:.7"></div></div><span class="br-v" id="bnh">—</span></div>
-            <div class="bal-row"><span class="br-l">Net sale</span><div class="bal-bar"><div class="bal-fill" id="bbn" style="background:var(--lime)"></div></div><span class="br-v" id="bnn" style="color:var(--lime)">—</span></div>
+            <div class="bal-row"><span class="br-l">Net sale</span><div class="bal-bar"><div class="bal-fill" id="bbn" style="background:var(--green)"></div></div><span class="br-v" id="bnn" style="color:var(--green)">—</span></div>
             <div class="bal-m3" id="bnn-m3">—</div>
           </div>
         </div>
@@ -509,7 +540,7 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
     <!-- ══════ SCENARIOS ══════ -->
     <div class="tab-page" id="page-scenarios">
       <div class="card">
-        <div class="card-head"><div class="card-icon" style="background:var(--limel)">📋</div><div class="card-title">Scenario Table — click to apply</div></div>
+        <div class="card-head"><div class="card-icon" style="background:var(--greenl);color:var(--green)"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg></div><div class="card-title">Scenario Table — click to apply</div></div>
         <div class="sc-wrap"><table class="sc-tbl"><thead><tr><th>kA</th><th>Cells</th><th>j kA/m²</th><th>NaOH MTPD</th><th>Cl₂ kg/h</th><th>NaOCl L/h</th><th>H₂ kg/h</th></tr></thead><tbody id="sb"></tbody></table></div>
       </div>
     </div>
@@ -521,7 +552,7 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
         <div class="rx-card"><div class="rx-type">Cathode (−)</div><div class="rx-eq">2H₂O + 2e⁻ → H₂ + 2OH⁻</div><div class="rx-note">H₂ + hydroxide</div></div>
         <div class="rx-card"><div class="rx-type">Overall cell</div><div class="rx-eq">2NaCl + 2H₂O →<br>Cl₂ + H₂ + 2NaOH</div><div class="rx-note">Electrolysis</div></div>
         <div class="rx-card"><div class="rx-type">Hypo absorption</div><div class="rx-eq">Cl₂ + 2NaOH →<br>NaOCl + NaCl + H₂O</div><div class="rx-note">C-6101 columns</div></div>
-        <div class="rx-card danger"><div class="rx-type">⚠ Hypo decomp</div><div class="rx-eq">2NaOCl → 2NaCl + O₂</div><div class="rx-note">Above 38°C — AVOID!</div></div>
+        <div class="rx-card danger"><div class="rx-type">Hypo decomp</div><div class="rx-eq">2NaOCl → 2NaCl + O₂</div><div class="rx-note">Above 38°C — AVOID!</div></div>
         <div class="rx-card hcl-r"><div class="rx-type">HCl synthesis</div><div class="rx-eq">Cl₂ + H₂ → 2HCl</div><div class="rx-note">U-8101 burner</div></div>
         <div class="rx-card"><div class="rx-type">Fixed ratios</div><div class="rx-eq">70.9g Cl₂ : 80g NaOH : 2g H₂</div><div class="rx-note">Faraday law</div></div>
         <div class="rx-card"><div class="rx-type">Brine softening</div><div class="rx-eq">Na₂CO₃ + Ca²⁺ → CaCO₃↓</div><div class="rx-note">R-1201 Ca removal</div></div>
@@ -532,17 +563,20 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
   </div>
 
   <footer class="foot">
-    <div class="foot-items"><span>Anchor: 11 kA · 31 cells → <strong id="ft-anchor">—</strong></span><span>HCl: · Max 24 T/j</span><span>CE: <span id="ftce">96.0</span>%</span><span class="mono" id="fttm">--:--:--</span></div>
-    <div>NAC </div>
+    <div class="foot-items"><span>Anchor: 11 kA · 32 cells → <strong id="ft-anchor">—</strong></span><span>HCl: Max 23 T/j</span><span>CE: <span id="ftce">96.0</span>%</span><span class="mono" id="fttm">--:--:--</span></div>
+    <div>NAC</div>
   </footer>
 </div>
 
 <script>
-const A_I=11, A_N=31, A_CE=0.96, A_CL2=415.68, A_NAOH=468.38;
+const A_I=11, A_N=32, A_CE=0.96, A_CL2=447.5, A_NAOH=504.1, A_H2=12.61;
 const M_CL2=70.906;
-const CL2_DENSITY=M_CL2/22.4, HCL_UNIT_MAX_NM3=110, H2_CL2_RATIO=122/110, DMW_PER_NM3=760/110, HCL_TJ_PER_NM3=24/110, HCL32_DENSITY=1160, NAOH32_DENSITY=1350;
-const NUBERG_TABLE=[{cl2_nm3:55,h2_nm3:61,dmw:380,hcl_tj:12},{cl2_nm3:68,h2_nm3:76,dmw:475,hcl_tj:15},{cl2_nm3:82,h2_nm3:91,dmw:570,hcl_tj:18},{cl2_nm3:96,h2_nm3:106,dmw:665,hcl_tj:21},{cl2_nm3:110,h2_nm3:122,dmw:760,hcl_tj:24}];
+const CL2_DENSITY=M_CL2/22.4, HCL_UNIT_MAX_NM3=110, H2_CL2_RATIO=122/110, DMW_PER_NM3=760/110, HCL_TJ_PER_NM3=23/110, HCL32_DENSITY=1160, NAOH32_DENSITY=1350;
+const NUBERG_TABLE=[{cl2_nm3:55,h2_nm3:61,dmw:380,hcl_tj:12},{cl2_nm3:68,h2_nm3:76,dmw:475,hcl_tj:15},{cl2_nm3:82,h2_nm3:91,dmw:570,hcl_tj:18},{cl2_nm3:96,h2_nm3:106,dmw:665,hcl_tj:21},{cl2_nm3:110,h2_nm3:122,dmw:760,hcl_tj:23}];
 const V_REV=2.12;
+const VALVE_CV_MAX_H2=33.3, VALVE_CV_MAX_CL2=225.4, VALVE_R=50;
+function gasCv(Q,MW,T,P1,P2,gamma,Z){if(Q<=0)return 0;var N9=24.6,dP=P1-P2,x=dP/P1,Fk=gamma/1.4,xT=0.7,Y=Math.max(2/3,1-x/(3*Fk*xT));return Q/(N9*P1*Y)*Math.sqrt(MW*T*Z/x);}
+function stemPct(Cv,Cvmax,R){var Cmin=Cvmax/R;if(Cv<=Cmin)return 0;if(Cv>=Cvmax)return 100;return Math.log(Cv/Cmin)/Math.log(R)*100;}
 const $=id=>document.getElementById(id);
 const fmt=(n,d=1)=>(+n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
 const fmt0=n=>Math.round(n).toLocaleString('en-US');
@@ -563,14 +597,15 @@ $('railBackdrop').onclick=function(){$('rail').classList.remove('rail-open')};
 
 $('themeBtn').onclick=function(){
   const h=document.documentElement;
-  if(h.getAttribute('data-theme')==='light'){h.removeAttribute('data-theme');localStorage.setItem('nac-theme','dark');this.textContent='🌙'}
-  else{h.setAttribute('data-theme','light');localStorage.setItem('nac-theme','light');this.textContent='☀️'}
+  const icon=$('themeIcon');
+  if(h.getAttribute('data-theme')==='light'){h.removeAttribute('data-theme');localStorage.setItem('nac-theme','dark');icon.innerHTML='<svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>'}
+  else{h.setAttribute('data-theme','light');localStorage.setItem('nac-theme','light');icon.innerHTML='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>'}
 };
-if(localStorage.getItem('nac-theme')==='light'){document.documentElement.setAttribute('data-theme','light');$('themeBtn').textContent='☀️'}
+if(localStorage.getItem('nac-theme')==='light'){document.documentElement.setAttribute('data-theme','light');$('themeIcon').innerHTML='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>'}
 
 $('exportBtn').onclick=function(){
   const I=+$('cur').value||0,N=+$('cel').value||0,CE=(+$('ce').value||0)/100,conc=+$('con').value||132;
-  const sc=(I/A_I)*(N/A_N)*(CE/A_CE),cl2=A_CL2*sc,naoh=A_NAOH*sc,h2=naoh*(2/80),naocl=cl2*1000/conc;
+  const sc=(I/A_I)*(N/A_N)*(CE/A_CE),cl2=A_CL2*sc,naoh=A_NAOH*sc,h2=A_H2*sc,naocl=cl2*1000*(74.44/70.906)/conc;
   const w=window.open('','_blank');
   w.document.write('<!DOCTYPE html><html><head><title>NAC Report</title><style>body{font-family:Arial;padding:20px}table{width:100%;border-collapse:collapse;margin:10px 0}th,td{padding:8px;border:1px solid #ddd;text-align:left}th{background:#f3f4f6}</style></head><body><h1>NAC Production Report</h1><table><tr><td>Current</td><td>'+I+' kA</td></tr><tr><td>Cells</td><td>'+N+'</td></tr><tr><td>CE</td><td>'+(CE*100).toFixed(1)+'%</td></tr><tr><td>Cl₂</td><td>'+cl2.toFixed(1)+' kg/h</td></tr><tr><td>NaOCl</td><td>'+naocl.toFixed(0)+' L/h</td></tr><tr><td>NaOH</td><td>'+naoh.toFixed(0)+' kg/h</td></tr><tr><td>H₂</td><td>'+h2.toFixed(1)+' kg/h</td></tr></table></body></html>');
   w.document.close();w.print();
@@ -587,7 +622,7 @@ function drawGauge(pct){
   const circum=2*Math.PI*55;
   arc.setAttribute('stroke-dasharray',circum);
   arc.setAttribute('stroke-dashoffset',circum-(pct/100)*circum);
-  const hue=pct>90?'var(--lime)':pct>60?'var(--blue)':pct>30?'var(--amber)':'var(--red)';
+  const hue=pct>90?'var(--green)':pct>60?'var(--blue)':pct>30?'var(--yellow)':'var(--red)';
   arc.setAttribute('stroke',hue);
   txt.textContent=pct>0?fmt(pct,1)+'%':'—';
 }
@@ -609,7 +644,7 @@ function buildNubergTable(cl2NM3Available){
     const tr=document.createElement('tr');
     if(!over&&isCur&&window.hclOn)tr.className='cur';
     if(over)tr.className='over';
-    tr.innerHTML='<td>'+row.cl2_nm3+'</td><td>'+cl2_kg.toFixed(1)+'</td><td>'+row.h2_nm3+'</td><td>'+row.dmw+'</td><td>'+row.hcl_tj+(isCur&&window.hclOn?'<span class="star">★</span>':'')+'</td><td>'+hcl_kgh.toFixed(1)+'</td><td style="color:'+(over?'var(--red)':isCur&&window.hclOn?'var(--amber)':'var(--k3)')+'">'+(over?'OVER':isCur&&window.hclOn?'←':'')+'</td>';
+    tr.innerHTML='<td>'+row.cl2_nm3+'</td><td>'+cl2_kg.toFixed(1)+'</td><td>'+row.h2_nm3+'</td><td>'+row.dmw+'</td><td>'+row.hcl_tj+(isCur&&window.hclOn?'<span class="star">★</span>':'')+'</td><td>'+hcl_kgh.toFixed(1)+'</td><td style="color:'+(over?'var(--red)':isCur&&window.hclOn?'var(--yellow)':'var(--k3)')+'">'+(over?'OVER':isCur&&window.hclOn?'←':'')+'</td>';
     tb.appendChild(tr);
   });
 }
@@ -624,23 +659,23 @@ function calc(){
   const I=+$('cur').value||0,N=+$('cel').value||0,CE=(+$('ce').value||0)/100,conc=+$('con').value||132,dil=(+$('dil').value||19)/100,exs=+$('exs').value||0;
   const hclTarget_tj=window.hclOn?(+$('hcl-t').value||23):0;
   const A_cell=+$('cell-area').value||2.7,brine_in=+$('brine-in').value||300,brine_out=+$('brine-out').value||210;
-  const brine_q_ref=+$('brine-q').value||5.0,cat_q_ref=+$('cat-q').value||7.14;
-  const V_cell=+$('vcell').value||2.96,cat_dt=+$('cat-dt').value||6;
+  const brine_q_ref=+$('brine-q').value||3.5,cat_q_ref=+$('cat-q').value||7.14;
+  const V_cell=+$('vcell').value||3.0,cat_dt=+$('cat-dt').value||6;
 
   const rI=I/A_I,rN=N/A_N,rCE=CE/A_CE,sc=rI*rN*rCE;
   const j=A_cell>0?I/A_cell:0;
-  const cl2_kgh=A_CL2*sc,naoh_kgh=A_NAOH*sc,h2_kgh=naoh_kgh*(2/80),naoh32=naoh_kgh/0.32,cl2_nm3=cl2_kgh/CL2_DENSITY;
+  const cl2_kgh=A_CL2*sc,naoh_kgh=A_NAOH*sc,h2_kgh=A_H2*sc,naoh32=naoh_kgh/0.32,cl2_nm3=cl2_kgh/CL2_DENSITY;
 
   const n_h2o_per_na=3;
   const i_amp=I*1000;
   const water_transport=N*(i_amp/96485)*18.015*n_h2o_per_na*3.6;
   const delta_conc=brine_in-brine_out;
   const nacl_total=cl2_kgh*(116.88/M_CL2);
-  const W_disp=water_transport/1000;
+  const W_disp=water_transport/1150;
   const Q_brine_far=delta_conc>0?(nacl_total-brine_out*W_disp)/delta_conc:0;
   const brine_far_lmin=N>0?Q_brine_far*1000/60/N:0;
 
-  const Q_heat_w=N*i_amp*(V_cell-V_REV);
+  const Q_heat_w=N*i_amp*(V_cell-V_REV)*0.5;
   const Q_heat_kw=Q_heat_w/1000;
   const Q_cat=N>0?cat_q_ref*I*N/16.2*60/1000:0;
   const Q_cat_lmin=N>0?Q_cat*1000/60/N:0;
@@ -652,8 +687,8 @@ function calc(){
     cl2_to_hcl_nm3=Math.min(cl2_needed_nm3,cl2_nm3,HCL_UNIT_MAX_NM3);cl2_to_hcl_kg=cl2_to_hcl_nm3*CL2_DENSITY;
     h2_to_hcl_nm3=cl2_to_hcl_nm3*H2_CL2_RATIO;dmw_lh=cl2_to_hcl_nm3*DMW_PER_NM3;
     hcl_tj_actual=cl2_to_hcl_nm3*HCL_TJ_PER_NM3;hcl_kgh_32=hcl_tj_actual*1000/24;
-    valve_cl2_pct=Math.min(100,cl2_to_hcl_nm3/HCL_UNIT_MAX_NM3*100);
-    valve_h2_pct=Math.min(100,h2_to_hcl_nm3/(HCL_UNIT_MAX_NM3*H2_CL2_RATIO)*100);
+    valve_cl2_pct=Math.min(100,stemPct(gasCv(cl2_to_hcl_nm3,70.906,296,111,101,1.34,0.99),VALVE_CV_MAX_CL2,VALVE_R));
+    valve_h2_pct=Math.min(100,stemPct(gasCv(h2_to_hcl_nm3,2.016,296,117,101,1.41,1),VALVE_CV_MAX_H2,VALVE_R));
   }
   const cl2_hypo=cl2_kgh-cl2_to_hcl_kg,naocl_lh=Math.max(0,cl2_hypo*1000*(74.44/70.906)/conc),valve_hypo_pct=cl2_kgh>0?(cl2_hypo/cl2_kgh*100):0;
   const naoh_rxn=cl2_hypo*(80/M_CL2),naoh_exs=naocl_lh*exs/1000,naoh_cons=naoh_rxn+naoh_exs,naoh_net=naoh_kgh-naoh_cons;
@@ -704,11 +739,11 @@ function calc(){
     $('hk-rem-cl2').textContent=fmt(cl2_hypo,1);$('hk-rem-naocl').textContent=fmt0(naocl_lh);
     $('vbar-cl2').style.width=valve_cl2_pct+'%';$('vbar-h2').style.width=valve_h2_pct+'%';$('vbar-hypo').style.width=valve_hypo_pct+'%';
     $('vpct-cl2').textContent=fmt(valve_cl2_pct,1)+'%';$('vpct-h2').textContent=fmt(valve_h2_pct,1)+'%';$('vpct-hypo').textContent=fmt(valve_hypo_pct,1)+'%';
-    $('vnote-cl2').textContent=fmt(cl2_to_hcl_nm3,1)+' NM³/hr';$('vnote-h2').textContent=fmt(h2_to_hcl_nm3,1)+' NM³/hr';$('vnote-hypo').textContent=fmt(cl2_hypo/CL2_DENSITY,1)+' NM³/hr';
+    $('vnote-cl2').textContent=fmt(cl2_to_hcl_nm3,1)+' NM³/hr · Cv '+fmt(gasCv(cl2_to_hcl_nm3,70.906,296,111,101,1.34,0.99),1);$('vnote-h2').textContent=fmt(h2_to_hcl_nm3,1)+' NM³/hr · Cv '+fmt(gasCv(h2_to_hcl_nm3,2.016,296,117,101,1.41,1),1);$('vnote-hypo').textContent=fmt(cl2_hypo/CL2_DENSITY,1)+' NM³/hr';
     const badge=$('hcl-cap-badge');
-    if(isOverCap){badge.textContent='⚠ INSUFFICIENT';badge.style.background='var(--red)'}
-    else if(hcl_tj_actual>=23){badge.textContent='FULL CAPACITY';badge.style.background='var(--lime)'}
-    else{badge.textContent='PARTIAL '+fmt(hcl_tj_actual,1)+' T/j';badge.style.background='var(--amber)'}
+    if(isOverCap){badge.textContent='INSUFFICIENT';badge.style.background='var(--red)'}
+    else if(hcl_tj_actual>=23){badge.textContent='FULL CAPACITY';badge.style.background='var(--green)'}
+    else{badge.textContent='PARTIAL '+fmt(hcl_tj_actual,1)+' T/j';badge.style.background='var(--yellow)'}
     const ocw=$('overcap-warn');
     if(isOverCap){ocw.classList.add('show');$('oc-avail').textContent=fmt(cl2_nm3,1)+' NM³/h';$('oc-req').textContent=fmt(hclTarget_tj/HCL_TJ_PER_NM3,1)+' NM³/h'}
     else{ocw.classList.remove('show')}
@@ -720,7 +755,7 @@ function calc(){
   $('bbp').style.width=Math.min(100,naoh_kgh/mx*100)+'%';$('bbn').style.width=Math.min(100,Math.abs(naoh_net)/mx*100)+'%';
   $('bbr').style.width=Math.min(100,naoh_cons/mx*100)+'%';$('bbh').style.width=Math.min(100,hgw/mx*100)+'%';
   $('bnp').textContent=fmt0(naoh_kgh)+' kg/h';$('bnr').textContent=fmt0(naoh_cons)+' kg/h';$('bnh').textContent=fmt0(hgw)+' kg/h';
-  $('bnn').textContent=fmt(naoh_net,1)+' kg/h';$('bnn').style.color=naoh_net>5?'var(--lime)':naoh_net<-5?'var(--red)':'var(--amber)';
+  $('bnn').textContent=fmt(naoh_net,1)+' kg/h';$('bnn').style.color=naoh_net>5?'var(--green)':naoh_net<-5?'var(--red)':'var(--yellow)';
   $('bnn-m3').textContent=naoh_net>0?fmt(naoh_net_m3h,2)+' m³/h for sale':'—';
 
   $('fb-total').textContent=fmt(Q_brine_far,2)+' m³/h';$('fb-cell').textContent=fmt(brine_far_lmin,2)+' L/min';
@@ -734,7 +769,7 @@ function calc(){
 
   $('ftce').textContent=(CE*100).toFixed(1);$('ft-anchor').textContent=fmtL(naocl_lh)+' L/h NaOCl';
   const w=[];
-  if(+$('dil').value>22)w.push('NaOH dilution >22% — NaCl will crystallize!');
+  if(+$('dil').value<15)w.push('NaOH dilution <15% — NaCl may crystallize!');
   if(+$('ce').value<92)w.push('CE below 92% — membrane replacement recommended!');
   if(conc>180)w.push('NaOCl concentration above 180 g/L!');
   if(I>16.2)w.push('Current exceeds design maximum 16.2 kA!');
@@ -745,15 +780,15 @@ function calc(){
 }
 
 function buildTable(){
-  const KAs=[4,6,8,10,11,12,14,16.2],Ns=[16,24,31,32,40,48],tb=$('sb');tb.innerHTML='';
+  const KAs=[4,6,8,10,11,12,14,16.2],Ns=[16,24,32,40,48],tb=$('sb');tb.innerHTML='';
   const A_cell_val=+($('cell-area')?$('cell-area').value:2.7)||2.7;
   const brine_in_val=+($('brine-in')?$('brine-in').value:300)||300;
   const brine_out_val=+($('brine-out')?$('brine-out').value:210)||210;
   const delta_c=brine_in_val-brine_out_val;
   KAs.forEach(function(kA){Ns.forEach(function(n){
-    const sc=(kA/A_I)*(n/A_N),cl2=A_CL2*sc,naoh=A_NAOH*sc,h2=naoh*(2/80),naocl=cl2*1000/132;
+    const sc=(kA/A_I)*(n/A_N),cl2=A_CL2*sc,naoh=A_NAOH*sc,h2=A_H2*sc,naocl=cl2*1000*(74.44/70.906)/132;
     const j_sc=A_cell_val>0?kA/A_cell_val:0;
-    const isc=kA===11&&n===31;
+    const isc=kA===11&&n===32;
     const tr=document.createElement('tr');if(isc)tr.classList.add('active');tr.dataset.k=kA;tr.dataset.n=n;
     const hc=heatClass(j_sc,6.0);
     tr.innerHTML='<td>'+(kA===16.2?'16.2':kA)+(isc?'<span class="star">★</span>':'')+'</td><td>'+n+'</td><td class="'+hc+'">'+j_sc.toFixed(3)+'</td><td>'+(naoh*24/1000).toFixed(2)+'</td><td>'+fmt(cl2,1)+'</td><td>'+fmtL(naocl)+'</td><td>'+h2.toFixed(1)+'</td>';
