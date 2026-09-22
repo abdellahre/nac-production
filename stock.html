@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAC · Stock Management</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#1a1a2e;--sf:#16162a;--s2:#1e1e36;--s3:#24243c;--bd:#2e2e4a;--b2:#3e3e5c;
+  --ink:#e8eaf0;--k2:#a0a3b8;--k3:#6b6e8a;
+  --green:#22c55e;--greend:#16a34a;--greenl:rgba(34,197,94,.10);
+  --blue:#3b82f6;--blued:#2563eb;--bluel:rgba(59,130,246,.10);
+  --red:#ef4444;--redd:#dc2626;--redl:rgba(239,68,68,.10);
+  --yellow:#eab308;--yellowd:#ca8a04;--yellowl:rgba(234,179,8,.10);
+  --teal:#14b8a6;--teald:#0d9488;--teall:rgba(20,184,166,.10);
+  --purple:#a78bfa;--purpled:#7c3aed;--purplel:rgba(167,139,250,.10);
+  --orange:#f97316;--orangel:rgba(249,115,22,.10);
+  --pink:#f87171;--pinkd:#dc2626;--pinkl:rgba(248,113,113,.10);
+  --mono:'IBM Plex Mono',monospace;--sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --radius:14px;--radius-sm:10px;--radius-lg:18px;
+  --neu-raised:6px 6px 14px #0d0d1a,-6px -6px 14px #272742;
+  --neu-pressed:inset 4px 4px 10px #0d0d1a,inset -4px -4px 10px #272742;
+  --neu-flat:3px 3px 8px #0d0d1a,-3px -3px 8px #272742;
+}
+[data-theme="light"]{
+  --bg:#e8eaf0;--sf:#f5f6fa;--s2:#ecedf3;--s3:#dddee8;--bd:#c8c9d6;--b2:#a8a9ba;
+  --ink:#191a22;--k2:#5d5e72;--k3:#9899ae;
+  --green:#16a34a;--greend:#15803d;--greenl:rgba(22,163,74,.08);
+  --blue:#2563eb;--blued:#1d4ed8;--bluel:rgba(37,99,235,.08);
+  --red:#dc2626;--redd:#b91c1c;--redl:rgba(220,38,38,.08);
+  --yellow:#ca8a04;--yellowd:#a16207;--yellowl:rgba(202,138,4,.08);
+  --teal:#0d9488;--teald:#0f766e;--teall:rgba(13,148,136,.08);
+  --purple:#7c3aed;--purpled:#6d28d9;--purplel:rgba(124,58,237,.08);
+  --orange:#ea580c;--orangel:rgba(234,88,12,.08);
+  --pink:#dc2626;--pinkd:#b91c1c;--pinkl:rgba(220,38,38,.08);
+  --neu-raised:6px 6px 14px #c8c9d6,-6px -6px 14px #ffffff;
+  --neu-pressed:inset 4px 4px 10px #c8c9d6,inset -4px -4px 10px #ffffff;
+  --neu-flat:3px 3px 8px #c8c9d6,-3px -3px 8px #ffffff;
+}
+html{font-size:15px}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column}
+
+/* ── Rail Navigation ── */
+.rail{position:fixed;left:0;top:0;bottom:0;width:52px;background:var(--sf);box-shadow:var(--neu-raised);z-index:200;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:4px;transition:width .2s ease}
+.rail:hover{width:180px}
+.rail-logo{width:32px;height:32px;background:linear-gradient(135deg,var(--green),var(--teal));border-radius:10px;display:grid;place-items:center;margin-bottom:8px;flex-shrink:0;box-shadow:var(--neu-raised)}
+.rail-logo svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round}
+.rail-btn{width:38px;height:38px;border-radius:var(--radius-sm);border:none;background:transparent;color:var(--k3);cursor:pointer;display:flex;align-items:center;gap:10px;padding:0 9px;transition:all .2s;position:relative;overflow:hidden;white-space:nowrap;text-decoration:none}
+.rail:hover .rail-btn{width:100%;justify-content:flex-start}
+.rail-btn:hover{background:var(--s2);color:var(--k2);box-shadow:var(--neu-flat)}
+.rail-btn.active{background:var(--greenl);color:var(--green);box-shadow:var(--neu-raised)}
+.rail-btn.active::before{content:'';position:absolute;left:-8px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:var(--green)}
+.rail-icon{flex-shrink:0;width:20px;text-align:center;display:flex;align-items:center;justify-content:center}
+.rail-icon svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.rail-label{font-size:11px;font-weight:500;opacity:0;width:0;transition:opacity .15s,width .15s}
+.rail:hover .rail-label{opacity:1;width:auto}
+.rail-spacer{flex:1}
+
+.shell{margin-left:52px;display:flex;flex-direction:column;min-height:100vh;transition:margin-left .2s ease}
+.rail:hover~.shell{margin-left:180px}
+.hamburger{display:none;position:fixed;top:10px;left:10px;z-index:300;width:40px;height:40px;border-radius:var(--radius-sm);border:1px solid var(--bd);background:var(--sf);color:var(--ink);cursor:pointer;place-items:center;padding:0}
+.hamburger svg{width:20px;height:20px}
+.rail.rail-open~.hamburger{left:148px}
+@media(max-width:640px){
+  .hamburger{display:grid}
+  .rail{width:0;overflow:hidden}
+  .rail.rail-open{width:180px}
+  .rail.rail-open .rail-label{opacity:1;width:auto}
+  .rail.rail-open .rail-btn{width:100%;justify-content:flex-start}
+  .shell{margin-left:0}
+  .rail.rail-open~.shell{margin-left:180px}
+  .rail-backdrop{display:none;position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.4)}
+  .rail.rail-open~.rail-backdrop{display:block}
+  .foot{padding-left:24px}
+}
+
+/* ── Ticker Bar ── */
+.ticker{position:sticky;top:0;z-index:100;background:var(--sf);box-shadow:var(--neu-flat)}
+.ticker-inner{display:flex;align-items:stretch;height:48px;overflow-x:auto;scrollbar-width:none}
+.ticker-inner::-webkit-scrollbar{display:none}
+.ticker-item{flex:0 0 auto;min-width:140px;padding:6px 14px;border-right:1px solid var(--bd);display:flex;flex-direction:column;justify-content:center;gap:1px;cursor:default;transition:background .1s;position:relative}
+.ticker-item:hover{background:var(--s2)}
+.ticker-item:last-child{border-right:none}
+.tk-label{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--k3)}
+.tk-val{font-family:var(--mono);font-size:15px;font-weight:600;line-height:1.2}
+.tk-val.green{color:var(--green)}.tk-val.blue{color:var(--blue)}.tk-val.orange{color:var(--yellow)}.tk-val.purple{color:var(--purple)}.tk-val.teal{color:var(--teal)}.tk-val.red{color:var(--red)}
+.tk-sub{font-size:8.5px;color:var(--k3);font-family:var(--mono)}
+.tk-live{display:flex;align-items:center;gap:5px;padding:0 14px;font-size:8.5px;font-weight:600;color:var(--green);letter-spacing:.06em;text-transform:uppercase;border-left:1px solid var(--bd);white-space:nowrap}
+.tk-live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.tk-actions{display:flex;align-items:center;gap:6px;padding:0 12px;border-left:1px solid var(--bd)}
+.tk-btn{padding:5px 12px;border-radius:var(--radius-sm);border:none;background:var(--sf);color:var(--k2);font-size:10px;font-weight:600;cursor:pointer;font-family:var(--sans);transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:5px;text-decoration:none;box-shadow:var(--neu-flat)}
+.tk-btn:hover{background:var(--s2);color:var(--ink);box-shadow:var(--neu-raised)}
+.tk-btn.primary{background:var(--green);border:none;color:#0a0a00;box-shadow:var(--neu-raised)}
+.tk-btn.primary:hover{background:#16a34a}
+.tk-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.warn-strip{display:none;align-items:center;gap:8px;padding:8px 20px;background:var(--redl);border-bottom:none;font-size:11px;color:var(--red);font-weight:500;box-shadow:var(--neu-flat)}
+.warn-strip.show{display:flex}
+.warn-strip svg{width:14px;height:14px;stroke:var(--red);fill:none;stroke-width:2;flex-shrink:0}
+
+/* ── Page ── */
+.page{flex:1;padding:20px 24px 24px;display:flex;flex-direction:column;gap:16px}
+
+/* ── Cards ── */
+.card{background:var(--sf);box-shadow:var(--neu-raised);border-radius:var(--radius-lg);overflow:hidden}
+.card-head{padding:12px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:8px;background:var(--s2);border-radius:var(--radius-lg) var(--radius-lg) 0 0}
+.card-icon{width:24px;height:24px;border-radius:var(--radius-sm);display:grid;place-items:center}
+.card-icon svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.card-title{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--k3)}
+
+/* ── Tank Grid ── */
+.tank-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:16px}
+@media(max-width:1000px){.tank-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.tank-grid{grid-template-columns:1fr}}
+
+/* ── Tank Card ── */
+.tank{background:var(--sf);box-shadow:var(--neu-raised);border-radius:var(--radius);padding:14px;position:relative;overflow:hidden;transition:all .2s}
+.tank:hover{box-shadow:var(--neu-raised),0 0 0 1px var(--b2)}
+.tank-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tank-name{font-size:13px;font-weight:600;color:var(--ink)}
+.tank-tag{font-size:9px;font-family:var(--mono);color:var(--k3);background:var(--s3);padding:2px 6px;border-radius:var(--radius-sm)}
+.tank-bar-wrap{height:24px;background:var(--sf);border-radius:var(--radius-sm);overflow:hidden;position:relative;margin-bottom:8px;box-shadow:var(--neu-pressed)}
+.tank-bar{height:100%;border-radius:var(--radius-sm);transition:width .8s ease;position:relative}
+.tank-bar::after{content:'';position:absolute;top:0;left:0;right:0;height:50%;background:linear-gradient(180deg,rgba(255,255,255,.12),transparent);border-radius:var(--radius-sm) var(--radius-sm) 0 0}
+.tank-stats{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.tank-vol{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--ink)}
+.tank-cap{font-size:10px;color:var(--k3)}
+.tank-pct{font-family:var(--mono);font-size:22px;font-weight:700}
+.tank-status{display:flex;align-items:center;gap:5px;margin-top:6px}
+.status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.status-dot.ok{background:var(--green);box-shadow:0 0 8px var(--green)}
+.status-dot.low{background:var(--red);box-shadow:0 0 8px var(--red);animation:blink 1.5s infinite}
+.status-dot.high{background:var(--yellow);box-shadow:0 0 8px var(--yellow);animation:blink 2s infinite}
+.status-txt{font-size:9px;color:var(--k3);font-weight:500}
+.tank-rate{font-size:9px;color:var(--k3);font-family:var(--mono);margin-top:4px}
+.tank-rate .fill{color:var(--green)}
+.tank-rate .drain{color:var(--red)}
+
+/* ── Distributor ── */
+.dist-wrap{padding:0 16px 16px}
+.dist-title{font-size:9px;font-weight:600;text-transform:uppercase;color:var(--k3);margin-bottom:10px;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.dist-title::before{content:'';width:3px;height:10px;border-radius:2px;background:var(--purple)}
+.dist-svg{width:100%;min-width:500px;height:100px}
+.dist-label{font-size:8px;fill:var(--k3);font-family:'Inter',sans-serif}
+.flow-line{fill:none;stroke-width:3;stroke-linecap:round;opacity:.5}
+.flow-dot{r:3;opacity:.8}
+
+/* ── Summary Bar ── */
+.summary-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:900px){.summary-bar{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.summary-bar{grid-template-columns:1fr}}
+.sum-item{background:var(--sf);box-shadow:var(--neu-raised);border-radius:var(--radius);padding:14px;position:relative;overflow:hidden}
+.sum-item::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,var(--green));border-radius:var(--radius) var(--radius) 0 0}
+.sum-lbl{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--k3);margin-bottom:4px}
+.sum-val{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--ink)}
+.sum-sub{font-size:9px;color:var(--k3);margin-top:2px;font-family:var(--mono)}
+
+/* ── Projection Calculator ── */
+.proj-wrap{padding:16px;display:flex;flex-direction:column;gap:16px}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:end}
+@media(max-width:900px){.proj-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.proj-grid{grid-template-columns:1fr}}
+.fld-item{display:flex;flex-direction:column;gap:6px}
+.fld-label{font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--k3)}
+.fld-inner{position:relative;display:flex;align-items:center}
+.fld-inner input,.sel{width:100%;height:42px;background:var(--sf);border:1px solid var(--bd);color:var(--ink);font-family:var(--mono);font-size:15px;font-weight:600;padding:0 12px;border-radius:var(--radius-sm);box-shadow:var(--neu-pressed);outline:none;transition:border-color .2s}
+.fld-inner input:focus,.sel:focus{border-color:var(--teal)}
+.fld-inner input{padding-right:46px}
+.fld-unit{position:absolute;right:12px;font-size:10px;color:var(--k3);font-family:var(--mono);pointer-events:none}
+.sel{appearance:none;-webkit-appearance:none;font-family:var(--sans);font-weight:500;cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,var(--k3) 50%),linear-gradient(135deg,var(--k3) 50%,transparent 50%);background-position:calc(100% - 16px) 50%,calc(100% - 10px) 50%;background-size:6px 6px;background-repeat:no-repeat}
+.seg{display:flex;gap:6px;width:100%;height:42px}
+.seg-btn{flex:1;border:none;border-radius:var(--radius-sm);background:var(--sf);color:var(--k2);font-size:11px;font-weight:600;cursor:pointer;box-shadow:var(--neu-flat);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px;font-family:var(--sans)}
+.seg-btn svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.seg-btn:hover{color:var(--ink)}
+.seg-btn.active{background:var(--greenl);color:var(--green);box-shadow:var(--neu-pressed)}
+.seg-btn.drain.active{background:var(--redl);color:var(--red);box-shadow:var(--neu-pressed)}
+.calc-btn{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:8px;height:46px;border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--teal),var(--teald));color:#fff;font-size:12px;font-weight:700;cursor:pointer;box-shadow:var(--neu-raised);transition:all .2s;font-family:var(--sans)}
+.calc-btn svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.calc-btn:hover{transform:translateY(-1px);box-shadow:var(--neu-raised),0 3px 8px rgba(0,0,0,.25)}
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:700px){.res-grid{grid-template-columns:1fr}}
+.res-item{background:var(--sf);box-shadow:var(--neu-pressed);border-radius:var(--radius);padding:14px;position:relative;overflow:hidden}
+.res-item::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,var(--teal))}
+.res-lbl{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--k3);margin-bottom:6px}
+.res-val{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--ink);line-height:1.1}
+.res-sub{font-size:9px;color:var(--k3);margin-top:4px;font-family:var(--mono)}
+.bar-legend{display:flex;justify-content:space-between;margin-bottom:6px;font-size:9px;color:var(--k3);font-family:var(--mono)}
+.bar-legend b{color:var(--ink);font-weight:600}
+.bar-track{height:28px;background:var(--sf);border-radius:var(--radius-sm);position:relative;box-shadow:var(--neu-pressed);overflow:hidden}
+.bar-fill{height:100%;width:0;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--teal),var(--teald));transition:width .5s ease;position:relative}
+.bar-fill::after{content:'';position:absolute;top:0;left:0;right:0;height:50%;background:linear-gradient(180deg,rgba(255,255,255,.15),transparent)}
+.bar-now{position:absolute;top:0;bottom:0;width:2px;background:var(--yellow);z-index:2;transition:left .5s ease;pointer-events:none}
+.bar-now::before{content:'';position:absolute;top:-5px;left:-4px;width:10px;height:10px;border-radius:50%;background:var(--yellow);box-shadow:0 0 6px var(--yellow)}
+.proj-note{font-size:10px;color:var(--k3);line-height:1.6;background:var(--s2);border:1px solid var(--bd);border-radius:var(--radius-sm);padding:10px 12px}
+.proj-note b{color:var(--ink)}
+.proj-actions{display:flex;gap:6px;height:42px;align-items:stretch}
+.proj-actions .calc-btn{grid-column:auto;flex:1;margin:0}
+.proj-actions .seg-btn#pj-clear{flex:0 0 auto;padding:0 16px}
+.route-chip{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--k3);background:var(--sf);border:1px solid var(--bd);padding:4px 10px;border-radius:999px;transition:all .2s}
+.route-chip.on{color:var(--green);border-color:var(--green);background:var(--greenl)}
+.route-chip.on .status-dot{background:var(--green);box-shadow:0 0 6px var(--green);animation:blink 2s infinite}
+.proj-tanks{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:700px){.proj-tanks{grid-template-columns:1fr}}
+.proj-tanks.mode-fill,.proj-tanks.mode-sell{grid-template-columns:1fr}
+.proj-tanks.mode-fill .proj-card.sell{display:none}
+.proj-tanks.mode-sell .proj-card.prod{display:none}
+#pj-mode{width:100%;margin-bottom:12px}
+.proj-card{position:relative}
+.proj-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--radius) var(--radius) 0 0}
+.proj-card.prod::before{background:var(--green)}
+.proj-card.sell::before{background:var(--red)}
+.tank.rg-prod{box-shadow:var(--neu-raised),0 0 0 1px var(--green),0 0 22px rgba(34,197,94,.45)}
+.tank.rg-sell{box-shadow:var(--neu-raised),0 0 0 1px var(--red),0 0 22px rgba(239,68,68,.45)}
+.tank.rg-prod.rg-sell{box-shadow:var(--neu-raised),0 0 0 1px var(--yellow),0 0 22px rgba(234,179,8,.5)}
+
+/* ── Footer ── */
+.foot{background:var(--sf);box-shadow:var(--neu-flat);padding:10px 24px 10px 76px;display:flex;align-items:center;justify-content:space-between;font-size:9px;color:var(--k3);gap:12px;flex-wrap:wrap}
+.foot-items{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.foot-items span::before{content:'·';margin-right:14px;color:var(--b2)}
+.foot-items span:first-child::before{display:none}
+.foot-items strong{color:var(--k2)}
+.foot-items .mono{font-family:var(--mono)}
+</style>
+</head>
+<body>
+
+<nav class="rail" id="rail">
+  <div class="rail-logo"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+  <button class="rail-btn active" data-section="overview" title="Overview"><span class="rail-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span><span class="rail-label">Overview</span></button>
+  <button class="rail-btn" data-section="naocl" title="NaOCl Tanks"><span class="rail-icon"><svg viewBox="0 0 24 24"><path d="M6 3v18M18 3v18M6 12h12"/></svg></span><span class="rail-label">NaOCl</span></button>
+  <button class="rail-btn" data-section="naoh" title="NaOH Tanks"><span class="rail-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span><span class="rail-label">NaOH</span></button>
+  <button class="rail-btn" data-section="hcl" title="HCl Tank"><span class="rail-icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg></span><span class="rail-label">HCl</span></button>
+  <button class="rail-btn" data-section="project" title="Stock Projection"><span class="rail-icon"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span><span class="rail-label">Projection</span></button>
+  <div class="rail-spacer"></div>
+  <button class="rail-btn" id="themeBtn" title="Toggle theme"><span class="rail-icon" id="themeIcon"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span><span class="rail-label">Theme</span></button>
+  <a href="nac_calculator5.html" class="rail-btn" title="Calculator"><span class="rail-icon"><svg viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="9"/><rect x="10" y="7" width="4" height="14"/><rect x="17" y="3" width="4" height="18"/></svg></span><span class="rail-label">Calculator</span></a>
+</nav>
+
+<button class="hamburger" id="hamburgerBtn">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
+<div class="rail-backdrop" id="railBackdrop"></div>
+
+<div class="shell">
+  <div class="ticker">
+    <div class="ticker-inner">
+      <div class="ticker-item" style="min-width:200px;border-right:1px solid var(--bd)"><div class="tk-label">Plant</div><div class="tk-val" style="color:var(--ink);font-size:12px;font-weight:600">Stock Management</div></div>
+      <div class="ticker-item"><div class="tk-label">NaOCl</div><div class="tk-val green" id="t-naocl">—</div><div class="tk-sub" id="t-naocl-sub">4 tanks · 320 m³</div></div>
+      <div class="ticker-item"><div class="tk-label">NaOH</div><div class="tk-val purple" id="t-naoh">—</div><div class="tk-sub" id="t-naoh-sub">5 tanks · 215 m³</div></div>
+      <div class="ticker-item"><div class="tk-label">HCl</div><div class="tk-val orange" id="t-hcl">—</div><div class="tk-sub">5 tanks · 210 m³</div></div>
+      <div class="ticker-item"><div class="tk-label">Status</div><div class="tk-val teal" id="t-status">—</div><div class="tk-sub" id="t-status-sub">Initializing</div></div>
+      <div class="tk-live">Live</div>
+      <div class="tk-actions">
+        <a href="nac_calculator5.html" class="tk-btn"><svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg> Calculator</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="warn-strip" id="wb"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span id="wt"></span></div>
+
+  <div class="page">
+
+    <!-- SUMMARY -->
+    <div class="summary-bar">
+      <div class="sum-item" style="--accent:var(--pink)"><div class="sum-lbl">Total NaOCl</div><div class="sum-val" id="sum-naocl">—</div><div class="sum-sub">m³ / 320 m³</div></div>
+      <div class="sum-item" style="--accent:var(--orange)"><div class="sum-lbl">Total NaOH</div><div class="sum-val" id="sum-naoh">—</div><div class="sum-sub">m³ / 215 m³</div></div>
+      <div class="sum-item" style="--accent:var(--purple)"><div class="sum-lbl">Total HCl</div><div class="sum-val" id="sum-hcl">—</div><div class="sum-sub">m³ / 210 m³</div></div>
+      <div class="sum-item" style="--accent:var(--teal)"><div class="sum-lbl">System Status</div><div class="sum-val" id="sum-status">—</div><div class="sum-sub" id="sum-status-sub">Initializing</div></div>
+    </div>
+
+    <!-- NaOCl STOCKAGE -->
+    <div class="card" id="sec-naocl">
+      <div class="card-head"><div class="card-icon" style="background:var(--pinkl);color:var(--pink)"><svg viewBox="0 0 24 24"><path d="M6 3v18M18 3v18M6 12h12"/></svg></div><div class="card-title">Hypochlorite NaOCl 12.5% — Stockage</div></div>
+      <div class="tank-grid" id="naocl-grid"></div>
+    </div>
+
+    <!-- NaOH STOCKAGE + DISTRIBUTOR -->
+    <div class="card" id="sec-naoh">
+      <div class="card-head"><div class="card-icon" style="background:var(--orangel);color:var(--orange)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div class="card-title">Caustic Soda NaOH 32% — Stockage &amp; Distribution</div></div>
+      <div class="tank-grid" id="naoh-grid"></div>
+      <div class="dist-wrap">
+        <div class="dist-title">NaOH Distribution Network</div>
+        <svg class="dist-svg" id="naoh-dist" viewBox="0 0 600 100"></svg>
+      </div>
+    </div>
+
+    <!-- HCl STOCKAGE + DISTRIBUTOR -->
+    <div class="card" id="sec-hcl">
+      <div class="card-head"><div class="card-icon" style="background:var(--purplel);color:var(--purple)"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg></div><div class="card-title">Hydrochloric Acid HCl 32% — Stockage &amp; Distribution</div></div>
+      <div class="tank-grid" id="hcl-grid"></div>
+      <div class="dist-wrap">
+        <div class="dist-title">HCl Distribution Network</div>
+        <svg class="dist-svg" id="hcl-dist" viewBox="0 0 600 100"></svg>
+      </div>
+    </div>
+
+    <!-- STOCK PROJECTION -->
+    <div class="card" id="sec-project" style="display:none">
+      <div class="card-head"><div class="card-icon" style="background:var(--teall);color:var(--teal)"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><div class="card-title">Stock Routing &amp; Projection</div><div class="route-chip" id="pj-state"><span class="status-dot ok"></span>Planning only</div></div>
+      <div class="proj-wrap">
+        <div class="seg" id="pj-mode">
+          <button type="button" class="seg-btn active" id="pj-m-fill"><svg viewBox="0 0 24 24"><path d="M12 3v3M6 9c0 3 2 5 2 5l8 1c1 0 2-1 2-2 0-1-1-2-2-2l-7-1s4-5 9-5-7 4-7 4"/><path d="M9 16l6-1"/></svg>Filling</button>
+          <button type="button" class="seg-btn drain" id="pj-m-drain"><svg viewBox="0 0 24 24"><path d="M12 21v-3M6 15c0-3 2-5 2-5l8-1c1 0 2 1 2 2 0 1-1 2-2 2l-7 1s4 5 9 5-7-4-7-4"/><path d="M9 8l6 1"/></svg>Draining</button>
+        </div>
+        <div class="proj-grid">
+          <div id="pj-prod-side" style="display:contents">
+          <div class="fld-item">
+            <label class="fld-label" for="pj-prod">Production goes to</label>
+            <select id="pj-prod" class="sel"></select>
+          </div>
+          <div class="fld-item">
+            <label class="fld-label" for="pj-prod-lvl">Set current level</label>
+            <div class="fld-inner"><input id="pj-prod-lvl" type="number" min="0" max="100" step="any" placeholder="auto"><span class="fld-unit">%</span></div>
+          </div>
+          <div class="fld-item">
+            <label class="fld-label" for="pj-prod-rate">Production rate</label>
+            <div class="fld-inner"><input id="pj-prod-rate" type="number" min="0" step="any" placeholder="0.8"><span class="fld-unit">m³/h</span></div>
+          </div>
+          </div>
+          <div id="pj-sell-side" style="display:none">
+          <div class="fld-item">
+            <label class="fld-label" for="pj-sell">Selling from</label>
+            <select id="pj-sell" class="sel"></select>
+          </div>
+          <div class="fld-item">
+            <label class="fld-label" for="pj-sell-lvl">Set current level</label>
+            <div class="fld-inner"><input id="pj-sell-lvl" type="number" min="0" max="100" step="any" placeholder="auto"><span class="fld-unit">%</span></div>
+          </div>
+          <div class="fld-item">
+            <label class="fld-label" for="pj-sell-rate">Selling rate</label>
+            <div class="fld-inner"><input id="pj-sell-rate" type="number" min="0" step="any" placeholder="0.5"><span class="fld-unit">m³/h</span></div>
+          </div>
+          </div>
+          <div class="fld-item">
+            <label class="fld-label" for="pj-hours">Forecast time</label>
+            <div class="fld-inner"><input id="pj-hours" type="number" min="0" step="any" placeholder="12"><span class="fld-unit">h</span></div>
+          </div>
+          <div class="fld-item">
+            <label class="fld-label">&nbsp;</label>
+            <div class="proj-actions">
+              <button type="button" class="calc-btn" id="pj-apply"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Apply routing</button>
+              <button type="button" class="seg-btn" id="pj-clear">Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="proj-tanks" id="pj-tanks">
+          <div class="tank proj-card prod">
+            <div class="tank-hdr"><span class="tank-name" id="pj-p-name">—</span><span class="tank-tag" id="pj-p-tag">Production</span></div>
+            <div class="tank-bar-wrap"><div class="tank-bar" id="pj-p-bar" style="width:0;background:linear-gradient(135deg,var(--green),var(--greend))"></div></div>
+            <div class="tank-stats"><span class="tank-vol" id="pj-p-vol">—</span><span class="tank-cap" id="pj-p-cap">/ —</span></div>
+            <div class="tank-pct" id="pj-p-pct" style="color:var(--k3)">—</div>
+            <div class="tank-status"><div class="status-dot ok" id="pj-p-dot"></div><span class="status-txt" id="pj-p-status">select a tank</span></div>
+            <div class="tank-rate" id="pj-p-rate"></div>
+          </div>
+          <div class="tank proj-card sell">
+            <div class="tank-hdr"><span class="tank-name" id="pj-s-name">—</span><span class="tank-tag" id="pj-s-tag">Selling</span></div>
+            <div class="tank-bar-wrap"><div class="tank-bar" id="pj-s-bar" style="width:0;background:linear-gradient(135deg,var(--red),var(--redd))"></div></div>
+            <div class="tank-stats"><span class="tank-vol" id="pj-s-vol">—</span><span class="tank-cap" id="pj-s-cap">/ —</span></div>
+            <div class="tank-pct" id="pj-s-pct" style="color:var(--k3)">—</div>
+            <div class="tank-status"><div class="status-dot ok" id="pj-s-dot"></div><span class="status-txt" id="pj-s-status">select a tank</span></div>
+            <div class="tank-rate" id="pj-s-rate"></div>
+          </div>
+        </div>
+
+        <div class="proj-note" id="pj-note">Select the tank that receives production and the tank used for selling — set rates and forecast time. Press <b>Apply routing</b> to also drive the live simulation with these routes.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="foot">
+    <div class="foot-items"><span>Config: <strong>4 NaOCl · 5 NaOH · 5 HCl</strong></span><span>Total: <span id="ft-total">—</span> m³</span><span class="mono" id="fttm">--:--:--</span></div>
+    <div>NAC 4295-G-MAN-0001 · Stock Management</div>
+  </footer>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const fmt=(n,d=1)=>(+n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const fmt0=n=>Math.round(n).toLocaleString('en-US');
+
+// Rail navigation
+document.querySelectorAll('.rail-btn[data-section]').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.rail-btn[data-section]').forEach(function(b){b.classList.remove('active')});
+    btn.classList.add('active');
+    var sec=btn.dataset.section;
+    if(sec==='overview'){document.querySelectorAll('.card').forEach(function(c){c.style.display=''})}
+    else{document.querySelectorAll('.card').forEach(function(c){c.style.display='none'});var el=$('sec-'+sec);if(el)el.style.display=''}
+    if(window.innerWidth<=640)$('rail').classList.remove('rail-open');
+  });
+});
+
+$('hamburgerBtn').onclick=function(){$('rail').classList.toggle('rail-open')};
+$('railBackdrop').onclick=function(){$('rail').classList.remove('rail-open')};
+
+// Theme
+$('themeBtn').onclick=function(){
+  const h=document.documentElement;const icon=$('themeIcon');
+  if(h.getAttribute('data-theme')==='light'){h.removeAttribute('data-theme');localStorage.setItem('nac-theme','dark');icon.innerHTML='<svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>'}
+  else{h.setAttribute('data-theme','light');localStorage.setItem('nac-theme','light');icon.innerHTML='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.56" x2="19.78" y2="4.22"/></svg>'}
+};
+if(localStorage.getItem('nac-theme')==='light'){document.documentElement.setAttribute('data-theme','light');$('themeIcon').innerHTML='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.56" x2="19.78" y2="4.22"/></svg>'}
+
+// Tank definitions
+const tanks=[
+  {id:'naocl',grid:'naocl-grid',color:'var(--pink)',gradient:'linear-gradient(135deg,var(--pink),var(--pinkd))',
+    tanks:[
+      {tag:'T-6101',name:'NaOCl-1',cap:80,level:58,rate:-1.8},
+      {tag:'T-6102',name:'NaOCl-2',cap:80,level:67,rate:-2.1},
+      {tag:'T-6103',name:'NaOCl-3',cap:80,level:53,rate:-1.5},
+      {tag:'T-6104',name:'NaOCl-4',cap:80,level:74,rate:-1.9}
+    ]},
+  {id:'naoh',grid:'naoh-grid',color:'var(--orange)',gradient:'linear-gradient(135deg,var(--orange),var(--yellowd))',
+    tanks:[
+      {tag:'T-5201',name:'NaOH-1',cap:50,level:35,rate:0.5},
+      {tag:'T-5202',name:'NaOH-2',cap:50,level:44,rate:0.4},
+      {tag:'T-5203',name:'NaOH-3',cap:50,level:30,rate:0.6},
+      {tag:'T-5204',name:'NaOH-4',cap:50,level:23,rate:0.3},
+      {tag:'T-5301',name:'NaOH-Dist',cap:15,level:8,rate:-0.2}
+    ]},
+  {id:'hcl',grid:'hcl-grid',color:'var(--purple)',gradient:'linear-gradient(135deg,var(--purple),var(--purpled))',
+    tanks:[
+      {tag:'T-8101',name:'HCl-32%',cap:50,level:32,rate:0.8},
+      {tag:'T-8102',name:'HCl-32%',cap:50,level:41,rate:0.5},
+      {tag:'T-8103',name:'HCl-32%',cap:50,level:25,rate:0.6},
+      {tag:'T-8104',name:'HCl-32%',cap:50,level:38,rate:0.7},
+      {tag:'D-8101',name:'HCl-Dist',cap:10,level:4,rate:-0.3}
+    ]}
+];
+
+// Build tank cards
+tanks.forEach(function(group){
+  const grid=$(group.grid);
+  group.tanks.forEach(function(t){
+    const pct=(t.level/t.cap*100);
+    const statusCls=pct<20?'low':pct>95?'high':'ok';
+    const statusTxt=pct<20?'LOW LEVEL':pct>95?'HIGH LEVEL':'Normal';
+    const rateHtml=t.rate>=0
+      ?'<span class="fill">▲ +'+fmt(Math.abs(t.rate),1)+' m³/h</span>'
+      :'<span class="drain">▼ -'+fmt(Math.abs(t.rate),1)+' m³/h</span>';
+    const card=document.createElement('div');
+    card.className='tank';card.dataset.tag=t.tag;
+    card.innerHTML=
+      '<div class="tank-hdr"><span class="tank-name">'+t.name+'</span><span class="tank-tag">'+t.tag+'</span></div>'+
+      '<div class="tank-bar-wrap"><div class="tank-bar" style="width:'+pct+'%;background:'+group.gradient+'"></div></div>'+
+      '<div class="tank-stats"><span class="tank-vol" data-field="vol">'+fmt0(t.level)+'</span><span class="tank-cap">/ '+t.cap+' m³</span></div>'+
+      '<div class="tank-pct" data-field="pct" style="color:'+(pct<20?'var(--red)':pct>95?'var(--yellow)':'var(--ink)')+'">'+fmt(pct,1)+'%</div>'+
+      '<div class="tank-status"><div class="status-dot '+statusCls+'"></div><span class="status-txt" data-field="status">'+statusTxt+'</span></div>'+
+      '<div class="tank-rate" data-field="rate">'+rateHtml+'</div>';
+    grid.appendChild(card);
+  });
+});
+
+// Distributor SVGs
+function buildDist(){
+  // NaOH distributor
+  var naohSvg=$('naoh-dist');
+  naohSvg.innerHTML=
+    '<defs><marker id="ah-naoh" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto"><polygon points="0 0,6 2,0 4" fill="var(--orange)" opacity="0.6"/></marker></defs>'+
+    '<line x1="80" y1="20" x2="80" y2="80" stroke="var(--orange)" class="flow-line" marker-end="url(#ah-naoh)"/>'+
+    '<text x="80" y="12" text-anchor="middle" class="dist-label">T-5201–5204</text>'+
+    '<line x1="80" y1="50" x2="200" y2="20" stroke="var(--orange)" class="flow-line" marker-end="url(#ah-naoh)"/>'+
+    '<line x1="80" y1="50" x2="200" y2="50" stroke="var(--orange)" class="flow-line" marker-end="url(#ah-naoh)"/>'+
+    '<line x1="80" y1="50" x2="200" y2="80" stroke="var(--orange)" class="flow-line" marker-end="url(#ah-naoh)"/>'+
+    '<circle cx="200" cy="20" class="flow-dot" fill="var(--orange)"/>'+
+    '<circle cx="200" cy="50" class="flow-dot" fill="var(--orange)"/>'+
+    '<circle cx="200" cy="80" class="flow-dot" fill="var(--orange)"/>'+
+    '<text x="220" y="24" class="dist-label">To Hypo Columns (C-6101)</text>'+
+    '<text x="220" y="54" class="dist-label">To HGW System</text>'+
+    '<text x="220" y="84" class="dist-label">To HCl Unit (U-8101)</text>'+
+    '<line x1="80" y1="50" x2="460" y2="50" stroke="var(--orange)" class="flow-line" marker-end="url(#ah-naoh)" stroke-dasharray="6 4"/>'+
+    '<text x="480" y="54" class="dist-label" fill="var(--orange)" style="font-weight:600">→ Export</text>';
+
+  // HCl distributor
+  var hclSvg=$('hcl-dist');
+  hclSvg.innerHTML=
+    '<defs><marker id="ah-hcl" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto"><polygon points="0 0,6 2,0 4" fill="var(--purple)" opacity="0.6"/></marker></defs>'+
+    '<line x1="80" y1="50" x2="80" y2="50" stroke="var(--purple)" class="flow-line" marker-end="url(#ah-hcl)"/>'+
+    '<text x="80" y="40" text-anchor="middle" class="dist-label">T-8101</text>'+
+    '<line x1="100" y1="50" x2="220" y2="20" stroke="var(--purple)" class="flow-line" marker-end="url(#ah-hcl)"/>'+
+    '<line x1="100" y1="50" x2="220" y2="50" stroke="var(--purple)" class="flow-line" marker-end="url(#ah-hcl)"/>'+
+    '<line x1="100" y1="50" x2="220" y2="80" stroke="var(--purple)" class="flow-line" marker-end="url(#ah-hcl)"/>'+
+    '<circle cx="220" cy="20" class="flow-dot" fill="var(--purple)"/>'+
+    '<circle cx="220" cy="50" class="flow-dot" fill="var(--purple)"/>'+
+    '<circle cx="220" cy="80" class="flow-dot" fill="var(--purple)"/>'+
+    '<text x="240" y="24" class="dist-label">To D-8101 Buffer Tank</text>'+
+    '<text x="240" y="54" class="dist-label">To Truck Loading Bay</text>'+
+    '<text x="240" y="84" class="dist-label">To Plant Consumers</text>'+
+    '<line x1="100" y1="50" x2="460" y2="50" stroke="var(--purple)" class="flow-line" marker-end="url(#ah-hcl)" stroke-dasharray="6 4"/>'+
+    '<text x="480" y="54" class="dist-label" fill="var(--purple)" style="font-weight:600">→ External</text>';
+}
+buildDist();
+
+// ── Stock Routing & Projection ──
+var routing={prod:null,sell:null,prodRate:0,sellRate:0,hours:12,active:false,mode:'fill'};
+var pjProd=$('pj-prod'),pjSell=$('pj-sell'),pjProdRate=$('pj-prod-rate'),pjSellRate=$('pj-sell-rate'),pjHrs=$('pj-hours');
+var pjProdLvl=$('pj-prod-lvl'),pjSellLvl=$('pj-sell-lvl');
+var pjModeFill=$('pj-m-fill'),pjModeDrain=$('pj-m-drain');
+var RKEY='nac-routing';
+
+function groupLabel(id){return id==='naocl'?'NaOCl':id==='naoh'?'NaOH':'HCl'}
+function fmtDur(h){
+  if(isNaN(h)||!isFinite(h))return '—';
+  if(h<=0)return 'now';
+  if(h<1)return Math.round(h*60)+' min';
+  if(h<48)return Math.floor(h)+' h '+Math.round((h-Math.floor(h))*60)+' m';
+  return fmt(h/24,1)+' days';
+}
+function populateTankSelects(sel){
+  sel.innerHTML='<option value="">— select tank —</option>';
+  tanks.forEach(function(group){
+    var og=document.createElement('optgroup');og.label=groupLabel(group.id);
+    group.tanks.forEach(function(t,i){
+      var o=document.createElement('option');
+      o.value=group.id+'-'+i;
+      o.textContent=t.tag+' · '+t.name+' · '+t.cap+' m³';
+      og.appendChild(o);
+    });
+    sel.appendChild(og);
+  });
+}
+function resolveTank(v){
+  if(!v)return null;
+  var p=v.split('-'),g=p[0],i=+p[1];
+  var grp=null;tanks.forEach(function(x){if(x.id===g)grp=x});
+  if(!grp||!grp.tanks[i])return null;
+  return {ref:v,grp:grp,t:grp.tanks[i]};
+}
+function parseFloatSafe(v){var n=parseFloat(v);return isNaN(n)?0:n}
+function readRoute(){
+  var prod=v=>v?resolveTank(v):null;
+  routing.prod=prod(pjProd.value);
+  routing.sell=prod(pjSell.value);
+  if(routing.mode==='fill')routing.sell=null;
+  if(routing.mode==='drain')routing.prod=null;
+  routing.prodRate=parseFloatSafe(pjProdRate.value);
+  routing.sellRate=parseFloatSafe(pjSellRate.value);
+  routing.hours=parseFloatSafe(pjHrs.value);
+  if(routing.hours<=0)routing.hours=0;
+}
+function sameTank(a,b){return a&&b&&a.ref===b.ref}
+function calcSingle(t,rate,hours,drain,lvlPct){
+  var cap=t.cap;
+  var lvl=(typeof lvlPct==='number'&&isFinite(lvlPct))
+    ?Math.max(0,Math.min(100,lvlPct))*cap/100
+    :t.level;
+  var lpct=lvl/cap*100;
+  var raw=lvl+rate*hours;
+  var p=Math.max(0,raw),ppct=p/cap*100;
+  var finalPct=Math.min(100,ppct);
+  var overflow=raw>cap,empty=raw<0;
+  var timeTxt='—';
+  var timeSub=rate===0?'no rate — static':(drain?'to EMPTY at '+fmt(Math.abs(rate),2)+' m³/h':'to FULL at '+fmt(Math.abs(rate),2)+' m³/h');
+  if(rate!==0){
+    var ar=Math.abs(rate);
+    var h=drain?lvl/ar:(cap-lvl)/ar;
+    timeTxt=fmtDur(h);
+  }
+  return {tag:t.tag,name:t.name,cap:cap,lvl:lvl,lpct:lpct,p:p,ppct:ppct,finalPct:finalPct,overflow:overflow,empty:empty,timeTxt:timeTxt,timeSub:timeSub,rate:rate};
+}
+function renderProjPanel(prefix,d,t,grp){
+  var nameEl=$(prefix+'-name'),tagEl=$(prefix+'-tag'),bar=$(prefix+'-bar'),volEl=$(prefix+'-vol'),capEl=$(prefix+'-cap');
+  var pctEl=$(prefix+'-pct'),statusEl=$(prefix+'-status'),rateEl=$(prefix+'-rate'),dot=$(prefix+'-dot');
+  if(!d){
+    nameEl.textContent='—';tagEl.textContent=(prefix==='pj-p'?'Production':'Selling');
+    bar.style.width='0';bar.style.background=prefix==='pj-p'?'linear-gradient(135deg,var(--green),var(--greend))':'linear-gradient(135deg,var(--red),var(--redd))';
+    volEl.textContent='—';capEl.textContent='/ —';
+    pctEl.textContent='—';pctEl.style.color='var(--k3)';
+    statusEl.textContent='select a tank';dot.className='status-dot ok';
+    rateEl.innerHTML='';
+    return;
+  }
+  var shownPct=d.empty?0:(d.overflow?d.ppct:d.finalPct);
+  var col=d.empty?'var(--red)':(d.overflow||d.finalPct>95)?'var(--yellow)':d.finalPct<20?'var(--red)':'var(--ink)';
+  nameEl.textContent=d.name;
+  tagEl.textContent=d.tag;
+  bar.style.width=d.finalPct+'%';
+  bar.style.background=grp?grp.gradient:(prefix==='pj-p'?'linear-gradient(135deg,var(--green),var(--greend))':'linear-gradient(135deg,var(--red),var(--redd))');
+  volEl.textContent=fmt(Math.min(d.cap,d.p),1);
+  capEl.textContent='/ '+fmt(d.cap,0)+' m³';
+  pctEl.textContent=shownPct.toFixed(1)+'%';
+  pctEl.style.color=col;
+  if(d.empty){statusEl.textContent='PROJECTED EMPTY';dot.className='status-dot low'}
+  else if(d.overflow){statusEl.textContent='PROJECTED OVERFLOW';dot.className='status-dot high'}
+  else if(d.finalPct>95){statusEl.textContent='PROJECTED HIGH';dot.className='status-dot high'}
+  else{statusEl.textContent=d.rate===0?'Static':'Projected OK';dot.className='status-dot ok'}
+  rateEl.innerHTML=d.rate>=0
+    ?'<span class="fill">▲ +'+fmt(Math.abs(d.rate),1)+' m³/h</span>'
+    :'<span class="drain">▼ -'+fmt(Math.abs(d.rate),1)+' m³/h</span>';
+}
+function syncGlow(){
+  document.querySelectorAll('.tank[data-tag]').forEach(function(c){c.classList.remove('rg-prod','rg-sell')});
+  if(routing.prod){
+    var pc=document.querySelector('.tank[data-tag="'+routing.prod.t.tag+'"]');
+    if(pc)pc.classList.add('rg-prod');
+  }
+  if(routing.sell){
+    var sc=document.querySelector('.tank[data-tag="'+routing.sell.t.tag+'"]');
+    if(sc)sc.classList.add('rg-sell');
+  }
+}
+function calcProjection(){
+  readRoute();
+  var dP=null,dS=null;
+  var pLvl=parseFloatSafe(pjProdLvl.value),sLvl=parseFloatSafe(pjSellLvl.value);
+  if(pjProdLvl.value==='')pLvl=NaN;
+  if(pjSellLvl.value==='')sLvl=NaN;
+  if(routing.mode==='fill'&&routing.prod){
+    dP=calcSingle(routing.prod.t,routing.prodRate,routing.hours,false,pLvl);
+  }
+  if(routing.mode==='drain'&&routing.sell){
+    dS=calcSingle(routing.sell.t,routing.sellRate,routing.hours,true,sLvl);
+  }
+  renderProjPanel('pj-p',dP,routing.prod?routing.prod.t:null,routing.prod?routing.prod.grp:null);
+  renderProjPanel('pj-s',dS,routing.sell?routing.sell.t:null,routing.sell?routing.sell.grp:null);
+  syncGlow();
+  var note=$('pj-note');
+  if(routing.mode==='fill'){
+    if(!routing.prod)note.innerHTML='Filling mode — choose the tank receiving production, set the fill rate and forecast time. Press <b>Apply routing</b> to drive the live simulation with this route.';
+    else{
+      note.innerHTML='Fill → <b>'+routing.prod.t.tag+'</b> +'+fmt(routing.prodRate,2)+' m³/h over '+fmt(routing.hours,1)+' h. '+((routing.active)?'<b>Applied to live simulation.</b>':'Press <b>Apply routing</b> to link the live simulation.');
+      if(dP)note.innerHTML+='<br>Projection: <b>'+dP.name+'</b> '+dP.lpct.toFixed(1)+'% → '+dP.finalPct.toFixed(1)+'% · '+dP.timeSub+' '+dP.timeTxt;
+    }
+  }else{
+    if(!routing.sell)note.innerHTML='Draining mode — choose the tank supplying sales, set the draw rate and forecast time. Press <b>Apply routing</b> to drive the live simulation with this route.';
+    else{
+      note.innerHTML='Drain ← <b>'+routing.sell.t.tag+'</b> -'+fmt(routing.sellRate,2)+' m³/h over '+fmt(routing.hours,1)+' h. '+((routing.active)?'<b>Applied to live simulation.</b>':'Press <b>Apply routing</b> to link the live simulation.');
+      if(dS)note.innerHTML+='<br>Projection: <b>'+dS.name+'</b> '+dS.lpct.toFixed(1)+'% → '+dS.finalPct.toFixed(1)+'% · '+dS.timeSub+' '+dS.timeTxt;
+    }
+  }
+}
+function setLevelField(sel,field){
+  var r=resolveTank(sel.value);
+  if(r){field.value=fmt(r.t.level/r.t.cap*100,1)}
+}
+function selectAutoFill(){
+  setLevelField(pjProd,pjProdLvl);
+  setLevelField(pjSell,pjSellLvl);
+  calcProjection();
+}
+function applyModeVisuals(){
+  pjModeFill.classList.toggle('active',routing.mode==='fill');
+  pjModeFill.classList.toggle('drain',false);
+  pjModeDrain.classList.toggle('active',routing.mode==='drain');
+  pjModeDrain.classList.toggle('drain',routing.mode==='drain');
+  $('pj-prod-side').style.display=routing.mode==='fill'?'contents':'none';
+  $('pj-sell-side').style.display=routing.mode==='drain'?'contents':'none';
+  $('pj-tanks').classList.toggle('mode-fill',routing.mode==='fill');
+  $('pj-tanks').classList.toggle('mode-sell',routing.mode==='drain');
+}
+function saveRouting(){
+  try{localStorage.setItem(RKEY,JSON.stringify({mode:routing.mode,prod:pjProd.value,sell:pjSell.value,prodRate:routing.prodRate,sellRate:routing.sellRate,hours:routing.hours,active:routing.active,prodLvl:pjProdLvl.value,sellLvl:pjSellLvl.value}))}catch(e){}
+}
+function loadRouting(){
+  try{var s=JSON.parse(localStorage.getItem(RKEY)||'null');
+    if(!s||!s.prod&&!s.sell)return;
+    routing.mode=s.mode==='drain'?'drain':'fill';
+    pjProd.value=s.prod||'';pjSell.value=s.sell||'';
+    if(s.prodRate)pjProdRate.value=s.prodRate;
+    if(s.sellRate)pjSellRate.value=s.sellRate;
+    if(s.hours)pjHrs.value=s.hours;
+    if(s.prodLvl)pjProdLvl.value=s.prodLvl;
+    if(s.sellLvl)pjSellLvl.value=s.sellLvl;
+    routing.active=!!s.active;
+  }catch(e){}
+}
+function updateChip(){
+  var chip=$('pj-state');
+  var label=routing.mode==='fill'?'Fill':'Drain';
+  chip.innerHTML=routing.active
+    ?'<span class="status-dot"></span>'+label+' routing active'
+    :'<span class="status-dot ok"></span>'+label+' · planning only';
+  chip.classList.toggle('on',routing.active);
+}
+function applyRouting(){
+  readRoute();
+  if(routing.mode==='fill'&&routing.prod){
+    var pLvl=parseFloatSafe(pjProdLvl.value);
+    if(pjProdLvl.value!=='')routing.prod.t.level=Math.max(0,Math.min(100,pLvl))*routing.prod.t.cap/100;
+    routing.prod.t.rate=routing.prodRate;
+  }
+  if(routing.mode==='drain'&&routing.sell){
+    var sLvl=parseFloatSafe(pjSellLvl.value);
+    if(pjSellLvl.value!=='')routing.sell.t.level=Math.max(0,Math.min(100,sLvl))*routing.sell.t.cap/100;
+    routing.sell.t.rate=-routing.sellRate;
+  }
+  routing.active=true;
+  saveRouting();updateChip();
+  calcProjection();
+  update();
+}
+function clearRouting(){
+  routing={prod:null,sell:null,prodRate:0,sellRate:0,hours:12,active:false,mode:'fill'};
+  pjProd.value='';pjSell.value='';pjProdRate.value='';pjSellRate.value='';pjHrs.value='12';pjProdLvl.value='';pjSellLvl.value='';
+  try{localStorage.removeItem(RKEY)}catch(e){}
+  applyModeVisuals();
+  updateChip();calcProjection();
+}
+populateTankSelects(pjProd);
+populateTankSelects(pjSell);
+loadRouting();
+applyModeVisuals();
+updateChip();
+pjModeFill.addEventListener('click',function(){
+  if(routing.mode==='fill')return;
+  routing.mode='fill';
+  applyModeVisuals();saveRouting();updateChip();calcProjection();
+});
+pjModeDrain.addEventListener('click',function(){
+  if(routing.mode==='drain')return;
+  routing.mode='drain';
+  applyModeVisuals();saveRouting();updateChip();calcProjection();
+});
+pjProd.addEventListener('change',selectAutoFill);
+pjSell.addEventListener('change',selectAutoFill);
+[pjProdLvl,pjSellLvl,pjProdRate,pjSellRate,pjHrs].forEach(function(el){
+  ['input','change'].forEach(function(ev){el.addEventListener(ev,calcProjection)});
+});
+$('pj-apply').addEventListener('click',applyRouting);
+$('pj-clear').addEventListener('click',clearRouting);
+calcProjection();
+
+// Live update
+function routedRate(t){
+  var net=0,isRouted=false;
+  if(routing.active){
+    if(routing.prod&&routing.prod.t===t){net+=routing.prodRate;isRouted=true}
+    if(routing.sell&&routing.sell.t===t){net-=routing.sellRate;isRouted=true}
+  }
+  return isRouted?net:null;
+}
+function update(){
+  var totalNaocl=0,totalNaoh=0,totalHcl=0,warnings=0;
+  tanks.forEach(function(group){
+    group.tanks.forEach(function(t){
+      var rr=routedRate(t);
+      if(routing.active&&rr===null){
+        // frozen: not a routed tank — level/rate untouched
+      }else{
+        t.level+=(rr!==null?rr:t.rate)*(1.5/3600)+(Math.random()-0.5)*0.4;
+        t.level=Math.max(0,Math.min(t.cap,t.level));
+        if(rr===null){
+          t.rate+=(Math.random()-0.5)*0.05;
+          t.rate=Math.max(-5,Math.min(5,t.rate));
+        }else{
+          t.rate=rr;
+        }
+      }
+      var pct=t.level/t.cap*100;
+      var card=document.querySelector('.tank[data-tag="'+t.tag+'"]');
+      if(!card)return;
+      card.querySelector('[data-field="vol"]').textContent=fmt0(t.level);
+      card.querySelector('[data-field="pct"]').textContent=fmt(pct,1)+'%';
+      card.querySelector('[data-field="pct"]').style.color=pct<20?'var(--red)':pct>95?'var(--yellow)':'var(--ink)';
+      card.querySelector('.tank-bar').style.width=pct+'%';
+      var dot=card.querySelector('.status-dot');var stxt=card.querySelector('[data-field="status"]');
+      if(pct<20){dot.className='status-dot low';stxt.textContent='LOW LEVEL';warnings++}
+      else if(pct>95){dot.className='status-dot high';stxt.textContent='HIGH LEVEL';warnings++}
+      else{dot.className='status-dot ok';stxt.textContent='Normal'}
+      var rateEl=card.querySelector('[data-field="rate"]');
+      rateEl.innerHTML=t.rate>=0
+        ?'<span class="fill">▲ +'+fmt(Math.abs(t.rate),1)+' m³/h</span>'
+        :'<span class="drain">▼ -'+fmt(Math.abs(t.rate),1)+' m³/h</span>';
+      if(group.id==='naocl')totalNaocl+=t.level;
+      else if(group.id==='naoh')totalNaoh+=t.level;
+      else totalHcl+=t.level;
+    });
+  });
+  $('t-naocl').textContent=fmt0(totalNaocl);$('t-naoh').textContent=fmt0(totalNaoh);$('t-hcl').textContent=fmt0(totalHcl);
+  $('sum-naocl').textContent=fmt0(totalNaocl);$('sum-naoh').textContent=fmt0(totalNaoh);$('sum-hcl').textContent=fmt0(totalHcl);
+  $('ft-total').textContent=fmt0(totalNaocl+totalNaoh+totalHcl);
+  if(routing.active)calcProjection();
+  if(warnings>0){$('t-status').textContent=warnings;$('t-status').className='tk-val red';$('t-status-sub').textContent='alerts active';$('sum-status').textContent=warnings;$('sum-status').style.color='var(--red)';$('sum-status-sub').textContent='alerts active'}
+  else{$('t-status').textContent='OK';$('t-status').className='tk-val teal';$('t-status-sub').textContent='All tanks normal';$('sum-status').textContent='OK';$('sum-status').style.color='var(--green)';$('sum-status-sub').textContent='All tanks normal'}
+}
+setInterval(update,1500);update();
+
+function tick(){$('fttm').textContent=new Date().toLocaleTimeString('en-GB',{hour12:false})}
+setInterval(tick,1000);tick();
+</script>
+</body>
+</html>
