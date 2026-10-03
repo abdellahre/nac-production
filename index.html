@@ -66,7 +66,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
   height:var(--nav-h);padding:0 var(--s-4)}
 .nav-ind{position:absolute;top:10px;left:0;height:var(--nav-ind-h);width:0;
   border-radius:999px;background:var(--ink);opacity:0;pointer-events:none;
-  transition:transform var(--dur) var(--ease),width var(--dur) var(--ease),opacity var(--dur-fast) var(--ease)}
+  transition:transform var(--dur) var(--ease),width var(--dur) var(--ease),top var(--dur) var(--ease),height var(--dur) var(--ease),opacity var(--dur-fast) var(--ease)}
 .js .nav-ind{opacity:1}
 .rail-logo{width:34px;height:34px;flex-shrink:0;margin-right:var(--s-2);
   border-radius:8px;background:var(--ink);display:grid;place-items:center}
@@ -117,7 +117,11 @@ html:not(.js) .rail-btn.active{background:var(--ink)}
 /* ── Page / Tabs ── */
 .page{flex:1;padding:var(--s-5) var(--gutter) var(--s-6);width:100%;max-width:calc(var(--measure) + 2*var(--gutter));margin:0 auto}
 .tab-page{display:none}
-.tab-page.active{display:block}
+.tab-page.active{display:block;animation:pageIn .18s var(--ease)}
+/* opacity + a 4px rise. No descendant of .tab-page is position:fixed (the only
+   fixed rule in this sheet is .rail), so the transform creates no containing
+   block problem. Neutralised globally by the prefers-reduced-motion block. */
+@keyframes pageIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 
 /* ── Cards ── */
 .card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:var(--s-4)}
@@ -344,11 +348,24 @@ html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 48px + 2*var(
     -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
   .rail::-webkit-scrollbar{display:none}
   .rail-logo,.rail-spacer{display:none}
-  .nav-ind{top:6px;height:calc(100% - 12px);background:var(--s2);border-radius:10px}
-  .js .rail-btn.active{color:var(--ink);background:transparent}
+  /* .console{display:contents} above deletes the console box, so the desktop
+     `position:sticky;z-index:200` that used to hold these bars above the content
+     is gone. .rail and .ticker are both positioned here, so give them an explicit
+     order: page content, then ticker, then rail. */
+  .ticker{z-index:60}
+  .rail{z-index:70}
+  /* high contrast on the glass bar: --ink is always the inverse of --bg, so the
+     same two declarations work in both themes. A --s2/--s3 tint on a near-black
+     bar is only ~0.01 apart in luminance, which is why the pill read as missing. */
+  .nav-ind{background:var(--ink);border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.35)}
+  .js .rail-btn.active{color:var(--bg);background:transparent}
   .rail-btn{flex-direction:column;gap:3px;padding:5px 4px;min-width:44px;
     font:600 8px/1 var(--mono);letter-spacing:.04em}
-  .rail-icon svg{width:18px;height:18px}
+  /* icon-only bar: the label span carries its own font-size, so hiding it has to
+     target .rail-label itself — a rule on .rail-btn would not win */
+  .rail-label{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  .rail-icon svg{width:20px;height:20px}
   #themeBtn,.rail-btn[href]{min-width:34px;padding:5px 2px}
   #themeBtn .rail-label,.rail-btn[href] .rail-label{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
   .page{padding-bottom:var(--s-6)}
@@ -751,7 +768,14 @@ function moveInd(){
   });
   var a=navEl.querySelector('.rail-btn.active');if(!a||!navInd)return;
   var r=navEl.getBoundingClientRect(),b=a.getBoundingClientRect();
-  navInd.style.transform='translateX('+(b.left-r.left)+'px)';
+  // top/height come from the button too, so the pill tracks it in both the
+  // desktop row and the phone bottom bar without the CSS guessing an orientation.
+  // clientLeft/clientTop are the rail's border widths: an absolutely positioned
+  // child is placed against the padding box, so without this the pill sits 1px
+  // low and 1px right on the phone bar (which has a 1px border-top).
+  navInd.style.top=(b.top-r.top-navEl.clientTop)+'px';
+  navInd.style.height=b.height+'px';
+  navInd.style.transform='translateX('+(b.left-r.left-navEl.clientLeft)+'px)';
   navInd.style.width=b.width+'px';
 }
 addEventListener('resize',moveInd);
