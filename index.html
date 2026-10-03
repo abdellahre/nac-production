@@ -4,140 +4,173 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NAC · Chlor-Alkali Production Calculator</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Manrope:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#1a1a2e;--sf:#16162a;--s2:#1e1e36;--s3:#24243c;--bd:#2e2e4a;--b2:#3e3e5c;
-  --ink:#e8eaf0;--k2:#a0a3b8;--k3:#6b6e8a;
-  --green:#22c55e;--greend:#16a34a;--greenl:rgba(34,197,94,.10);
+  /* surfaces + ink */
+  --bg:#0b0b0d;--sf:#111215;--s2:#1b1c20;--s3:#22232a;--bd:rgba(255,255,255,.12);--b2:rgba(255,255,255,.30);
+  --ink:#f3f0ea;--k2:#beb9bc;--k3:#77737a;
+  --green:#22c55e;--greend:#16a34a;--greenl:rgba(34,197,94,.10);--greent:#22c55e;
   --blue:#3b82f6;--blued:#2563eb;--bluel:rgba(59,130,246,.10);
   --red:#ef4444;--redd:#dc2626;--redl:rgba(239,68,68,.10);
-  --yellow:#eab308;--yellowd:#ca8a04;--yellowl:rgba(234,179,8,.10);
+  --yellow:#eab308;--yellowd:#ca8a04;--yellowl:rgba(234,179,8,.10);--yellowt:#ca8a04;
   --teal:#14b8a6;--teald:#0d9488;--teall:rgba(20,184,166,.10);
   --purple:#a78bfa;--purpled:#7c3aed;--purplel:rgba(167,139,250,.10);
   --orange:#f97316;--orangel:rgba(249,115,22,.10);
-  --mono:'IBM Plex Mono',monospace;--sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
-  --radius:14px;--radius-sm:10px;--radius-lg:18px;
-  --neu-raised:6px 6px 14px #0d0d1a,-6px -6px 14px #272742;
-  --neu-pressed:inset 4px 4px 10px #0d0d1a,inset -4px -4px 10px #272742;
-  --neu-flat:3px 3px 8px #0d0d1a,-3px -3px 8px #272742;
+  --pink:#f87171;--pinkd:#dc2626;--pinkl:rgba(248,113,113,.10);
+  --mono:'DM Mono',ui-monospace,monospace;
+  --sans:'Manrope',-apple-system,BlinkMacSystemFont,sans-serif;
+  --display:'Space Grotesk','Manrope',sans-serif;
+  --radius:12px;--radius-sm:6px;--radius-lg:18px;
+  --neu-raised:none;--neu-pressed:none;--neu-flat:none;
+  --lift:0 1px 2px rgba(0,0,0,.40);
+  --lift-lg:0 14px 38px rgba(0,0,0,.50);
+  --glass:rgba(11,11,13,.62);--glassline:rgba(255,255,255,.22);
+  --s-1:4px;--s-2:8px;--s-3:12px;--s-4:16px;--s-5:24px;--s-6:32px;--s-7:48px;
+  --measure:1240px;--gutter:clamp(20px,4vw,56px);
+  --nav-h:60px;--nav-ind-h:40px;
+  --ease:cubic-bezier(.22,1,.36,1);--dur-fast:.2s;--dur:.38s;
 }
-[data-theme="light"]{
-  --bg:#e8eaf0;--sf:#f5f6fa;--s2:#ecedf3;--s3:#dddee8;--bd:#c8c9d6;--b2:#a8a9ba;
-  --ink:#191a22;--k2:#5d5e72;--k3:#9899ae;
-  --green:#16a34a;--greend:#15803d;--greenl:rgba(22,163,74,.08);
-  --blue:#2563eb;--blued:#1d4ed8;--bluel:rgba(37,99,235,.08);
-  --red:#dc2626;--redd:#b91c1c;--redl:rgba(220,38,38,.08);
-  --yellow:#ca8a04;--yellowd:#a16207;--yellowl:rgba(202,138,4,.08);
-  --teal:#0d9488;--teald:#0f766e;--teall:rgba(13,148,136,.08);
-  --purple:#7c3aed;--purpled:#6d28d9;--purplel:rgba(124,58,237,.08);
-  --orange:#ea580c;--orangel:rgba(234,88,12,.08);
-  --neu-raised:6px 6px 14px #c8c9d6,-6px -6px 14px #ffffff;
-  --neu-pressed:inset 4px 4px 10px #c8c9d6,inset -4px -4px 10px #ffffff;
-  --neu-flat:3px 3px 8px #c8c9d6,-3px -3px 8px #ffffff;
+[data-theme="light"]{ /* warm paper */
+  --bg:#f3f0ea;--sf:#ffffff;--s2:#eceae4;--s3:#e0ddd6;--bd:rgba(0,0,0,.10);--b2:rgba(0,0,0,.20);
+  --ink:#141417;--k2:#55525a;--k3:#8b8892;
+  --green:#16a34a;--greend:#15803d;--greenl:rgba(22,163,74,.10);--greent:#166534;
+  --blue:#2563eb;--blued:#1d4ed8;--bluel:rgba(37,99,235,.10);
+  --red:#dc2626;--redd:#b91c1c;--redl:rgba(220,38,38,.10);
+  --yellow:#ca8a04;--yellowd:#a16207;--yellowl:rgba(202,138,4,.10);--yellowt:#92400e;
+  --teal:#0d9488;--teald:#0f766e;--teall:rgba(13,148,136,.10);
+  --purple:#7c3aed;--purpled:#6d28d9;--purplel:rgba(124,58,237,.10);
+  --orange:#ea580c;--orangel:rgba(234,88,12,.10);
+  --pink:#dc2626;--pinkd:#b91c1c;--pinkl:rgba(220,38,38,.10);
+  --glass:rgba(243,240,234,.66);--glassline:rgba(0,0,0,.14);
+  --lift:0 1px 2px rgba(0,0,0,.10);
 }
 html{font-size:15px}
+h1,h2,h3{font-family:var(--display);letter-spacing:-.01em}
 body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column}
 
-/* ── Rail Navigation ── */
-.rail{position:fixed;left:0;top:0;bottom:0;width:52px;background:var(--sf);box-shadow:var(--neu-raised);z-index:200;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:4px;transition:width .2s ease}
-.rail:hover{width:180px}
-.rail-logo{width:32px;height:32px;background:linear-gradient(135deg,var(--green),var(--teal));border-radius:10px;display:grid;place-items:center;margin-bottom:8px;flex-shrink:0;box-shadow:var(--neu-raised)}
-.rail-logo svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round}
-.rail-btn{width:38px;height:38px;border-radius:var(--radius-sm);border:none;background:transparent;color:var(--k3);cursor:pointer;display:flex;align-items:center;gap:10px;padding:0 9px;transition:all .2s;position:relative;overflow:hidden;white-space:nowrap;text-decoration:none}
-.rail:hover .rail-btn{width:100%;justify-content:flex-start}
-.rail-btn:hover{background:var(--s2);color:var(--k2);box-shadow:var(--neu-flat)}
-.rail-btn.active{background:var(--greenl);color:var(--green);box-shadow:var(--neu-raised)}
-.rail-btn.active::before{content:'';position:absolute;left:-8px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:var(--green)}
-.rail-icon{flex-shrink:0;width:20px;text-align:center;display:flex;align-items:center;justify-content:center}
-.rail-icon svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.rail-label{font-size:11px;font-weight:500;opacity:0;width:0;transition:opacity .15s,width .15s}
-.rail:hover .rail-label{opacity:1;width:auto}
-.rail-spacer{flex:1}
+/* ── Console: one floating glass surface holding nav + live data ── */
+.console{position:sticky;top:var(--s-3);z-index:200;
+  width:max-content;max-width:calc(100vw - 2*var(--gutter));margin:0 auto var(--s-4);
+  border-radius:var(--radius-lg);border:1px solid var(--glassline);
+  background:linear-gradient(180deg,rgba(11,11,13,.92),rgba(11,11,13,.80));
+  -webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);
+  box-shadow:0 14px 38px rgba(0,0,0,.45);overflow:hidden}
+[data-theme="light"] .console{background:linear-gradient(180deg,rgba(255,255,255,.94),rgba(243,240,234,.86));box-shadow:0 14px 32px rgba(0,0,0,.14)}
 
-.shell{margin-left:52px;display:flex;flex-direction:column;min-height:100vh;transition:margin-left .2s ease}
-.rail:hover~.shell{margin-left:180px}
-.hamburger{display:none;position:fixed;top:10px;left:10px;z-index:300;width:40px;height:40px;border-radius:var(--radius-sm);border:1px solid var(--bd);background:var(--sf);color:var(--ink);cursor:pointer;place-items:center;padding:0}
-.hamburger svg{width:20px;height:20px}
-.rail.rail-open~.hamburger{left:148px}
-@media(max-width:640px){
-  .hamburger{display:grid}
-  .rail{width:0;overflow:hidden}
-  .rail.rail-open{width:180px}
-  .rail.rail-open .rail-label{opacity:1;width:auto}
-  .rail.rail-open .rail-btn{width:100%;justify-content:flex-start}
-  .shell{margin-left:0}
-  .rail.rail-open~.shell{margin-left:180px}
-  .rail-backdrop{display:none;position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.4)}
-  .rail.rail-open~.rail-backdrop{display:block}
-  .foot{padding-left:24px}
-  .ticker-item{min-width:120px;padding:6px 10px}
-  .prod-hero{grid-template-columns:1fr 1fr}
-  .flow-detail{grid-template-columns:1fr}
-}
+/* ── Navigation: pill row inside the console ── */
+.rail{position:relative;
+  display:flex;align-items:center;justify-content:center;gap:var(--s-1);
+  height:var(--nav-h);padding:0 var(--s-4)}
+.nav-ind{position:absolute;top:10px;left:0;height:var(--nav-ind-h);width:0;
+  border-radius:999px;background:var(--ink);opacity:0;pointer-events:none;
+  transition:transform var(--dur) var(--ease),width var(--dur) var(--ease),opacity var(--dur-fast) var(--ease)}
+.js .nav-ind{opacity:1}
+.rail-logo{width:34px;height:34px;flex-shrink:0;margin-right:var(--s-2);
+  border-radius:8px;background:var(--ink);display:grid;place-items:center}
+.rail-logo svg{width:16px;height:16px;stroke:var(--bg);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.rail-btn{position:relative;z-index:1;height:var(--nav-ind-h);width:auto;
+  padding:0 16px;border-radius:999px;border:1px solid transparent;background:transparent;
+  color:var(--k2);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  font:600 13px/1 var(--sans);text-decoration:none;white-space:nowrap;
+  transition:color var(--dur-fast) var(--ease),background-color var(--dur-fast) var(--ease)}
+.rail-btn:hover{color:var(--ink);background:rgba(255,255,255,.10)}
+[data-theme="light"] .rail-btn:hover{background:rgba(0,0,0,.05)}
+.rail-btn.active{color:var(--bg)}
+html:not(.js) .rail-btn.active{background:var(--ink)}
+.rail-icon{flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.rail-icon svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.rail-label{font-size:13px;font-weight:600;white-space:nowrap}
+.rail-spacer{width:1px;height:22px;background:var(--glassline);flex:none;margin:0 var(--s-1)}
+.shell{margin-left:0;display:flex;flex-direction:column;min-height:100vh}
+
+
 
 /* ── Ticker Bar ── */
-.ticker{position:sticky;top:0;z-index:100;background:var(--sf);box-shadow:var(--neu-flat)}
-.ticker-inner{display:flex;align-items:stretch;height:48px;overflow-x:auto;scrollbar-width:none}
+.ticker{position:static;background:none;border-top:1px solid var(--bd)}
+.ticker-inner{display:flex;align-items:stretch;height:52px;overflow-x:auto;scrollbar-width:none}
 .ticker-inner::-webkit-scrollbar{display:none}
 .ticker-item{flex:0 0 auto;min-width:140px;padding:6px 14px;border-right:1px solid var(--bd);display:flex;flex-direction:column;justify-content:center;gap:1px;cursor:default;transition:background .1s;position:relative}
 .ticker-item:hover{background:var(--s2)}
 .ticker-item:last-child{border-right:none}
-.tk-label{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--k3)}
-.tk-val{font-family:var(--mono);font-size:15px;font-weight:600;line-height:1.2}
+.tk-label{font:500 9px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--k3)}
+.tk-val{font:400 15px/1.2 var(--mono)}
 .tk-val.green{color:var(--green)}.tk-val.blue{color:var(--blue)}.tk-val.orange{color:var(--yellow)}.tk-val.purple{color:var(--purple)}.tk-val.teal{color:var(--teal)}.tk-val.red{color:var(--red)}
-.tk-sub{font-size:8.5px;color:var(--k3);font-family:var(--mono)}
-.tk-live{display:flex;align-items:center;gap:5px;padding:0 14px;font-size:8.5px;font-weight:600;color:var(--green);letter-spacing:.06em;text-transform:uppercase;border-left:1px solid var(--bd);white-space:nowrap}
-.tk-live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
+.tk-sub{font:400 9px/1 var(--mono);color:var(--k3)}
+.tk-live{display:flex;align-items:center;gap:6px;padding:0 14px;font:500 9px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--green);border-left:1px solid var(--bd);white-space:nowrap}
+.tk-live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite;flex-shrink:0}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 .tk-actions{display:flex;align-items:center;gap:6px;padding:0 12px;border-left:1px solid var(--bd)}
-.tk-btn{padding:5px 12px;border-radius:var(--radius-sm);border:none;background:var(--sf);color:var(--k2);font-size:10px;font-weight:600;cursor:pointer;font-family:var(--sans);transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:5px;text-decoration:none;box-shadow:var(--neu-flat)}
-.tk-btn:hover{background:var(--s2);color:var(--ink);box-shadow:var(--neu-raised)}
-.tk-btn.primary{background:var(--green);border:none;color:#0a0a00;box-shadow:var(--neu-raised)}
-.tk-btn.primary:hover{background:#16a34a}
+.tk-btn{padding:7px 14px;border-radius:999px;border:1px solid var(--glassline);background:rgba(255,255,255,.10);color:var(--ink);font:700 12px/1 var(--sans);cursor:pointer;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);white-space:nowrap;display:inline-flex;align-items:center;gap:6px;text-decoration:none;transition:background-color var(--dur-fast) var(--ease),border-color var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease)}
+.tk-btn:hover{background:rgba(255,255,255,.16);border-color:var(--b2);transform:translateY(-1px)}
+.tk-btn.primary{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.tk-btn.primary:hover{background:var(--ink);filter:brightness(1.1)}
 .tk-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
 /* ── Warning Strip ── */
-.warn-strip{display:none;align-items:center;gap:8px;padding:8px 20px;background:var(--redl);border-bottom:none;font-size:11px;color:var(--red);font-weight:500;box-shadow:var(--neu-flat)}
+.warn-strip{display:none;align-items:center;gap:8px;padding:9px 16px;background:var(--redl);border-top:1px solid var(--bd);font:500 11px/1.5 var(--mono);color:var(--red)}
 .warn-strip.show{display:flex}
 .warn-strip svg{width:14px;height:14px;stroke:var(--red);fill:none;stroke-width:2;flex-shrink:0}
 
 /* ── Page / Tabs ── */
-.page{flex:1;padding:20px 24px 24px}
+.page{flex:1;padding:var(--s-5) var(--gutter) var(--s-6);width:100%;max-width:calc(var(--measure) + 2*var(--gutter));margin:0 auto}
 .tab-page{display:none}
 .tab-page.active{display:block}
 
 /* ── Cards ── */
-.card{background:var(--sf);box-shadow:var(--neu-raised);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:16px}
-.card-head{padding:12px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:8px;background:var(--s2);border-radius:var(--radius-lg) var(--radius-lg) 0 0}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:var(--s-4)}
+.card-head{padding:12px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px;background:var(--s2)}
 .card-icon{width:24px;height:24px;border-radius:var(--radius-sm);display:grid;place-items:center}
 .card-icon svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.card-title{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--k3)}
+.card-title{font:500 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--k3)}
 
 /* ── Input Grid ── */
 .inputs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
 .input-group{padding:14px 16px}
 .input-group+.input-group{border-top:1px solid var(--bd)}
-.ig-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--k3);margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.ig-label::before{content:'';width:3px;height:12px;border-radius:2px;background:var(--green)}
+.ig-label{font:500 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--k3);margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .field-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--s3)}
 .field-row:last-child{border-bottom:none}
-.field-meta strong{display:block;font-size:12px;font-weight:500;color:var(--ink);line-height:1.3}
-.field-meta span{font-size:9.5px;color:var(--k3)}
+.field-meta strong{display:block;font:600 12px/1.3 var(--sans);color:var(--ink)}
+.field-meta span{font:400 9.5px/1.4 var(--mono);color:var(--k3)}
 .field-ctrl{display:flex;align-items:center;gap:5px}
-.field-ctrl input[type=number]{width:68px;padding:5px 7px;border:none;border-radius:var(--radius-sm);font-family:var(--mono);font-size:12px;color:var(--green);background:var(--sf);outline:none;text-align:right;transition:all .2s;box-shadow:var(--neu-pressed)}
-.field-ctrl input[type=number]:focus{box-shadow:var(--neu-pressed),0 0 0 2px var(--green)}
-.field-unit{font-size:9px;color:var(--k3);min-width:16px;font-weight:500}
+.field-ctrl input[type=number]{width:72px;padding:6px 8px;border:1px solid var(--bd);border-radius:var(--radius-sm);font:400 12px/1 var(--mono);color:var(--green);background:var(--bg);outline:none;text-align:right;transition:border-color var(--dur-fast) var(--ease)}
+.field-ctrl input[type=number]:focus{border-color:var(--ink);outline:none}
+.field-unit{font:400 9px/1 var(--mono);color:var(--k3);min-width:16px}
 .slider-row{padding:2px 0 6px}
-input[type=range]{-webkit-appearance:none;width:100%;height:4px;background:var(--s3);border-radius:2px;cursor:pointer;outline:none;box-shadow:var(--neu-pressed)}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--green);border:2px solid var(--sf);box-shadow:var(--neu-raised);cursor:pointer}
+input[type=range]{-webkit-appearance:none;width:100%;height:4px;background:var(--s3);border:1px solid var(--bd);border-radius:2px;cursor:pointer;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--ink);border:2px solid var(--bg);cursor:pointer;box-shadow:var(--lift)}
 .toggle-wrap{display:flex;align-items:center;gap:8px}
-.toggle{width:38px;height:20px;border-radius:10px;background:var(--sf);cursor:pointer;position:relative;transition:all .2s;border:none;box-shadow:var(--neu-pressed)}
-.toggle.on{background:var(--green);box-shadow:var(--neu-raised)}
-.toggle::after{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform .2s;box-shadow:var(--neu-flat)}
+.toggle{width:38px;height:20px;border-radius:999px;background:var(--s3);cursor:pointer;position:relative;transition:background-color var(--dur-fast) var(--ease);border:1px solid var(--bd)}
+.toggle.on{background:var(--green);border-color:var(--green)}
+.toggle::after{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:var(--ink);top:2px;left:2px;transition:transform var(--dur-fast) var(--ease)}
 .toggle.on::after{transform:translateX(18px)}
-.toggle-lbl{font-size:10px;font-weight:500;color:var(--k2)}
+.toggle-lbl{font:600 10px/1 var(--sans);color:var(--k2)}
+button.toggle{padding:0;display:block}
+
+/* ── Plant Production master card ── */
+/* The card edge stays neutral on purpose. The merged unit settings below remain live
+   when production is off, so the state is signalled by the status panel + header icon
+   rather than by ringing the whole card. */
+.prod-card{border-color:var(--bd)}
+.prod-status{transition:background-color var(--dur-fast) var(--ease),box-shadow var(--dur-fast) var(--ease)}
+.prod-card.prod-off .prod-status{background:var(--yellowl);box-shadow:inset 3px 0 0 var(--yellowd)}
+.prod-card.prod-on .prod-status{background:var(--greenl);box-shadow:inset 3px 0 0 var(--green)}
+.prod-card .card-icon{background:var(--yellowl);color:var(--yellow);transition:background-color var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease)}
+.prod-card.prod-on .card-icon{background:var(--greenl);color:var(--green)}
+/* scoped to the status group: the Hypochlorite / HCl labels must keep default ink */
+.prod-status .field-meta strong{color:var(--yellowt);transition:color var(--dur-fast) var(--ease)}
+.prod-card.prod-on .prod-status .field-meta strong{color:var(--greent)}
+.prod-card #prod-meta{color:var(--k2)}
+/* unit identity dots inside the merged card (own class: .card-icon is state-owned) */
+.ig-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ig-dot.hypo{background:var(--teal)}
+.ig-dot.hcl{background:var(--yellow)}
+/* the HCl target rows are conditionally hidden, so the trailing divider cannot rely on
+   .field-row:last-child (a structural selector that ignores display:none) */
+.prod-card #grp-hcl.hcl-off .field-row{border-bottom:none}
 
 /* ── Gauge ── */
 .gauge-wrap{text-align:center;padding:16px}
@@ -152,8 +185,8 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 @media(max-width:1200px){.prod-hero{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:700px){.prod-hero{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:400px){.prod-hero{grid-template-columns:1fr}}
-.hero-card{background:var(--sf);box-shadow:var(--neu-raised);border-radius:var(--radius);padding:14px;position:relative;overflow:hidden}
-.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--hc,var(--green));border-radius:var(--radius) var(--radius) 0 0}
+.hero-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--radius);padding:var(--s-4);position:relative;overflow:hidden}
+.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--hc,var(--green))}
 .hero-card .hc-l{font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--k3);margin-bottom:4px}
 .hero-card .hc-v{font-family:var(--mono);font-size:24px;font-weight:300;color:var(--ink);line-height:1}
 .hero-card .hc-u{font-size:10px;color:var(--k3);margin-top:2px}
@@ -164,7 +197,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .hbar-chart{display:flex;align-items:flex-end;justify-content:space-around;height:160px;gap:16px}
 .hbar-col{display:flex;flex-direction:column;align-items:center;flex:1;max-width:80px}
 .hbar-val{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink);margin-bottom:4px}
-.hbar{width:100%;border-radius:var(--radius-sm) var(--radius-sm) 0 0;transition:height .4s cubic-bezier(.4,0,.2,1);box-shadow:var(--neu-flat)}
+.hbar{width:100%;border-radius:var(--radius-sm) var(--radius-sm) 0 0;transition:height .5s var(--ease)}
 .hbar-name{font-size:9px;color:var(--k3);margin-top:6px;font-weight:500}
 .hbar-unit{font-size:8px;color:var(--k3);margin-top:1px}
 .chart-totals{display:flex;justify-content:center;gap:32px;margin-top:20px;flex-wrap:wrap}
@@ -175,81 +208,79 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 /* ── HCl Cards ── */
 .hcl-hero{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
 @media(max-width:700px){.hcl-hero{grid-template-columns:1fr 1fr}}
-.hcl-h-card{background:var(--sf);box-shadow:var(--neu-raised);border-radius:var(--radius);padding:14px;position:relative;overflow:hidden}
-.hcl-h-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,var(--yellow));border-radius:var(--radius) var(--radius) 0 0}
+.hcl-h-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--radius);padding:var(--s-4);position:relative;overflow:hidden}
+.hcl-h-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--hc,var(--yellow));border-radius:var(--radius) var(--radius) 0 0}
 .hcl-h-card .hh-l{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--k3);margin-bottom:4px}
-.hcl-h-card .hh-v{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--accent,var(--yellow))}
+.hcl-h-card .hh-v{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--hc,var(--yellow))}
 .hcl-h-card .hh-s{font-size:9px;color:var(--k3);margin-top:2px}
 
 /* ── Valve Grid ── */
 .valve-grid{display:flex;flex-direction:column;gap:10px}
-.valve-entry{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--sf);border-radius:var(--radius-sm);box-shadow:var(--neu-raised)}
+.valve-entry{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--sf);border:1px solid var(--bd);border-radius:var(--radius-sm)}
 .valve-lbl{font-size:10px;font-weight:600;color:var(--yellow);width:70px;font-family:var(--mono)}
-.valve-track{flex:1;height:8px;background:var(--sf);border-radius:4px;overflow:hidden;box-shadow:var(--neu-pressed)}
+.valve-track{flex:1;height:8px;background:var(--bg);border:1px solid var(--bd);border-radius:4px;overflow:hidden}
 .valve-fill{height:100%;border-radius:4px;background:var(--yellow);transition:width .5s}
 .valve-pct{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--yellow);width:45px;text-align:right}
 .valve-info{font-size:8.5px;color:var(--k3);width:90px;text-align:right}
-.valve-entry.green-valve{box-shadow:var(--neu-raised)}
+.valve-entry.green-valve{border-color:rgba(20,184,166,.35)}
 .valve-entry.green-valve .valve-lbl{color:var(--teal)}
 .valve-entry.green-valve .valve-track{background:var(--sf)}
 .valve-entry.green-valve .valve-fill{background:var(--teal)}
 .valve-entry.green-valve .valve-pct{color:var(--teal)}
 
-.overcap-box{display:none;padding:10px 14px;background:var(--redl);border-radius:var(--radius-sm);font-size:10px;color:var(--red);font-weight:500;box-shadow:var(--neu-flat)}
+.overcap-box{display:none;padding:10px 14px;background:var(--redl);border:1px solid rgba(239,68,68,.30);border-radius:var(--radius-sm);font:500 10px/1.5 var(--mono);color:var(--red)}
 .overcap-box.show{display:block}
 
 /* ── Tables ── */
 .nuberg-tbl{width:100%;border-collapse:collapse;font-size:10px}
-.nuberg-tbl th{background:var(--yellowl);padding:6px 8px;text-align:center;font-size:8.5px;font-weight:700;color:var(--yellow);letter-spacing:.04em;text-transform:uppercase;border-bottom:1px solid var(--bd)}
+.nuberg-tbl th{background:var(--s2);padding:8px;text-align:center;font:500 8.5px/1 var(--mono);color:var(--k3);letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid var(--bd)}
 .nuberg-tbl td{padding:5px 8px;text-align:center;border-bottom:1px solid var(--bd);font-family:var(--mono);font-size:10px;color:var(--k2)}
-.nuberg-tbl tr.cur td{background:var(--yellowl);color:var(--yellow);font-weight:600;box-shadow:var(--neu-flat)}
+.nuberg-tbl tr.cur td{background:var(--yellowl);color:var(--yellow);font-weight:500}
 .nuberg-tbl tr.over td{color:var(--red);background:var(--redl)}
 
 /* ── Balance ── */
 .bal-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:750px){.bal-grid{grid-template-columns:1fr}}
-.bal-card{background:var(--sf);box-shadow:var(--neu-raised);border-radius:var(--radius);padding:16px}
-.bal-card-title{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--k3);margin-bottom:12px;display:flex;align-items:center;gap:6px}
-.bal-card-title::before{content:'';width:3px;height:10px;border-radius:2px;background:var(--purple)}
+.bal-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--radius);padding:var(--s-4)}
+.bal-card-title{font:500 9px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--k3);margin-bottom:12px;display:flex;align-items:center;gap:8px}
 
 .stream-flow{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
-.snode{background:var(--sf);border-radius:var(--radius-sm);padding:6px 10px;text-align:center;box-shadow:var(--neu-flat)}
+.snode{background:var(--sf);border:1px solid var(--bd);border-radius:var(--radius-sm);padding:6px 10px;text-align:center}
 .snode .sn-l{font-size:7px;font-weight:700;color:var(--k3);text-transform:uppercase;letter-spacing:.06em}
 .snode .sn-v{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--ink);margin-top:2px}
 .sarrow{color:var(--k3);font-size:10px}
-.snode.c-n{box-shadow:var(--neu-raised)}.snode.c-n .sn-v{color:var(--teal)}
-.snode.c-l{box-shadow:var(--neu-raised)}.snode.c-l .sn-v{color:var(--green)}
-.snode.c-p{box-shadow:var(--neu-raised)}.snode.c-p .sn-v{color:var(--purple)}
-.snode.c-a{box-shadow:var(--neu-raised)}.snode.c-a .sn-v{color:var(--yellow)}
-.snode.c-o{box-shadow:var(--neu-raised)}.snode.c-o .sn-v{color:var(--yellow)}
+.snode.c-n{border-left:2px solid var(--teal)}.snode.c-n .sn-v{color:var(--teal)}
+.snode.c-l{border-left:2px solid var(--green)}.snode.c-l .sn-v{color:var(--green)}
+.snode.c-p{border-left:2px solid var(--purple)}.snode.c-p .sn-v{color:var(--purple)}
+.snode.c-a{border-left:2px solid var(--yellow)}.snode.c-a .sn-v{color:var(--yellow)}
+.snode.c-o{border-left:2px solid var(--orange)}.snode.c-o .sn-v{color:var(--yellow)}
 
 .bal-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
 .bal-row .br-l{font-size:10px;color:var(--k2);width:85px;flex-shrink:0}
 .bal-row .br-v{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--ink);width:80px;text-align:right;flex-shrink:0}
-.bal-bar{flex:1;height:6px;background:var(--sf);border-radius:3px;overflow:hidden;box-shadow:var(--neu-pressed)}
+.bal-bar{flex:1;height:6px;background:var(--bg);border:1px solid var(--bd);border-radius:3px;overflow:hidden}
 .bal-fill{height:100%;border-radius:3px;transition:width .5s}
 .bal-m3{font-size:9px;color:var(--k3);margin-top:8px;font-style:italic}
 
 .flow-detail{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-.fd-card{background:var(--sf);border-radius:var(--radius-sm);padding:12px;box-shadow:var(--neu-flat)}
-.fd-title{font-size:8px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--k3);margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.fd-title::before{content:'';width:3px;height:10px;border-radius:2px;background:var(--blue)}
+.fd-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--radius-sm);padding:var(--s-3)}
+.fd-title{font:500 9px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--k3);margin-bottom:10px;display:flex;align-items:center;gap:8px}
 .fd-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--s3)}
 .fd-row:last-child{border-bottom:none}
 .fd-row .fd-l{font-size:9px;color:var(--k2)}
 .fd-row .fd-v{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--ink)}
-.fd-bar{height:4px;background:var(--sf);border-radius:2px;margin-top:4px;overflow:hidden;box-shadow:var(--neu-pressed)}
+.fd-bar{height:4px;background:var(--bg);border:1px solid var(--bd);border-radius:2px;margin-top:4px;overflow:hidden}
 .fd-bar-fill{height:100%;border-radius:2px;transition:width .5s}
-.formula-hint{margin-top:10px;padding:8px 10px;background:var(--sf);border-radius:var(--radius-sm);font-size:8px;color:var(--k3);line-height:1.6;font-family:var(--mono);box-shadow:var(--neu-pressed)}
+.formula-hint{margin-top:10px;padding:10px 12px;background:var(--bg);border:1px solid var(--bd);border-radius:var(--radius-sm);font:400 9px/1.7 var(--mono);color:var(--k3)}
 
 /* ── Scenario Table ── */
 .sc-wrap{overflow-x:auto}
 .sc-tbl{width:100%;border-collapse:collapse}
-.sc-tbl th{font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--k3);padding:8px 10px;text-align:right;background:var(--s2);border-bottom:1px solid var(--bd);white-space:nowrap}
+.sc-tbl th{font:500 9px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--k3);padding:10px;text-align:right;background:var(--s2);border-bottom:1px solid var(--bd);white-space:nowrap}
 .sc-tbl th:first-child{text-align:left}
 .sc-tbl tr{border-bottom:1px solid var(--bd);cursor:pointer;transition:all .2s}
-.sc-tbl tr:hover{background:var(--s2);box-shadow:var(--neu-flat)}
-.sc-tbl tr.active{background:var(--greenl);box-shadow:var(--neu-raised)}
+.sc-tbl tr:hover{background:var(--s2)}
+.sc-tbl tr.active{background:var(--greenl)}
 .sc-tbl tr.active td{color:var(--green);font-weight:500}
 .sc-tbl td{padding:6px 10px;text-align:right;font-size:10px;color:var(--k2);font-family:var(--mono)}
 .sc-tbl td:first-child{text-align:left;font-family:var(--sans);color:var(--ink)}
@@ -266,9 +297,9 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
 .rx-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 @media(max-width:750px){.rx-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:420px){.rx-grid{grid-template-columns:1fr}}
-.rx-card{background:var(--sf);border-radius:var(--radius);padding:12px;border-left:3px solid var(--b2);box-shadow:var(--neu-raised)}
-.rx-card.danger{background:var(--redl);border-left-color:var(--red);box-shadow:var(--neu-raised)}
-.rx-card.hcl-r{background:var(--yellowl);border-left-color:var(--yellow);box-shadow:var(--neu-raised)}
+.rx-card{background:var(--sf);border:1px solid var(--bd);border-left:3px solid var(--b2);border-radius:var(--radius);padding:var(--s-3)}
+.rx-card.danger{background:var(--redl);border-color:rgba(239,68,68,.30);border-left-color:var(--red)}
+.rx-card.hcl-r{background:var(--yellowl);border-color:rgba(234,179,8,.30);border-left-color:var(--yellow)}
 .rx-card .rx-type{font-size:7.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--k3);margin-bottom:3px}
 .rx-card.danger .rx-type{color:var(--red)}
 .rx-card.hcl-r .rx-type{color:var(--yellow)}
@@ -278,7 +309,7 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
 .rx-card .rx-note{font-size:8.5px;color:var(--k3);margin-top:3px;font-style:italic}
 
 /* ── Footer ── */
-.foot{background:var(--sf);box-shadow:var(--neu-flat);padding:10px 24px 10px 76px;display:flex;align-items:center;justify-content:space-between;font-size:9px;color:var(--k3);gap:12px;flex-wrap:wrap}
+.foot{background:transparent;border-top:1px solid var(--bd);padding:12px var(--gutter);display:flex;align-items:center;justify-content:space-between;font:400 10px/1.5 var(--mono);color:var(--k3);gap:12px;flex-wrap:wrap}
 .foot-items{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .foot-items span::before{content:'·';margin-right:14px;color:var(--b2)}
 .foot-items span:first-child::before{display:none}
@@ -288,29 +319,70 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
 /* ── Cell Status Grid ── */
 .cell-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
 @media(max-width:750px){.cell-grid{grid-template-columns:1fr}}
+
+/* ── Accessibility ── */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:var(--radius-sm)}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 48px + 2*var(--s-3))}
+@media(max-width:640px){html{scroll-padding-top:52px;scroll-padding-bottom:calc(64px + env(safe-area-inset-bottom))}}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+/* ── Navigation: bottom bar (mobile) ── */
+@media(max-width:640px){
+  /* console box is dropped so the ticker can stick against <body>, and the
+     bottom bar has to carry its own glass again */
+  .console{display:contents}
+  .rail{position:fixed;top:auto;bottom:0;left:0;right:0;height:auto;gap:0;
+    justify-content:space-around;padding:6px 4px calc(6px + env(safe-area-inset-bottom));
+    border-top:1px solid var(--bd);border-bottom:none;overflow-x:auto;scrollbar-width:none;
+    background:linear-gradient(0deg,rgba(11,11,13,.96),rgba(11,11,13,.86));
+    -webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%)}
+  [data-theme="light"] .rail{background:linear-gradient(0deg,rgba(255,255,255,.96),rgba(243,240,234,.90))}
+  .ticker{position:sticky;top:0;background:var(--sf);border-top:none;
+    border-bottom:1px solid var(--bd);
+    -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+  .rail::-webkit-scrollbar{display:none}
+  .rail-logo,.rail-spacer{display:none}
+  .nav-ind{top:6px;height:calc(100% - 12px);background:var(--s2);border-radius:10px}
+  .js .rail-btn.active{color:var(--ink);background:transparent}
+  .rail-btn{flex-direction:column;gap:3px;padding:5px 4px;min-width:44px;
+    font:600 8px/1 var(--mono);letter-spacing:.04em}
+  .rail-icon svg{width:18px;height:18px}
+  #themeBtn,.rail-btn[href]{min-width:34px;padding:5px 2px}
+  #themeBtn .rail-label,.rail-btn[href] .rail-label{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  .page{padding-bottom:var(--s-6)}
+  .foot{padding:12px var(--gutter) calc(70px + env(safe-area-inset-bottom))}
+  .ticker-item{min-width:118px;padding:6px 10px}
+  .prod-hero{grid-template-columns:1fr 1fr}
+  .cell-grid,.bal-grid,.flow-detail{grid-template-columns:1fr}
+}
+
+/* ── Icon-only pill (tablet) ── */
+@media(max-width:1080px) and (min-width:641px){
+  .rail-btn{padding:0 14px}
+  .rail-label{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+}
 </style>
 </head>
 <body>
 
-<nav class="rail" id="rail">
-  <div class="rail-logo"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-  <button class="rail-btn active" data-tab="inputs" title="Inputs"><span class="rail-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg></span><span class="rail-label">Inputs</span></button>
-  <button class="rail-btn" data-tab="production" title="Production"><span class="rail-icon"><svg viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="9"/><rect x="10" y="7" width="4" height="14"/><rect x="17" y="3" width="4" height="18"/></svg></span><span class="rail-label">Production</span></button>
-  <button class="rail-btn" data-tab="hcl" title="HCl Unit"><span class="rail-icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg></span><span class="rail-label">HCl Unit</span></button>
-  <button class="rail-btn" data-tab="balance" title="Balance & Flow"><span class="rail-icon"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12l9-9 9 9"/></svg></span><span class="rail-label">Balance</span></button>
-  <button class="rail-btn" data-tab="scenarios" title="Scenarios"><span class="rail-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></span><span class="rail-label">Scenarios</span></button>
-  <button class="rail-btn" data-tab="reactions" title="Reactions"><span class="rail-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></span><span class="rail-label">Reactions</span></button>
+<h1 class="sr-only">NAC Plant Calculator — chlorine, caustic and hydrogen balance</h1>
+<div class="console" id="console">
+  <nav class="rail" id="rail" aria-label="Primary">
+  <div class="nav-ind" id="navInd" aria-hidden="true"></div>
+  <div class="rail-logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+  <button class="rail-btn active" data-tab="inputs" title="Inputs"><span class="rail-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg></span><span class="rail-label">Inputs</span></button>
+  <button class="rail-btn" data-tab="production" title="Production"><span class="rail-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="9"/><rect x="10" y="7" width="4" height="14"/><rect x="17" y="3" width="4" height="18"/></svg></span><span class="rail-label">Production</span></button>
+  <button class="rail-btn" data-tab="hcl" title="HCl Unit"><span class="rail-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg></span><span class="rail-label">HCl Unit</span></button>
+  <button class="rail-btn" data-tab="balance" title="Balance & Flow"><span class="rail-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v18M3 12l9-9 9 9"/></svg></span><span class="rail-label">Balance</span></button>
+  <button class="rail-btn" data-tab="scenarios" title="Scenarios"><span class="rail-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></span><span class="rail-label">Scenarios</span></button>
+  <button class="rail-btn" data-tab="reactions" title="Reactions"><span class="rail-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></span><span class="rail-label">Reactions</span></button>
   <div class="rail-spacer"></div>
-  <button class="rail-btn" id="themeBtn" title="Toggle theme"><span class="rail-icon" id="themeIcon"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span><span class="rail-label">Theme</span></button>
-  <a href="stock.html" class="rail-btn" title="Stock"><span class="rail-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span><span class="rail-label">Stock</span></a>
+  <button class="rail-btn" id="themeBtn" title="Toggle theme"><span class="rail-icon" id="themeIcon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span><span class="rail-label">Theme</span></button>
+  <a href="stock.html" class="rail-btn" title="Stock"><span class="rail-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span><span class="rail-label">Stock</span></a>
 </nav>
 
-<button class="hamburger" id="hamburgerBtn">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-</button>
-<div class="rail-backdrop" id="railBackdrop"></div>
-
-<div class="shell">
   <div class="ticker">
     <div class="ticker-inner">
       <div class="ticker-item" style="min-width:200px;border-right:1px solid var(--bd)"><div class="tk-label">Plant</div><div class="tk-val" style="color:var(--ink);font-size:12px;font-weight:600">North Africa Chemical</div></div>
@@ -330,11 +402,42 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
 
   <div class="warn-strip" id="wb"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span id="wt"></span></div>
 
+</div>
+
+<div class="shell">
   <div class="page">
 
     <!-- ══════ INPUTS ══════ -->
     <div class="tab-page active" id="page-inputs">
       <div class="inputs-grid">
+        <div class="card prod-card prod-off" id="prod-card">
+          <div class="card-head"><div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.9 4.9l2.9 2.9M16.2 16.2l2.9 2.9M2 12h4M18 12h4M4.9 19.1l2.9-2.9M16.2 7.8l2.9-2.9"/></svg></div><div class="card-title">Plant Production</div></div>
+          <div class="input-group prod-status" id="grp-status">
+            <div class="ig-label">Plant Master Status</div>
+            <div class="field-row">
+              <div class="field-meta"><strong id="prod-state">Production off</strong><span id="prod-meta">Off since --:--</span></div>
+              <div class="toggle-wrap"><button type="button" class="toggle" id="prod-btn" role="switch" aria-checked="false" aria-label="Plant production master switch" onclick="toggleProd()"></button><span class="toggle-lbl" id="prod-lbl">Off</span></div>
+            </div>
+          </div>
+          <div class="input-group" id="grp-hypo">
+            <div class="ig-label"><span class="ig-dot hypo"></span>Hypochlorite</div>
+            <div class="field-row"><div class="field-meta"><strong>NaOCl Concentration</strong><span>125–180 g/L</span></div><div class="field-ctrl"><input type="number" id="con" value="132" min="100" max="180" step="1"><span class="field-unit">g/L</span></div></div>
+            <div class="slider-row"><input type="range" id="con-s" min="100" max="180" step="1" value="132"></div>
+            <div class="field-row"><div class="field-meta"><strong>NaOH Dilution to Columns</strong><span>Keep below 22%</span></div><div class="field-ctrl"><input type="number" id="dil" value="19" min="15" max="22" step="0.5"><span class="field-unit">%</span></div></div>
+            <div class="field-row"><div class="field-meta"><strong>Caustic Excess in Product</strong><span>2–4 g/L</span></div><div class="field-ctrl"><input type="number" id="exs" value="3" min="0" max="8" step="0.5"><span class="field-unit">g/L</span></div></div>
+          </div>
+          <div class="input-group hcl-off" id="grp-hcl">
+            <div class="ig-label"><span class="ig-dot hcl"></span>HCl Unit</div>
+            <div class="field-row">
+              <div class="field-meta"><strong>HCl Unit — U-8101</strong><span>Max 23 T/j</span></div>
+              <div class="toggle-wrap"><div class="toggle" id="hcl-btn" onclick="toggleHcl()"></div><span class="toggle-lbl" id="hcl-lbl">Off</span></div>
+            </div>
+            <div id="hcl-target-row" class="field-row" style="display:none">
+              <div class="field-meta"><strong>HCl Production Target</strong><span>Max: 23 T/j</span></div><div class="field-ctrl"><input type="number" id="hcl-t" value="23" min="0" max="23" step="0.5"><span class="field-unit">T/j</span></div>
+            </div>
+            <div class="slider-row" id="hcl-target-slider" style="display:none"><input type="range" id="hcl-t-s" min="0" max="23" step="0.5" value="23"></div>
+          </div>
+        </div>
         <div class="card">
           <div class="card-head"><div class="card-icon" style="background:var(--greenl);color:var(--green)"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><div class="card-title">Electrolyzer</div></div>
           <div class="input-group">
@@ -350,30 +453,6 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
             <div class="field-row"><div class="field-meta"><strong>Cell Area — A<sub>cell</sub></strong><span>NBZ-2.7 spec</span></div><div class="field-ctrl"><input type="number" id="cell-area" value="2.7" min="1" max="5" step="0.1"><span class="field-unit">m²</span></div></div>
             <div class="field-row"><div class="field-meta"><strong>Cell Voltage — V<sub>cell</sub></strong><span>NBZ-2.7 initial 3.0V</span></div><div class="field-ctrl"><input type="number" id="vcell" value="3.0" min="2.0" max="4.0" step="0.01"><span class="field-unit">V</span></div></div>
             <div class="slider-row"><input type="range" id="vcell-s" min="2.0" max="4.0" step="0.01" value="3.0"></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head"><div class="card-icon" style="background:var(--teall);color:var(--teal)"><svg viewBox="0 0 24 24"><path d="M6 3v18M18 3v18M6 12h12"/></svg></div><div class="card-title">Hypochlorite</div></div>
-          <div class="input-group">
-            <div class="ig-label">Settings</div>
-            <div class="field-row"><div class="field-meta"><strong>NaOCl Concentration</strong><span>125–180 g/L</span></div><div class="field-ctrl"><input type="number" id="con" value="132" min="100" max="180" step="1"><span class="field-unit">g/L</span></div></div>
-            <div class="slider-row"><input type="range" id="con-s" min="100" max="180" step="1" value="132"></div>
-            <div class="field-row"><div class="field-meta"><strong>NaOH Dilution to Columns</strong><span>Keep below 22%</span></div><div class="field-ctrl"><input type="number" id="dil" value="19" min="15" max="22" step="0.5"><span class="field-unit">%</span></div></div>
-            <div class="field-row"><div class="field-meta"><strong>Caustic Excess in Product</strong><span>2–4 g/L</span></div><div class="field-ctrl"><input type="number" id="exs" value="3" min="0" max="8" step="0.5"><span class="field-unit">g/L</span></div></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head"><div class="card-icon" style="background:var(--yellowl);color:var(--yellow)"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg></div><div class="card-title">HCl Unit</div></div>
-          <div class="input-group">
-            <div class="ig-label">Unit Status</div>
-            <div class="field-row">
-              <div class="field-meta"><strong>HCl Unit — U-8101</strong><span>Max 23 T/j</span></div>
-              <div class="toggle-wrap"><div class="toggle" id="hcl-btn" onclick="toggleHcl()"></div><span class="toggle-lbl" id="hcl-lbl">Off</span></div>
-            </div>
-            <div id="hcl-target-row" class="field-row" style="display:none">
-              <div class="field-meta"><strong>HCl Production Target</strong><span>Max: 23 T/j</span></div><div class="field-ctrl"><input type="number" id="hcl-t" value="23" min="0" max="23" step="0.5"><span class="field-unit">T/j</span></div>
-            </div>
-            <div class="slider-row" id="hcl-target-slider" style="display:none"><input type="range" id="hcl-t-s" min="0" max="23" step="0.5" value="23"></div>
           </div>
         </div>
         <div class="card">
@@ -397,6 +476,21 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
 
     <!-- ══════ PRODUCTION ══════ -->
     <div class="tab-page" id="page-production">
+      <div class="card">
+        <div class="card-head"><div class="card-icon" style="background:var(--bluel);color:var(--blue)"><svg viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="9"/><rect x="10" y="7" width="4" height="14"/><rect x="17" y="3" width="4" height="18"/></svg></div><div class="card-title">Production Volume (m³/day)</div></div>
+        <div class="chart-wrap">
+          <div class="hbar-chart">
+            <div class="hbar-col"><div class="hbar-val" id="bar-naocl-v">—</div><div class="hbar" style="background:var(--green);height:0px" id="bar-naocl"></div><div class="hbar-name">NaOCl</div><div class="hbar-unit">m³/h</div></div>
+            <div class="hbar-col"><div class="hbar-val" id="bar-hcl-v">—</div><div class="hbar" style="background:var(--yellow);height:0px" id="bar-hcl"></div><div class="hbar-name">HCl 32%</div><div class="hbar-unit">m³/h</div></div>
+            <div class="hbar-col"><div class="hbar-val" id="bar-naoh-v">—</div><div class="hbar" style="background:var(--purple);height:0px" id="bar-naoh"></div><div class="hbar-name">NaOH Net</div><div class="hbar-unit">m³/h</div></div>
+          </div>
+          <div class="chart-totals">
+            <div class="ct-item"><div class="ct-l">NaOCl</div><div class="ct-v" style="color:var(--green)" id="naocl-total">— m³/d</div></div>
+            <div class="ct-item"><div class="ct-l">HCl 32%</div><div class="ct-v" style="color:var(--yellow)" id="hcl-total">— m³/d</div></div>
+            <div class="ct-item"><div class="ct-l">NaOH Net</div><div class="ct-v" style="color:var(--purple)" id="naoh-total">— m³/d</div></div>
+          </div>
+        </div>
+      </div>
       <div class="cell-grid">
         <div class="card" style="margin-bottom:0">
           <div class="card-head"><div class="card-icon" style="background:var(--greenl);color:var(--green)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div class="card-title">Capacity Utilization</div></div>
@@ -427,21 +521,6 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
         <div class="hero-card" style="--hc:var(--purple)"><div class="hc-l">Caustic Soda NaOH</div><div class="hc-v" id="knaoh">—</div><div class="hc-u">kg / hour</div><div class="hc-s" id="snaoh">—</div><div class="hc-s" id="snaoh-m3"></div></div>
         <div class="hero-card" style="--hc:var(--teal)"><div class="hc-l">Hydrogen H₂</div><div class="hc-v" id="kh2">—</div><div class="hc-u">kg / hour</div><div class="hc-s" id="sh2">—</div></div>
       </div>
-      <div class="card">
-        <div class="card-head"><div class="card-icon" style="background:var(--bluel);color:var(--blue)"><svg viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="9"/><rect x="10" y="7" width="4" height="14"/><rect x="17" y="3" width="4" height="18"/></svg></div><div class="card-title">Production Volume (m³/day)</div></div>
-        <div class="chart-wrap">
-          <div class="hbar-chart">
-            <div class="hbar-col"><div class="hbar-val" id="bar-naocl-v">—</div><div class="hbar" style="background:var(--green);height:0px" id="bar-naocl"></div><div class="hbar-name">NaOCl</div><div class="hbar-unit">m³/h</div></div>
-            <div class="hbar-col"><div class="hbar-val" id="bar-hcl-v">—</div><div class="hbar" style="background:var(--yellow);height:0px" id="bar-hcl"></div><div class="hbar-name">HCl 32%</div><div class="hbar-unit">m³/h</div></div>
-            <div class="hbar-col"><div class="hbar-val" id="bar-naoh-v">—</div><div class="hbar" style="background:var(--purple);height:0px" id="bar-naoh"></div><div class="hbar-name">NaOH Net</div><div class="hbar-unit">m³/h</div></div>
-          </div>
-          <div class="chart-totals">
-            <div class="ct-item"><div class="ct-l">NaOCl</div><div class="ct-v" style="color:var(--green)" id="naocl-total">— m³/d</div></div>
-            <div class="ct-item"><div class="ct-l">HCl 32%</div><div class="ct-v" style="color:var(--yellow)" id="hcl-total">— m³/d</div></div>
-            <div class="ct-item"><div class="ct-l">NaOH Net</div><div class="ct-v" style="color:var(--purple)" id="naoh-total">— m³/d</div></div>
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- ══════ HCL ══════ -->
@@ -453,7 +532,7 @@ tr.active td.heat-0,tr.active td.heat-1,tr.active td.heat-2,tr.active td.heat-3,
       <div id="hcl-content" style="display:none">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
           <div style="display:flex;align-items:center;gap:10px"><svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--yellow);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg><span style="font-size:14px;font-weight:600">HCl Unit U-8101</span></div>
-          <span id="hcl-cap-badge" style="font-size:9px;font-weight:700;padding:5px 12px;border-radius:var(--radius-sm);background:var(--yellow);color:#000;letter-spacing:.04em">RUNNING</span>
+          <span id="hcl-cap-badge" style="font-size:9px;font-weight:700;padding:5px 12px;border-radius:var(--radius-sm);background:var(--yellow);color:var(--bg);letter-spacing:.04em">RUNNING</span>
         </div>
         <div class="hcl-hero">
           <div class="hcl-h-card"><div class="hh-l">HCl 32% Output</div><div class="hh-v" id="hk-hcl-tj">—</div><div class="hh-s">T/j</div></div>
@@ -588,12 +667,28 @@ document.querySelectorAll('.rail-btn[data-tab]').forEach(function(btn){
     btn.classList.add('active');
     document.querySelectorAll('.tab-page').forEach(function(p){p.classList.remove('active')});
     $('page-'+btn.dataset.tab).classList.add('active');
-    if(window.innerWidth<=640)$('rail').classList.remove('rail-open');
+    moveInd();
   });
 });
 
-$('hamburgerBtn').onclick=function(){$('rail').classList.toggle('rail-open')};
-$('railBackdrop').onclick=function(){$('rail').classList.remove('rail-open')};
+// Sliding paper indicator behind the active nav tab
+document.documentElement.classList.add('js');
+var navEl=$('rail'),navInd=$('navInd');
+function moveInd(){
+  navEl.querySelectorAll('.rail-btn[data-tab],.rail-btn[data-section]').forEach(function(b){
+    if(b.classList.contains('active'))b.setAttribute('aria-current','page');
+    else b.removeAttribute('aria-current');
+  });
+  var a=navEl.querySelector('.rail-btn.active');if(!a||!navInd)return;
+  var r=navEl.getBoundingClientRect(),b=a.getBoundingClientRect();
+  navInd.style.transform='translateX('+(b.left-r.left)+'px)';
+  navInd.style.width=b.width+'px';
+}
+addEventListener('resize',moveInd);
+addEventListener('orientationchange',moveInd);
+addEventListener('load',moveInd);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(moveInd);
+moveInd();
 
 $('themeBtn').onclick=function(){
   const h=document.documentElement;
@@ -605,7 +700,10 @@ if(localStorage.getItem('nac-theme')==='light'){document.documentElement.setAttr
 
 $('exportBtn').onclick=function(){
   const I=+$('cur').value||0,N=+$('cel').value||0,CE=(+$('ce').value||0)/100,conc=+$('con').value||132;
-  const sc=(I/A_I)*(N/A_N)*(CE/A_CE),cl2=A_CL2*sc,naoh=A_NAOH*sc,h2=A_H2*sc,naocl=cl2*1000*(74.44/70.906)/conc;
+  const sc=(I/A_I)*(N/A_N)*(CE/A_CE),cl2=A_CL2*sc,naoh=A_NAOH*sc,h2=A_H2*sc;
+  const cl2_nm3=cl2/CL2_DENSITY,hclTarget_tj=window.hclOn?(+$('hcl-t').value||23):0;
+  const cl2h_hcl=hclTarget_tj>0?Math.min(hclTarget_tj/HCL_TJ_PER_NM3,cl2_nm3,HCL_UNIT_MAX_NM3)*CL2_DENSITY:0;
+  const naocl=Math.max(0,(cl2-cl2h_hcl)*1000/conc);
   const w=window.open('','_blank');
   w.document.write('<!DOCTYPE html><html><head><title>NAC Report</title><style>body{font-family:Arial;padding:20px}table{width:100%;border-collapse:collapse;margin:10px 0}th,td{padding:8px;border:1px solid #ddd;text-align:left}th{background:#f3f4f6}</style></head><body><h1>NAC Production Report</h1><table><tr><td>Current</td><td>'+I+' kA</td></tr><tr><td>Cells</td><td>'+N+'</td></tr><tr><td>CE</td><td>'+(CE*100).toFixed(1)+'%</td></tr><tr><td>Cl₂</td><td>'+cl2.toFixed(1)+' kg/h</td></tr><tr><td>NaOCl</td><td>'+naocl.toFixed(0)+' L/h</td></tr><tr><td>NaOH</td><td>'+naoh.toFixed(0)+' kg/h</td></tr><tr><td>H₂</td><td>'+h2.toFixed(1)+' kg/h</td></tr></table></body></html>');
   w.document.close();w.print();
@@ -616,6 +714,7 @@ $('exportBtn').onclick=function(){
   $(a[1]).addEventListener('input',function(){$(a[0]).value=$(a[1]).value;calc()});
 });
 ['ce','dil','exs','brine-in','brine-out','cell-area','brine-q','cat-q'].forEach(function(id){$(id).addEventListener('input',calc)});
+$('con').addEventListener('input',buildTable);
 
 function drawGauge(pct){
   const arc=$('gauge-arc'),txt=$('gauge-text');
@@ -628,9 +727,50 @@ function drawGauge(pct){
 }
 
 window.hclOn=false;
+
+// ── Plant production master switch ──
+// Gates what stock.html treats as live production. Persisted in its own key: nac-plant
+// is rewritten on every calc() run, and nac-routing is deleted by stock.html's Reset,
+// so neither is safe for storing the operator's choice.
+const PSTATE='nac-prodstate';
+window.prodOn=false,window.prodSince=Date.now();
+function loadProdState(){
+  try{
+    var s=JSON.parse(localStorage.getItem(PSTATE)||'null');
+    window.prodOn=!!(s&&s.on);
+    window.prodSince=(s&&typeof s.since==='number')?s.since:Date.now();
+  }catch(e){}
+}
+function saveProdState(){
+  try{localStorage.setItem(PSTATE,JSON.stringify({on:window.prodOn,since:window.prodSince}))}catch(e){}
+}
+function prodStamp(){
+  const d=new Date(window.prodSince||Date.now()),p=n=>String(n).padStart(2,'0');
+  return p(d.getHours())+':'+p(d.getMinutes());
+}
+function paintProd(){
+  const btn=$('prod-btn');
+  if(!btn)return;
+  const card=$('prod-card');
+  btn.classList.toggle('on',window.prodOn);
+  btn.setAttribute('aria-checked',window.prodOn?'true':'false');
+  $('prod-lbl').textContent=window.prodOn?'On':'Off';
+  $('prod-state').textContent=window.prodOn?'Production live':'Production off';
+  $('prod-meta').textContent=(window.prodOn?'Live since ':'Off since ')+prodStamp();
+  card.classList.toggle('prod-on',window.prodOn);
+  card.classList.toggle('prod-off',!window.prodOn);
+}
+function toggleProd(){
+  if(window.prodOn&&!confirm('Stop plant production?\n\nstock.html will show PRODUCTION OFF. Production inflow, inventory runway and fill-rate seeding are suppressed there until you switch it back on. Tank routing stays available for planning.'))return;
+  window.prodOn=!window.prodOn;
+  window.prodSince=Date.now();
+  saveProdState();paintProd();calc();
+}
+
 function toggleHcl(){
   window.hclOn=!window.hclOn;
   const btn=$('hcl-btn'),lbl=$('hcl-lbl');
+  $('grp-hcl').classList.toggle('hcl-off',!window.hclOn);
   if(window.hclOn){btn.classList.add('on');lbl.textContent='On';$('hcl-target-row').style.display='flex';$('hcl-target-slider').style.display='block';$('fn-hcl').style.display='block'}
   else{btn.classList.remove('on');lbl.textContent='Off';$('hcl-target-row').style.display='none';$('hcl-target-slider').style.display='none';$('fn-hcl').style.display='none'}
   calc();
@@ -777,6 +917,25 @@ function calc(){
   if(window.hclOn&&isOverCap)w.push('HCl target requires more Cl₂. Increase current.');
   $('wb').classList.toggle('show',!!w[0]);if(w[0])$('wt').textContent=w[0];
   document.querySelectorAll('#sb tr').forEach(function(tr){tr.classList.toggle('active',+tr.dataset.k===+I&&+tr.dataset.n===+N)});
+publishPlant({I:I,N:N,CE:CE,conc:conc,hclOn:!!window.hclOn,
+    prodOn:!!window.prodOn,prodSince:window.prodSince,
+    naocl_m3h:naocl_m3h,naoh_m3h:naoh_m3h,naoh_net_m3h:naoh_net_m3h,
+    hcl_m3h:hcl_m3h,cl2_kgh:cl2_kgh,cl2_nm3h:cl2_nm3});
+}
+
+// Publish live production to stock.html via localStorage (one-way: calc -> stock)
+function publishPlant(d){
+  try{
+    localStorage.setItem('nac-plant',JSON.stringify({
+      ts:Date.now(),I:d.I,N:d.N,CE:d.CE*100,conc:d.conc,hclOn:d.hclOn,
+      prodOn:d.prodOn,prodSince:d.prodSince,
+      naocl_m3h:d.naocl_m3h,naocl_m3d:d.naocl_m3h*24,
+      naoh_m3h:d.naoh_m3h,naoh_m3d:d.naoh_m3h*24,
+      naoh_net_m3h:Math.abs(d.naoh_net_m3h),
+      hcl_m3h:d.hcl_m3h,hcl_m3d:d.hcl_m3h*24,
+      cl2_kgh:d.cl2_kgh,cl2_nm3h:d.cl2_nm3h
+    }));
+  }catch(e){}
 }
 
 function buildTable(){
@@ -786,7 +945,8 @@ function buildTable(){
   const brine_out_val=+($('brine-out')?$('brine-out').value:210)||210;
   const delta_c=brine_in_val-brine_out_val;
   KAs.forEach(function(kA){Ns.forEach(function(n){
-    const sc=(kA/A_I)*(n/A_N),cl2=A_CL2*sc,naoh=A_NAOH*sc,h2=A_H2*sc,naocl=cl2*1000*(74.44/70.906)/132;
+    const con_val=+($('con')?$('con').value:132)||132;
+    const sc=(kA/A_I)*(n/A_N),cl2=A_CL2*sc,naoh=A_NAOH*sc,h2=A_H2*sc,naocl=cl2*1000/con_val;
     const j_sc=A_cell_val>0?kA/A_cell_val:0;
     const isc=kA===11&&n===32;
     const tr=document.createElement('tr');if(isc)tr.classList.add('active');tr.dataset.k=kA;tr.dataset.n=n;
@@ -799,7 +959,7 @@ function buildTable(){
 
 function tick(){$('fttm').textContent=new Date().toLocaleTimeString('en-GB',{hour12:false})}
 setInterval(tick,1000);tick();
-buildTable();calc();
+buildTable();loadProdState();paintProd();calc();
 </script>
 </body>
 </html>
