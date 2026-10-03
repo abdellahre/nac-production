@@ -363,7 +363,9 @@ html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 48px + 2*var(
   .rail-btn{padding:0 14px}
   .rail-label{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 }
-</style>
+.proj-wrap{padding:16px;display:flex;flex-direction:column;gap:16px}.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:end}@media(max-width:900px){.proj-grid{grid-template-columns:repeat(2,1fr)}}.fld-item{display:flex;flex-direction:column;gap:6px}.fld-label{font:500 9px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--k3)}.fld-inner{position:relative;display:flex;align-items:center}.fld-inner input,.sel{width:100%;height:42px;background:var(--bg);border:1px solid var(--bd);color:var(--ink);font:400 15px/1 var(--mono);padding:0 12px;border-radius:var(--radius-sm);outline:none}.fld-inner input{padding-right:46px}.fld-unit{position:absolute;right:12px;font-size:10px;color:var(--k3);font-family:var(--mono);pointer-events:none}.sel{appearance:none;font-family:var(--sans);font-weight:500;cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,var(--k3) 50%),linear-gradient(135deg,var(--k3) 50%,transparent 50%);background-position:calc(100% - 16px) 50%,calc(100% - 10px) 50%;background-size:6px 6px;background-repeat:no-repeat}.seg{display:flex;gap:6px;width:100%;height:42px}.seg-btn{flex:1;border:1px solid var(--bd);border-radius:var(--radius-sm);background:var(--sf);color:var(--k2);font:600 11px/1 var(--sans);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}.seg-btn.active{background:var(--ink);border-color:var(--ink);color:var(--bg)}.seg-btn.drain.active{background:var(--red);border-color:var(--red);color:var(--sf)}.calc-btn{display:flex;align-items:center;justify-content:center;gap:8px;height:46px;border:1px solid var(--ink);border-radius:var(--radius-sm);background:var(--ink);color:var(--bg);font:700 12px/1 var(--sans);cursor:pointer}.proj-note{font:400 10px/1.6 var(--mono);color:var(--k2);background:var(--s2);border:1px solid var(--bd);border-radius:var(--radius-sm);padding:12px}.proj-actions{display:flex;gap:6px;height:42px;align-items:stretch}.proj-actions .calc-btn{flex:1}.proj-actions .seg-btn#pj-clear{flex:0 0 auto;padding:0 16px}.route-chip{margin-left:auto;display:flex;align-items:center;gap:6px;font:500 9px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--k3);background:var(--sf);border:1px solid var(--bd);padding:6px 12px;border-radius:999px}.route-chip.on{color:var(--green);border-color:var(--green);background:var(--greenl)}.proj-tanks{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.proj-tanks.mode-fill .proj-card.sell,.proj-tanks.mode-sell .proj-card.prod{display:none}.proj-card{position:relative}.proj-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--radius) var(--radius) 0 0}.proj-card.prod::before{background:var(--green)}.proj-card.sell::before{background:var(--red)}.tank{background:var(--sf);border:1px solid var(--bd);border-radius:var(--radius);padding:var(--s-4)}.tank-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.tank-name{font-size:13px;font-weight:600;color:var(--ink)}.tank-tag{font:400 9px/1 var(--mono);color:var(--k3);background:var(--s3);border:1px solid var(--bd);padding:3px 6px;border-radius:var(--radius-sm)}.tank-bar-wrap{height:24px;background:var(--bg);border:1px solid var(--bd);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:8px}.tank-bar{height:100%;background:linear-gradient(90deg,var(--green),var(--greend));transition:width .6s ease}.tank-stats{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}.tank-vol{font:400 18px/1 var(--mono);color:var(--ink)}.tank-cap{font-size:10px;color:var(--k3)}.tank-pct{font:400 22px/1 var(--mono)}.tank-status{display:flex;align-items:center;gap:6px;margin-top:8px}.status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}.status-dot.ok{background:var(--green)}.status-dot.low{background:var(--red)}.status-dot.high{background:var(--yellow)}.status-txt{font-size:9px;color:var(--k3);font-weight:500}.tank-rate{font:400 9px/1 var(--mono);color:var(--k3);margin-top:6px}
+.seg-btn svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.calc-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}</style>
 </head>
 <body>
 
@@ -489,6 +491,74 @@ html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 48px + 2*var(
             <div class="ct-item"><div class="ct-l">HCl 32%</div><div class="ct-v" style="color:var(--yellow)" id="hcl-total">— m³/d</div></div>
             <div class="ct-item"><div class="ct-l">NaOH Net</div><div class="ct-v" style="color:var(--purple)" id="naoh-total">— m³/d</div></div>
           </div>
+        </div>
+      </div>
+      <div class="card" id="routing-card">
+        <div class="card-head"><div class="card-icon" style="background:var(--teall);color:var(--teal)"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><div class="card-title">Stock Routing &amp; Projection</div><div class="route-chip" id="pj-state"><span class="status-dot ok"></span>Planning only</div></div>
+        <div class="proj-wrap">
+          <div class="seg" id="pj-mode">
+            <button type="button" class="seg-btn active" id="pj-m-fill"><svg viewBox="0 0 24 24"><path d="M12 3v3M6 9c0 3 2 5 2 5l8 1c1 0 2-1 2-2 0-1-1-2-2-2l-7-1s4-5 9-5-7 4-7 4"/><path d="M9 16l6-1"/></svg>Filling</button>
+            <button type="button" class="seg-btn drain" id="pj-m-drain"><svg viewBox="0 0 24 24"><path d="M12 21v-3M6 15c0-3 2-5 2-5l8-1c1 0 2 1 2 2 0 1-1 2-2 2l-7 1s4 5 9 5-7-4-7-4"/><path d="M9 8l6 1"/></svg>Draining</button>
+          </div>
+          <div class="proj-grid">
+            <div id="pj-prod-side" style="display:contents">
+              <div class="fld-item"><label class="fld-label" for="pj-prod-dest">Production goes to</label>
+                <select id="pj-prod-dest" class="sel">
+                  <option value="naocl-80" selected>Hypochlorite — 80 m³</option>
+                  <option value="hcl-50">HCl — 50 m³</option>
+                  <option value="naoh-50">NaOH — 50 m³</option>
+                  <option value="custom">Custom tank...</option>
+                </select>
+              </div>
+              <div class="fld-item" id="pj-prod-custom-wrap" style="display:none">
+                <label class="fld-label" for="pj-prod-cap">Custom tank size</label>
+                <div class="fld-inner"><input id="pj-prod-cap" type="number" min="0" step="0.1" placeholder="80"><span class="fld-unit">m³</span></div>
+              </div>
+              <div class="fld-item"><label class="fld-label" for="pj-prod-lvl">Set current level</label>
+                <div class="fld-inner"><input id="pj-prod-lvl" type="number" min="0" max="100" step="any" placeholder="0" value="0"><span class="fld-unit">%</span></div>
+              </div>
+              <div class="fld-item"><label class="fld-label" for="pj-prod-rate">Production rate</label>
+                <div class="fld-inner"><input id="pj-prod-rate" type="number" min="0" step="any" placeholder="—"><span class="fld-unit">m³/h</span></div>
+              </div>
+            </div>
+            <div id="pj-sell-side" style="display:none">
+              <div class="fld-item"><label class="fld-label" for="pj-sell">Selling from</label><select id="pj-sell" class="sel"></select></div>
+              <div class="fld-item"><label class="fld-label" for="pj-sell-lvl">Set current level</label>
+                <div class="fld-inner"><input id="pj-sell-lvl" type="number" min="0" max="100" step="any" placeholder="auto"><span class="fld-unit">%</span></div>
+              </div>
+              <div class="fld-item"><label class="fld-label" for="pj-sell-rate">Selling rate</label>
+                <div class="fld-inner"><input id="pj-sell-rate" type="number" min="0" step="any" placeholder="—"><span class="fld-unit">m³/h</span></div>
+              </div>
+            </div>
+            <div class="fld-item"><label class="fld-label" for="pj-hours">Forecast time</label>
+              <div class="fld-inner"><input id="pj-hours" type="number" min="0" step="any" placeholder="12"><span class="fld-unit">h</span></div>
+            </div>
+            <div class="fld-item"><label class="fld-label">&nbsp;</label>
+              <div class="proj-actions">
+                <button type="button" class="calc-btn" id="pj-apply"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Apply routing</button>
+                <button type="button" class="seg-btn" id="pj-clear">Reset</button>
+              </div>
+            </div>
+          </div>
+          <div class="proj-tanks" id="pj-tanks">
+            <div class="tank proj-card prod">
+              <div class="tank-hdr"><span class="tank-name" id="pj-p-name">—</span><span class="tank-tag" id="pj-p-tag">Production</span></div>
+              <div class="tank-bar-wrap"><div class="tank-bar" id="pj-p-bar" style="width:0"></div></div>
+              <div class="tank-stats"><span class="tank-vol" id="pj-p-vol">—</span><span class="tank-cap" id="pj-p-cap">/ —</span></div>
+              <div class="tank-pct" id="pj-p-pct" style="color:var(--k3)">—</div>
+              <div class="tank-status"><div class="status-dot ok" id="pj-p-dot"></div><span class="status-txt" id="pj-p-status">select a tank</span></div>
+              <div class="tank-rate" id="pj-p-rate"></div>
+            </div>
+            <div class="tank proj-card sell">
+              <div class="tank-hdr"><span class="tank-name" id="pj-s-name">—</span><span class="tank-tag" id="pj-s-tag">Selling</span></div>
+              <div class="tank-bar-wrap"><div class="tank-bar" id="pj-s-bar" style="width:0"></div></div>
+              <div class="tank-stats"><span class="tank-vol" id="pj-s-vol">—</span><span class="tank-cap" id="pj-s-cap">/ —</span></div>
+              <div class="tank-pct" id="pj-s-pct" style="color:var(--k3)">—</div>
+              <div class="tank-status"><div class="status-dot ok" id="pj-s-dot"></div><span class="status-txt" id="pj-s-status">select a tank</span></div>
+              <div class="tank-rate" id="pj-s-rate"></div>
+            </div>
+          </div>
+          <div class="proj-note" id="pj-note">Select destination, set rate and forecast time, then press Apply routing.</div>
         </div>
       </div>
       <div class="cell-grid">
@@ -921,6 +991,7 @@ publishPlant({I:I,N:N,CE:CE,conc:conc,hclOn:!!window.hclOn,
     prodOn:!!window.prodOn,prodSince:window.prodSince,
     naocl_m3h:naocl_m3h,naoh_m3h:naoh_m3h,naoh_net_m3h:naoh_net_m3h,
     hcl_m3h:hcl_m3h,cl2_kgh:cl2_kgh,cl2_nm3h:cl2_nm3});
+  pjSeedRate();
 }
 
 // Publish live production to stock.html via localStorage (one-way: calc -> stock)
@@ -959,7 +1030,266 @@ function buildTable(){
 
 function tick(){$('fttm').textContent=new Date().toLocaleTimeString('en-GB',{hour12:false})}
 setInterval(tick,1000);tick();
-buildTable();loadProdState();paintProd();calc();
+// ── Stock Routing & Projection (calculator-side planning copy) ──
+// Same nac-routing shape stock.html writes, so the two pages stay interchangeable.
+// Production destination is a fixed-capacity preset (or a custom tank) rather than
+// a tank reference; the resolved tank ref is published alongside it as prodRef.
+const PJRKEY='nac-routing';
+const PJ_INVENTORY=[
+  {id:'naocl',label:'NaOCl',color:'var(--pink)',gradient:'linear-gradient(135deg,var(--pink),var(--pinkd))',
+   tanks:[['T-6101','NaOCl-1',80],['T-6102','NaOCl-2',80],['T-6103','NaOCl-3',80],['T-6104','NaOCl-4',80]]},
+  {id:'naoh',label:'NaOH',color:'var(--orange)',gradient:'linear-gradient(135deg,var(--orange),var(--yellowd))',
+   tanks:[['T-5201','NaOH-1',50],['T-5202','NaOH-2',50],['T-5203','NaOH-3',50],['T-5204','NaOH-4',50],['T-5301','NaOH-Dist',15]]},
+  {id:'hcl',label:'HCl',color:'var(--purple)',gradient:'linear-gradient(135deg,var(--purple),var(--purpled))',
+   tanks:[['T-8101','HCl-32%',50],['T-8102','HCl-32%',50],['T-8103','HCl-32%',50],['T-8104','HCl-32%',50],['D-8101','HCl-Dist',10]]}
+];
+const PJ_PRESETS={naocl:80,hcl:50,naoh:50};
+const PJ_GRAD={naocl:'linear-gradient(135deg,var(--green),var(--greend))',naoh:'linear-gradient(135deg,var(--orange),var(--yellowd))',hcl:'linear-gradient(135deg,var(--yellow),var(--yellowd))',custom:'linear-gradient(135deg,var(--teal),var(--teald))'};
+var pjDest={mode:'naocl',cap:80,custom:false};
+var pjRoute={mode:'fill',active:false,prodRate:0,sellRate:0,hours:12,prodRef:'',sellRef:''};
+
+function pjGroup(id){for(var i=0;i<PJ_INVENTORY.length;i++)if(PJ_INVENTORY[i].id===id)return PJ_INVENTORY[i];return null}
+function pjParse(v){var n=parseFloat(v);return isNaN(n)?0:n}
+function pjDur(h){
+  if(isNaN(h)||!isFinite(h))return '—';
+  if(h<=0)return 'now';
+  if(h<1)return Math.round(h*60)+' min';
+  if(h<48)return Math.floor(h)+' h '+Math.round((h-Math.floor(h))*60)+' m';
+  return fmt(h/24,1)+' days';
+}
+function pjTankRef(ref){
+  if(!ref)return null;
+  var p=ref.split('-'),g=pjGroup(p[0]),i=+p[1];
+  if(!g||!g.tanks[i])return null;
+  return {ref:ref,grp:g,tag:g.tanks[i][0],name:g.tanks[i][1],cap:g.tanks[i][2]};
+}
+// Fill "Selling from" with the same grouped tank list stock.html uses.
+function pjFillTankSelects(sel){
+  if(!sel)return;
+  sel.innerHTML='<option value="">— select tank —</option>';
+  PJ_INVENTORY.forEach(function(group){
+    var og=document.createElement('optgroup');og.label=group.label;
+    group.tanks.forEach(function(t,i){
+      var o=document.createElement('option');
+      o.value=group.id+'-'+i;
+      o.textContent=t[0]+' · '+t[1]+' · '+t[2]+' m³';
+      og.appendChild(o);
+    });
+    sel.appendChild(og);
+  });
+}
+function pjPlant(){
+  try{var s=JSON.parse(localStorage.getItem('nac-plant')||'null');return s&&typeof s.naocl_m3h==='number'?s:null}catch(e){return null}
+}
+// Production rate mirrors the Production Volume bars above. This card is a planning
+// tool, so the rate follows the computed bars whatever the plant master switch is
+// doing; a value the operator has typed is never overwritten.
+function pjSeedRate(){
+  var el=$('pj-prod-rate');
+  if(!el||el.dataset.touched)return;
+  var mode=pjDest.mode,v=0;
+  var bn=$('bar-naocl-v'),bh=$('bar-hcl-v'),bna=$('bar-naoh-v');
+  if(mode==='naocl'||mode==='custom')v=pjParse(bn?bn.textContent:'');
+  else if(mode==='hcl')v=pjParse(bh?bh.textContent:'');
+  else if(mode==='naoh')v=Math.abs(pjParse(bna?bna.textContent:''));
+  if(!(v>0)){
+    var p=pjPlant();
+    if(p){
+      if(mode==='naocl'||mode==='custom')v=pjParse(p.naocl_m3h);
+      else if(mode==='hcl')v=pjParse(p.hcl_m3h);
+      else if(mode==='naoh')v=Math.abs(pjParse(p.naoh_net_m3h));
+    }
+  }
+  el.value=v>0?v.toFixed(2):'0.00';
+  pjRoute.prodRate=parseFloat(el.value);
+  pjProject();
+}
+function pjSyncDest(){
+  var sel=$('pj-prod-dest'),wrap=$('pj-prod-custom-wrap'),cap=$('pj-prod-cap'),lvl=$('pj-prod-lvl');
+  if(!sel)return;
+  var v=sel.value;
+  pjDest.custom=(v==='custom');
+  pjDest.mode=v==='custom'?'custom':(v.split('-')[0]||'naocl');
+  pjDest.cap=pjDest.custom?(pjParse(cap?cap.value:'')||80):(PJ_PRESETS[pjDest.mode]||80);
+  if(wrap)wrap.style.display=pjDest.custom?'flex':'none';
+  if(lvl&&!lvl.dataset.touched)lvl.value='0';
+  pjSeedRate();pjProject();
+}
+function pjTargetTank(){
+  var cap=pjDest.custom?(pjParse($('pj-prod-cap').value)||80):(PJ_PRESETS[pjDest.mode]||80);
+  var lvlPct=Math.max(0,Math.min(100,pjParse($('pj-prod-lvl').value)));
+  var lvl=lvlPct*cap/100;
+  var hours=Math.max(0,pjParse($('pj-hours').value));
+  var rate=pjDest.custom?pjParse($('pj-prod-rate').value):pjParse($('pj-prod-rate').value);
+  return {mode:pjDest.mode,cap:cap,lvlPct:lvlPct,lvl:lvl,rate:Math.abs(rate),hours:hours,
+          name:pjDest.custom?'Custom tank':(pjDest.mode==='naocl'?'NaOCl':pjDest.mode==='hcl'?'HCl-32%':'NaOH'),
+          tag:pjDest.custom?'CUSTOM':(pjDest.mode==='naocl'?'T-6101':pjDest.mode==='hcl'?'T-8101':'T-5201')};
+}
+function pjSellTank(){
+  var r=pjTankRef($('pj-sell')?$('pj-sell').value:'');
+  if(!r)return null;
+  var lvlEl=$('pj-sell-lvl'),lvlPct=Math.max(0,Math.min(100,pjParse(lvlEl?lvlEl.value:'')));
+  var lvl=lvlPct>0?lvlPct*r.cap/100:r.cap*0.3;
+  return {mode:r.grp.id,cap:r.cap,lvlPct:lvlPct,lvl:lvl,rate:Math.abs(pjParse($('pj-sell-rate').value)),
+          hours:Math.max(0,pjParse($('pj-hours').value)),name:r.name,tag:r.tag};
+}
+function pjCalc(t,drain){
+  var raw=drain?t.lvl-t.rate*t.hours:t.lvl+t.rate*t.hours;
+  var p=Math.max(0,Math.min(t.cap,raw)),pct=p/t.cap*100,lpct=t.lvl/t.cap*100;
+  var over=raw>t.cap,empty=raw<0;
+  var time='—';
+  if(t.rate!==0)time=pjDur(drain?t.lvl/t.rate:(t.cap-t.lvl)/t.rate);
+  return {t:t,lvl:t.lvl,pct:pct,lpct:lpct,over:over,empty:empty,time:time};
+}
+function pjRenderPanel(prefix,d,drain){
+  var nameEl=$(prefix+'-name'),tagEl=$(prefix+'-tag'),bar=$(prefix+'-bar'),volEl=$(prefix+'-vol'),capEl=$(prefix+'-cap');
+  var pctEl=$(prefix+'-pct'),statusEl=$(prefix+'-status'),rateEl=$(prefix+'-rate'),dot=$(prefix+'-dot');
+  if(!nameEl)return;
+  if(!d){
+    nameEl.textContent='—';tagEl.textContent=prefix==='pj-p'?'Production':'Selling';
+    bar.style.width='0';volEl.textContent='—';capEl.textContent='/ —';
+    pctEl.textContent='—';pctEl.style.color='var(--k3)';
+    statusEl.textContent='select a tank';dot.className='status-dot ok';rateEl.textContent='';
+    return;
+  }
+  var t=d.t,pct=d.pct;
+  nameEl.textContent=t.name;tagEl.textContent=t.tag;
+  bar.style.width=pct+'%';
+  bar.style.background=drain?'linear-gradient(135deg,var(--red),var(--redd))':PJ_GRAD[t.mode]||PJ_GRAD.custom;
+  volEl.textContent=fmt(pct/100*t.cap,1);capEl.textContent='/ '+fmt(t.cap,0)+' m³';
+  pctEl.textContent=pct.toFixed(1)+'%';
+  var col=d.empty?'var(--red)':(d.over||pct>95)?'var(--yellow)':pct<20?'var(--red)':'var(--ink)';
+  pctEl.style.color=col;
+  var label=d.empty?'empty':d.over?'overflow':pct>95?'near full':pct<20?'low':'within range';
+  var dotCls=d.empty?'low':(d.over||pct>95)?'high':pct<20?'low':'ok';
+  dot.className='status-dot '+dotCls;
+  statusEl.textContent=label;
+  var sub=t.rate===0?'no rate — static':(drain?'to EMPTY at '+fmt(t.rate,2)+' m³/h':'to FULL at '+fmt(t.rate,2)+' m³/h');
+  rateEl.textContent=d.time+' · '+sub;
+}
+function pjProject(){
+  var fill=pjRoute.mode==='fill';
+  var sellT=fill?null:pjSellTank();
+  pjRenderPanel('pj-p',fill?pjCalc(pjTargetTank(),false):null,false);
+  pjRenderPanel('pj-s',sellT?pjCalc(sellT,true):null,true);
+}
+function pjModeVisuals(){
+  var fill=pjRoute.mode==='fill';
+  $('pj-m-fill').classList.toggle('active',fill);
+  $('pj-m-drain').classList.toggle('active',!fill);
+  $('pj-m-fill').classList.toggle('drain',false);
+  $('pj-m-drain').classList.toggle('drain',true);
+  $('pj-prod-side').style.display=fill?'contents':'none';
+  $('pj-sell-side').style.display=fill?'none':'contents';
+  $('pj-tanks').classList.toggle('mode-fill',fill);
+  $('pj-tanks').classList.toggle('mode-sell',!fill);
+}
+function pjChip(){
+  var chip=$('pj-state'),label=pjRoute.mode==='fill'?'Fill':'Drain';
+  chip.innerHTML=pjRoute.active
+    ?'<span class="status-dot"></span>'+label+' routing active'
+    :'<span class="status-dot ok"></span>'+label+' · planning only';
+  chip.classList.toggle('on',pjRoute.active);
+}
+function pjSave(){
+  try{
+    localStorage.setItem(PJRKEY,JSON.stringify({
+      mode:pjRoute.mode,prod:$('pj-prod-dest').value,sell:$('pj-sell').value,
+      prodRate:pjParse($('pj-prod-rate').value),sellRate:pjParse($('pj-sell-rate').value),
+      hours:pjParse($('pj-hours').value),active:pjRoute.active,
+      prodLvl:$('pj-prod-lvl').value,sellLvl:$('pj-sell-lvl').value,
+      prodRef:pjRoute.prodRef,sellRef:pjRoute.sellRef,
+      prodDestMode:pjDest.mode,prodDestCap:pjDest.cap
+    }));
+  }catch(e){}
+}
+// Legacy payloads stored prod as a tank ref (naocl-0). Map the group back to its preset.
+function pjLegacyDest(ref){
+  if(!ref)return null;
+  var g=ref.split('-')[0];
+  if(g==='naocl'||g==='naoh'||g==='hcl')return g+'-'+PJ_PRESETS[g];
+  return null;
+}
+function pjLoad(){
+  try{
+    var s=JSON.parse(localStorage.getItem(PJRKEY)||'null');
+    if(!s)return;
+    pjRoute.mode=s.mode==='drain'?'drain':'fill';
+    pjRoute.active=!!s.active;
+    pjRoute.prodRef=s.prodRef||'';
+    pjRoute.sellRef=s.sellRef||s.sell||'';
+    // Accept a preset token, or a legacy tank ref (naocl-0 / hcl-3) via its group.
+    var dest=$('pj-prod-dest').querySelector('option[value="'+s.prod+'"]')?s.prod:null;
+    if(!dest)dest=pjLegacyDest(s.prodRef)||pjLegacyDest(s.prod);
+    if(s.prodDestMode==='custom')dest='custom';
+    if(!dest)dest='naocl-80';
+    $('pj-prod-dest').value=dest;
+    if(s.prodDestMode)pjDest.mode=s.prodDestMode;
+    if(s.prodDestCap)pjDest.cap=s.prodDestCap;
+    if(s.sell&&$('pj-sell').querySelector('option[value="'+s.sell+'"]'))$('pj-sell').value=s.sell;
+    if(s.prodRate!==undefined&&s.prodRate!==null)$('pj-prod-rate').value=s.prodRate;
+    if(s.sellRate!==undefined&&s.sellRate!==null)$('pj-sell-rate').value=s.sellRate;
+    if(s.hours!==undefined&&s.hours!==null)$('pj-hours').value=s.hours;
+    if(s.prodLvl!==undefined&&s.prodLvl!=='')$('pj-prod-lvl').value=s.prodLvl;
+    if(s.sellLvl!==undefined)$('pj-sell-lvl').value=s.sellLvl;
+    if(s.prodDestCap&&s.prodDestMode==='custom')$('pj-prod-cap').value=s.prodDestCap;
+    // Restored values are operator intent: keep pjSyncDest from resetting them.
+    if(s.prodLvl!==undefined&&s.prodLvl!=='')$('pj-prod-lvl').dataset.touched='1';
+    // Only a real rate counts as operator intent: a plan saved while the plant was
+    // off stores 0, and that must not freeze the field against live seeding.
+    if(s.prodRate>0)$('pj-prod-rate').dataset.touched='1';
+    else $('pj-prod-rate').value='';
+  }catch(e){}
+}
+function pjApply(){
+  pjRoute.prodRate=pjParse($('pj-prod-rate').value);
+  pjRoute.sellRate=pjParse($('pj-sell-rate').value);
+  pjRoute.hours=Math.max(0,pjParse($('pj-hours').value));
+  var dest=$('pj-prod-dest').value;
+  pjDest.custom=(dest==='custom');
+  pjDest.mode=pjDest.custom?'custom':(dest.split('-')[0]||'naocl');
+  pjDest.cap=pjDest.custom?(pjParse($('pj-prod-cap').value)||80):(PJ_PRESETS[pjDest.mode]||80);
+  pjRoute.prodRef=pjDest.mode+'-0';
+  pjRoute.sellRef=$('pj-sell').value||'';
+  pjRoute.active=true;
+  pjSave();pjChip();pjProject();
+}
+function pjClearRouting(){
+  pjRoute={mode:'fill',active:false,prodRate:0,sellRate:0,hours:12,prodRef:'',sellRef:''};
+  pjDest={mode:'naocl',cap:80,custom:false};
+  $('pj-prod-dest').value='naocl-80';
+  $('pj-prod-cap').value='';
+  $('pj-prod-custom-wrap').style.display='none';
+  $('pj-prod-lvl').value='0';delete $('pj-prod-lvl').dataset.touched;
+  $('pj-prod-rate').value='';delete $('pj-prod-rate').dataset.touched;
+  $('pj-sell').value='';$('pj-sell-lvl').value='';$('pj-sell-rate').value='';
+  $('pj-hours').value='12';
+  try{localStorage.removeItem(PJRKEY)}catch(e){}
+  pjModeVisuals();pjChip();pjProject();
+}
+function pjInit(){
+  pjFillTankSelects($('pj-sell'));
+  pjLoad();
+  $('pj-prod-dest').addEventListener('change',function(){pjSyncDest()});
+  $('pj-prod-cap').addEventListener('input',function(){if(pjDest.custom){pjDest.cap=pjParse(this.value)||80;pjProject()}});
+  $('pj-prod-lvl').addEventListener('input',function(){this.dataset.touched='1';pjProject()});
+  $('pj-prod-rate').addEventListener('input',function(){this.dataset.touched='1';pjRoute.prodRate=pjParse(this.value);pjProject()});
+  $('pj-sell').addEventListener('change',function(){pjRoute.sellRef=this.value;pjProject()});
+  $('pj-sell-lvl').addEventListener('input',function(){pjProject()});
+  $('pj-sell-rate').addEventListener('input',function(){pjRoute.sellRate=pjParse(this.value);pjProject()});
+  $('pj-hours').addEventListener('input',function(){pjRoute.hours=pjParse(this.value);pjProject()});
+  $('pj-m-fill').addEventListener('click',function(){if(pjRoute.mode==='fill')return;pjRoute.mode='fill';pjModeVisuals();pjChip();pjProject()});
+  $('pj-m-drain').addEventListener('click',function(){if(pjRoute.mode==='drain')return;pjRoute.mode='drain';pjModeVisuals();pjChip();pjProject()});
+  $('pj-apply').addEventListener('click',pjApply);
+  $('pj-clear').addEventListener('click',pjClearRouting);
+  // Keep the rate mirrored while Production Volume recalculates.
+  if(window.MutationObserver){
+    var mo=new MutationObserver(function(){pjSeedRate()});
+    ['bar-naocl-v','bar-hcl-v','bar-naoh-v'].forEach(function(id){var n=$(id);if(n)mo.observe(n,{childList:true,characterData:true,subtree:true})});
+  }
+  pjSyncDest();pjModeVisuals();pjChip();pjProject();pjSeedRate();
+}
+buildTable();loadProdState();paintProd();pjInit();calc();pjSeedRate();
 </script>
 </body>
 </html>
