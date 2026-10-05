@@ -6,9 +6,13 @@
 <title>NAC · Chlor-Alkali Production Calculator</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Manrope:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#f6f4ee">
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b2545">
 <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js'));
+  }
+</script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
   }
