@@ -1,13 +1,13 @@
 {
-  "name": "Nac",
-  "short_name": "Nac",
-  "start_url": "/",
-  "scope": "/",
+  "name": "Recham",
+  "short_name": "Recham",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#f6f4ee",
-  "theme_color": "#f6f4ee",
+  "background_color": "#0b2545",
+  "theme_color": "#0b2545",
   "icons": [
-    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ]
 }
