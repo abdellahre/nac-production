@@ -6,13 +6,8 @@
 <title>NAC · Chlor-Alkali Production Calculator</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Manrope:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0b2545">
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js'));
-  }
-</script>
+  <link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#f6f4ee">
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
@@ -452,10 +447,10 @@ html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 48px + 2*var(
           </div>
           <div class="input-group" id="grp-hypo">
             <div class="ig-label"><span class="ig-dot hypo"></span>Hypochlorite</div>
-            <div class="field-row"><div class="field-meta"><strong>NaOCl Concentration</strong><span>125–180 g/L</span></div><div class="field-ctrl"><input type="number" id="con" value="132" min="100" max="180" step="1"><span class="field-unit">g/L</span></div></div>
-            <div class="slider-row"><input type="range" id="con-s" min="100" max="180" step="1" value="132"></div>
+            <div class="field-row"><div class="field-meta"><strong>g/L de chlore actif</strong><span>125–180 g/L</span></div><div class="field-ctrl"><input type="number" id="con" value="168" min="100" max="180" step="1"><span class="field-unit">g/L</span></div></div>
+            <div class="slider-row"><input type="range" id="con-s" min="100" max="180" step="1" value="168"></div>
             <div class="field-row"><div class="field-meta"><strong>NaOH Dilution to Columns</strong><span>Keep below 22%</span></div><div class="field-ctrl"><input type="number" id="dil" value="19" min="15" max="22" step="0.5"><span class="field-unit">%</span></div></div>
-            <div class="field-row"><div class="field-meta"><strong>Caustic Excess in Product</strong><span>2–4 g/L</span></div><div class="field-ctrl"><input type="number" id="exs" value="3" min="0" max="8" step="0.5"><span class="field-unit">g/L</span></div></div>
+            <div class="field-row"><div class="field-meta"><strong>Caustic Excess in Product</strong><span>2–4 g/L</span></div><div class="field-ctrl"><input type="number" id="exs" value="6" min="0" max="15" step="0.5"><span class="field-unit">g/L</span></div></div>
           </div>
           <div class="input-group hcl-off" id="grp-hcl">
             <div class="ig-label"><span class="ig-dot hcl"></span>HCl Unit</div>
@@ -475,9 +470,9 @@ html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 48px + 2*var(
             <div class="ig-label">Settings</div>
             <div class="field-row"><div class="field-meta"><strong>Rectifier Current — I</strong><span>Max: 16.2 kA</span></div><div class="field-ctrl"><input type="number" id="cur" value="11" min="0" max="16.2" step="0.1"><span class="field-unit">kA</span></div></div>
             <div class="slider-row"><input type="range" id="cur-s" min="0" max="16.2" step="0.1" value="11"></div>
-            <div class="field-row"><div class="field-meta"><strong>Active Cells — N</strong><span>Phase 1: 32 → 17 MTPD · Phase 2: 46 → 24 MTPD</span></div><div class="field-ctrl"><input type="number" id="cel" value="32" min="1" max="48" step="1"><span class="field-unit">cells</span></div></div>
-            <div class="slider-row"><input type="range" id="cel-s" min="1" max="48" step="1" value="32"></div>
-            <div class="field-row"><div class="field-meta"><strong>Current Efficiency — CE</strong><span>New 95.5% · End 92%</span></div><div class="field-ctrl"><input type="number" id="ce" value="96" min="85" max="100" step="0.5"><span class="field-unit">%</span></div></div>
+            <div class="field-row"><div class="field-meta"><strong>Active Cells — N</strong><span>Phase 1: 32 cells → 15 MTPD Cl₂ (17 MTPD NaOH) · Phase 2: 46 cells → 23 MTPD Cl₂ (24 MTPD NaOH)</span></div><div class="field-ctrl"><input type="number" id="cel" value="32" min="1" max="46" step="1"><span class="field-unit">cells</span></div></div>
+            <div class="slider-row"><input type="range" id="cel-s" min="1" max="46" step="1" value="32"></div>
+            <div class="field-row"><div class="field-meta"><strong>Current Efficiency — CE</strong><span>New 95.5% · End 92%</span></div><div class="field-ctrl"><input type="number" id="ce" value="92" min="85" max="100" step="0.5"><span class="field-unit">%</span></div></div>
           </div>
           <div class="input-group">
             <div class="ig-label">Cell Specs</div>
@@ -598,7 +593,7 @@ html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 48px + 2*var(
               <circle class="gauge-bg" cx="70" cy="70" r="55"/>
               <circle class="gauge-arc" id="gauge-arc" cx="70" cy="70" r="55" transform="rotate(-90 70 70)" stroke-dasharray="345.58" stroke-dashoffset="345.58"/>
               <text class="gauge-text" id="gauge-text" x="70" y="66" text-anchor="middle">—</text>
-              <text class="gauge-label" x="70" y="82" text-anchor="middle">of 15 MTPD Cl₂</text>
+              <text class="gauge-label" id="gauge-cap" x="70" y="82" text-anchor="middle">of 15 MTPD Cl₂</text>
             </svg>
           </div>
         </div>
@@ -713,6 +708,22 @@ html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 48px + 2*var(
       <div class="formula-hint">
         <strong>Formulas:</strong> j = I / A<sub>cell</sub> · Q<sub>brine</sub> = (NaCl_cons − C<sub>out</sub>×W<sub>tr</sub>) / ΔC · Q<sub>cat</sub> = cat_q × (I/16.2) × N × 60/1000 · m<sub>NaOH</sub> = N × I × 1.493 × CE
       </div>
+    <!-- ══════ CE VERIFICATION (from NaOCl produced) ══════ -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-head"><div class="card-icon" style="background:var(--bluel);color:var(--blue)"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div class="card-title">CE Verification — from NaOCl actually produced</div></div>
+      <div style="padding:16px">
+        <div class="proj-grid" style="margin-bottom:12px">
+          <div class="fld-item"><label class="fld-label" for="cev-time">Period (h)</label><div class="fld-inner"><input id="cev-time" type="number" min="0" step="0.1" value="24"><span class="fld-unit">h</span></div></div>
+          <div class="fld-item"><label class="fld-label" for="cev-naocl-vol">NaOCl produced</label><div class="fld-inner"><input id="cev-naocl-vol" type="number" min="0" step="0.1" value="0"><span class="fld-unit">m³</span></div></div>
+          <div class="fld-item"><label class="fld-label" for="cev-naocl-conc">NaOCl conc.</label><div class="fld-inner"><input id="cev-naocl-conc" type="number" min="0" step="1" value="168"><span class="fld-unit">g/L</span></div></div>
+        </div>
+        <div class="proj-grid" style="margin-bottom:12px">
+          <div class="fld-item"><label class="fld-label" for="cev-i">Current I</label><div class="fld-inner"><input id="cev-i" type="number" min="0" step="0.1" value="11"><span class="fld-unit">kA</span></div></div>
+          <div class="fld-item"><label class="fld-label" for="cev-n">Cells N</label><div class="fld-inner"><input id="cev-n" type="number" min="1" step="1" value="32"><span class="fld-unit">cells</span></div></div>
+        </div>
+        <div id="cev-result" style="padding:12px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--radius-sm);font:400 10px/1.7 var(--mono);color:var(--k2)">Enter measured NaOCl volume.</div>
+      </div>
+    </div>
     </div>
 
     <!-- ══════ SCENARIOS ══════ -->
@@ -741,13 +752,20 @@ html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 48px + 2*var(
   </div>
 
   <footer class="foot">
-    <div class="foot-items"><span>Anchor: 11 kA · 32 cells → <strong id="ft-anchor">—</strong></span><span>HCl: Max 23 T/j</span><span>CE: <span id="ftce">96.0</span>%</span><span class="mono" id="fttm">--:--:--</span></div>
+    <div class="foot-items"><span>Anchor: 11 kA · 32 cells → <strong id="ft-anchor">—</strong></span><span>HCl: Max 23 T/j</span><span>CE: <span id="ftce">95.5</span>%</span><span class="mono" id="fttm">--:--:--</span></div>
     <div>NAC</div>
   </footer>
 </div>
 
 <script>
-const A_I=11, A_N=32, A_CE=0.96, A_CL2=447.5, A_NAOH=504.1, A_H2=12.61;
+
+
+//--------  this is the calculator ------------------------- //
+
+
+
+//const A_I=11, A_N=32, A_CE=0.955, A_CL2=447.5, A_NAOH=504.1, A_H2=12.61;
+const A_I=11, A_N=32, A_CE=0.96, A_CL2=444.7, A_NAOH=501.7, A_H2=12.64;
 const M_CL2=70.906;
 const CL2_DENSITY=M_CL2/22.4, HCL_UNIT_MAX_NM3=110, H2_CL2_RATIO=122/110, DMW_PER_NM3=760/110, HCL_TJ_PER_NM3=23/110, HCL32_DENSITY=1160, NAOH32_DENSITY=1350;
 const NUBERG_TABLE=[{cl2_nm3:55,h2_nm3:61,dmw:380,hcl_tj:12},{cl2_nm3:68,h2_nm3:76,dmw:475,hcl_tj:15},{cl2_nm3:82,h2_nm3:91,dmw:570,hcl_tj:18},{cl2_nm3:96,h2_nm3:106,dmw:665,hcl_tj:21},{cl2_nm3:110,h2_nm3:122,dmw:760,hcl_tj:23}];
@@ -805,7 +823,7 @@ $('themeBtn').onclick=function(){
 if(localStorage.getItem('nac-theme')==='light'){document.documentElement.setAttribute('data-theme','light');$('themeIcon').innerHTML='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>'}
 
 $('exportBtn').onclick=function(){
-  const I=+$('cur').value||0,N=+$('cel').value||0,CE=(+$('ce').value||0)/100,conc=+$('con').value||132;
+  const I=+$('cur').value||0,N=+$('cel').value||0,CE=(+$('ce').value||0)/100,conc=+$('con').value||168;
   const sc=(I/A_I)*(N/A_N)*(CE/A_CE),cl2=A_CL2*sc,naoh=A_NAOH*sc,h2=A_H2*sc;
   const cl2_nm3=cl2/CL2_DENSITY,hclTarget_tj=window.hclOn?(+$('hcl-t').value||23):0;
   const cl2h_hcl=hclTarget_tj>0?Math.min(hclTarget_tj/HCL_TJ_PER_NM3,cl2_nm3,HCL_UNIT_MAX_NM3)*CL2_DENSITY:0;
@@ -902,7 +920,7 @@ function heatClass(v,maxV){
 }
 
 function calc(){
-  const I=+$('cur').value||0,N=+$('cel').value||0,CE=(+$('ce').value||0)/100,conc=+$('con').value||132,dil=(+$('dil').value||19)/100,exs=+$('exs').value||0;
+  const I=+$('cur').value||0,N=+$('cel').value||0,CE=(+$('ce').value||0)/100,conc=+$('con').value||168,dil=(+$('dil').value||19)/100,exs=+$('exs').value||0;
   const hclTarget_tj=window.hclOn?(+$('hcl-t').value||23):0;
   const A_cell=+$('cell-area').value||2.7,brine_in=+$('brine-in').value||300,brine_out=+$('brine-out').value||210;
   const brine_q_ref=+$('brine-q').value||3.5,cat_q_ref=+$('cat-q').value||7.14;
@@ -941,8 +959,10 @@ function calc(){
   const hgw=naoh_cons*(1/dil-1/0.32);
 
   const cl2_mtpd=cl2_kgh*24/1000;
-  const util_pct=15>0?(cl2_mtpd/15*100):0;
+  const capMTPD = (N>32)?23:15;
+  const util_pct = capMTPD>0?(cl2_mtpd/capMTPD*100):0;
   drawGauge(util_pct);
+  const gc=$('gauge-cap'); if(gc) gc.textContent='of '+capMTPD+' MTPD Cl₂';
 
   $('t-naocl').textContent=fmtL(naocl_lh);$('t-naocl-s').textContent=fmt(naocl_lh/1000*24,2)+' m³/d';
   $('t-cl2').textContent=fmt(cl2_kgh,1)+' kg/h';$('t-cl2-s').textContent=fmt(cl2_mtpd,2)+' MTPD';
@@ -1045,6 +1065,25 @@ function publishPlant(d){
   }catch(e){}
 }
 
+function cevCalc(){
+  const t=+$('cev-time').value||0;
+  const vol=+$('cev-naocl-vol').value||0; // m3
+  const conc=+$('cev-naocl-conc').value||168; // g/L
+  const I=+$('cev-i').value||0;
+  const N=+$('cev-n').value||0;
+  // theoretical Cl2 from Faraday (kg) over period
+  const cl2Theo = I*N*70.906*0.995*3600*t/(2*96485); // kg (I in kA)
+  // actual Cl2 accounted (kg)
+  const cl2Hypo = vol*1000*conc/1000; // m3 * g/L = kg? vol(m3)*1000 L/m3 * conc(g/L)/1000 = vol*conc kg. Actually vol*conc kg. Let's do vol*conc (m3*g/L = kg? 1 m3=1000L, *g/L = 1000*g = kg). yes vol*conc kg.
+  const theoNaOClL = cl2Theo*1000/conc; // L
+  const actualNaOClL = vol*1000; // L
+  const impliedCE = theoNaOClL>0 ? (actualNaOClL/theoNaOClL*100) : 0;
+  const enteredCE = (+$('ce').value||96);
+  const expectedNaOCl = theoNaOClL*(enteredCE/100); // L
+  const dev = expectedNaOCl>0 ? ((actualNaOClL-expectedNaOCl)/expectedNaOCl*100) : 0;
+  const r=$('cev-result');
+  r.innerHTML = 'Implied CE: <strong style="color:'+(impliedCE>90?'var(--green)':'var(--red)')+'">'+impliedCE.toFixed(2)+' %</strong>';
+}
 function buildTable(){
   const KAs=[4,6,8,10,11,12,14,16.2],Ns=[16,24,32,40,48],tb=$('sb');tb.innerHTML='';
   const A_cell_val=+($('cell-area')?$('cell-area').value:2.7)||2.7;
@@ -1052,7 +1091,7 @@ function buildTable(){
   const brine_out_val=+($('brine-out')?$('brine-out').value:210)||210;
   const delta_c=brine_in_val-brine_out_val;
   KAs.forEach(function(kA){Ns.forEach(function(n){
-    const con_val=+($('con')?$('con').value:132)||132;
+    const con_val=+($('con')?$('con').value:168)||168;
     const sc=(kA/A_I)*(n/A_N),cl2=A_CL2*sc,naoh=A_NAOH*sc,h2=A_H2*sc,naocl=cl2*1000/con_val;
     const j_sc=A_cell_val>0?kA/A_cell_val:0;
     const isc=kA===11&&n===32;
@@ -1325,7 +1364,12 @@ function pjInit(){
   }
   pjSyncDest();pjModeVisuals();pjChip();pjProject();pjSeedRate();
 }
+// keep CE-verify inputs in sync with main inputs
+['cev-time','cev-naocl-vol','cev-naocl-conc','cev-i','cev-n'].forEach(function(id){var el=$(id);if(el)el.addEventListener('input',cevCalc)});
 buildTable();loadProdState();paintProd();pjInit();calc();pjSeedRate();
+// seed ce-verify I/N from main inputs
+$('cev-i').value=$('cur').value; $('cev-n').value=$('cel').value; $('cev-naocl-conc').value=$('con').value;
+cevCalc();
 </script>
 </body>
 </html>
